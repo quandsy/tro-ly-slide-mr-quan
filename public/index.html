@@ -207,6 +207,7 @@ footer.site b{color:var(--ink)}
 .live-item{border:2px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;background:var(--surface)}
 .manual-item{border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--surface)}
 .manual-item label{font-weight:700;display:block;margin-bottom:5px;font-size:14.5px}
+.game-note{grid-column:1/-1;background:#FFF7E6;border:2px dashed #F2A007;border-radius:12px;padding:12px 14px;font-size:14px;color:#5B4A1F}
 </style>
 </head>
 <body>
@@ -361,7 +362,7 @@ footer.site b{color:var(--ink)}
   <!-- STEP 3 -->
   <section id="view3" class="hidden">
     <h1>Bước 3 · Thêm trò chơi vào bài</h1>
-    <p class="sub">Bấm <b>Chơi thử ngay</b> để chơi thử từng trò ngay tại đây — chấm đúng/sai, tính điểm, có pháo giấy và âm báo. Trò được bật sẽ chèn vào cuối bài và chơi được ngay khi trình chiếu.</p>
+    <p class="sub">Bấm <b>Chơi thử ngay</b> để chơi thử từng trò ngay tại đây — chấm đúng/sai, tính điểm, có pháo giấy và âm báo. Trò được bật sẽ chèn vào cuối bài và chơi được ngay khi trình chiếu. Câu hỏi lấy từ nội dung bài ở Bước 1, không dùng câu hỏi mẫu chung.</p>
     <div class="game-grid" id="gameGrid"></div>
     <div class="navrow">
       <button class="btn outline" data-back="2" type="button">← Quay lại</button>
@@ -463,21 +464,141 @@ var GAMES=[
  {id:"ochu", name:"Giải Ô Chữ", icon:"🔤", color:"#B97A04", desc:"Đọc gợi ý, đoán từ khoá của bài học."},
  {id:"vongquay", name:"Vòng Quay May Mắn", icon:"🎡", color:"#3E9B4F", desc:"Quay bánh xe chọn điểm và câu hỏi ngẫu nhiên."}
 ];
-var QBANK=[
- {q:"Hạt gạo bắt đầu từ đâu?", a:["Hạt thóc gieo xuống ruộng","Cái bánh chưng","Chợ bán gạo","Nhà máy xay xát"], c:0},
- {q:"Để lúa lớn, cây lúa cần nhất điều gì?", a:["Nước, nắng và bàn tay chăm sóc","Ti vi và điện thoại","Bóng râm cả ngày","Không cần gì"], c:0},
- {q:"Khi lúa chín, bông lúa có màu gì?", a:["Vàng óng","Xanh dương","Tím","Đen"], c:0},
- {q:"Ai là người vất vả trồng lúa ngoài đồng?", a:["Bác nông dân","Phi hành gia","Ca sĩ","Đầu bếp"], c:0},
- {q:"Câu nói nào nhắc ta quý hạt gạo?", a:["Ai ơi bưng bát cơm đầy, dẻo thơm một hạt đắng cay muôn phần","Ăn xong thì bỏ","Cơm để nguội cũng được","Không cần cảm ơn ai"], c:0},
- {q:"Thóc sau khi gặt được làm gì tiếp theo?", a:["Phơi khô rồi xay thành gạo","Cất vào tủ lạnh","Đem sơn màu","Trồng xuống biển"], c:0}
-];
-var TF=[
- {s:"Hạt gạo làm ra từ cây lúa.", t:true},{s:"Cây lúa trồng được ở dưới biển.", t:false},
- {s:"Bác nông dân phải chăm lúa nhiều tháng mới có hạt gạo.", t:true},{s:"Ta nên lãng phí cơm vì gạo rất dễ làm ra.", t:false},
- {s:"Bông lúa chín có màu vàng.", t:true}
-];
-var PAIRS=[["Thóc","Hạt còn vỏ trấu"],["Gạo","Hạt đã xay vỏ"],["Bông lúa","Nơi kết hạt của cây lúa"],["Phơi nắng","Làm khô thóc sau gặt"],["Bác nông dân","Người trồng lúa"],["Cơm","Món ăn nấu từ gạo"]];
-var CROSS=[{w:"GẠO",hint:"Hạt trắng nấu thành cơm"},{w:"LÚA",hint:"Cây trồng cho hạt gạo"},{w:"RUỘNG",hint:"Nơi cây lúa mọc"},{w:"THÓC",hint:"Hạt lúa còn vỏ trấu"}];
+/* ============ GAME BANKS — generated from the current lesson (Step 1 content) ============ */
+var QBANK=[];
+var TF=[];
+var PAIRS=[];
+var CROSS=[];
+var GAME_FACT_COUNT=0;
+function shortTxt(s,n){ s=String(s==null?"":s).replace(/\s+/g," ").trim(); n=n||70; if(s.length<=n) return s;
+ var cut=s.slice(0,Math.max(1,n-1)); var sp=cut.lastIndexOf(" ");
+ if(sp>Math.floor(n*0.5)) cut=cut.slice(0,sp);
+ return cut.replace(/[\s,.;:]+$/,"")+"…"; }
+function regEsc(s){ return String(s).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+function lessonTitle(){ if(typeof state!=="undefined" && state.topic && String(state.topic).trim()) return String(state.topic).trim();
+ if(typeof state!=="undefined" && state.slides){ for(var i=0;i<state.slides.length;i++){ if(state.slides[i].type==="cover" && state.slides[i].title) return coreTitle(state.slides[i].title)||String(state.slides[i].title).trim(); }
+  if(state.slides.length && state.slides[0].title) return coreTitle(state.slides[0].title)||String(state.slides[0].title).trim(); }
+ return "Bài học mới"; }
+function negateFact(s){
+ var str=String(s==null?"":s).replace(/\s+/g," ").trim(); if(!str) return null;
+ var low=str.toLowerCase();
+ var banned=["không phải","chưa từng","không","chưa","chẳng","đừng"];
+ for(var bi=0;bi<banned.length;bi++){ if(low.indexOf(banned[bi])>=0) return null; }
+ if(/ là /i.test(str)) return str.replace(/ là /i," không phải là ");
+ if(/ được /i.test(str)) return str.replace(/ được /i," không được ");
+ if(str.indexOf("=")>=0 && str.indexOf("≠")<0) return str.replace("=","≠");
+ var verbs="cần phải nên sẽ đang có làm trồng gieo mọc chín gặt phơi xay nấu ăn đi đến cho giúp tạo thành chứa bắt đầu lớn rụng nở chảy bay bốc ngưng rơi tan đọng trôi bơi chạy nhảy đọc viết nghe nói học chơi sống cao thấp dài ngắn nặng nhẹ nhanh chậm đẹp xấu tốt vui buồn khỏe yếu đông sáng tối nóng lạnh ấm mát khô ướt sạch bẩn mới cũ to nhỏ nhiều ít đủ thiếu giống khác thích muốn biết hiểu nhớ quên thấy nhìn cầm mang đeo mặc đội đứng ngồi nằm ngủ dậy ra vào lên xuống qua lại về tới gặp chào hỏi kể hát múa vẽ cắt dán mở đóng đẩy kéo đặt để lấy đưa gửi nhận mua bán trả đổi chia nhân cộng trừ đếm đo cân".split(" ");
+ var best=null;
+ verbs.forEach(function(v){
+  var re=new RegExp("(^|\\s)("+regEsc(v)+")(?=[\\s,.!?;:]|$)","i");
+  var m=re.exec(low);
+  if(m){ var pos=m.index+(m[1]?m[1].length:0); if(!best || pos<best.pos) best={pos:pos}; }
+ });
+ if(!best) return null;
+ return str.slice(0,best.pos)+"không "+str.slice(best.pos);
+}
+function lessonFacts(){
+ var groups=[], flat=[];
+ var slides=(typeof state!=="undefined" && state.slides)?state.slides:[];
+ slides.forEach(function(sl){
+  if(!sl || sl.type!=="content") return;
+  var rawTitle=String(sl.title||"");
+  if(rawTitle.indexOf("Mục tiêu")>=0 || rawTitle.indexOf("Tổng kết")>=0 || rawTitle.indexOf("Luyện tập")>=0) return;
+  var title=coreTitle(rawTitle)||rawTitle.trim(); if(!title) return;
+  var bullets=parseBullets(sl).slice(0,4);
+  var facts=[], gi=groups.length;
+  if(bullets.length){ bullets.forEach(function(b){ facts.push({text:b,fromTitle:false,title:title,groupIndex:gi}); }); }
+  else { facts.push({text:title,fromTitle:true,title:title,groupIndex:gi}); }
+  groups.push({title:title,facts:facts,groupIndex:gi});
+  facts.forEach(function(f){ flat.push(f); });
+ });
+ return {groups:groups, facts:flat};
+}
+function makeMCQ(qText, correct, wrongs){
+ var seen={}, opts=[];
+ var cShort=shortTxt(correct,70); if(!cShort) return null;
+ seen[cShort.toLowerCase()]=1; opts.push(cShort);
+ (wrongs||[]).forEach(function(w){ var ws=shortTxt(w,70); if(!ws) return; var k=ws.toLowerCase(); if(seen[k]) return; seen[k]=1; opts.push(ws); });
+ if(opts.length<3) return null;
+ var mixed=shuffled(opts);
+ return {q:qText, a:mixed, c:mixed.indexOf(cShort)};
+}
+function buildGameBanks(){
+ var LF=lessonFacts();
+ GAME_FACT_COUNT=LF.facts.length;
+ var lesson=lessonTitle();
+ /* --- QBANK: multiple choice --- */
+ var mcqs=[], seenSets={};
+ function tryAdd(q){ if(!q) return; var key=q.a.slice().sort().join("||").toLowerCase(); if(seenSets[key]) return; seenSets[key]=1; mcqs.push(q); }
+ LF.groups.forEach(function(g){
+  var bulletFacts=g.facts.filter(function(f){return !f.fromTitle;}); if(!bulletFacts.length) return;
+  var others=LF.facts.filter(function(f){return f.groupIndex!==g.groupIndex;}); if(others.length<2) return;
+  var wrongs=shuffled(others).slice(0,3).map(function(f){return f.text;});
+  tryAdd(makeMCQ("Câu nào dưới đây thuộc phần “"+g.title+"”?", bulletFacts[0].text, wrongs));
+ });
+ LF.facts.forEach(function(f){
+  var negs=[], others=shuffled(LF.facts.filter(function(o){return o!==f;}));
+  for(var i=0;i<others.length && negs.length<3;i++){ var n=negateFact(others[i].text); if(n) negs.push(n); }
+  if(negs.length<2) return;
+  tryAdd(makeMCQ("Theo bài “"+lesson+"”, câu nào dưới đây là đúng?", f.text, negs));
+ });
+ QBANK=shuffled(mcqs).slice(0,6);
+ /* --- TF: true / false --- */
+ var tfAll=[];
+ LF.facts.forEach(function(f){
+  tfAll.push({s:shortTxt(f.text,90), t:true});
+  var neg=negateFact(f.text);
+  if(neg){ tfAll.push({s:shortTxt(neg,90), t:false}); }
+  else {
+   var otherGroup=null;
+   for(var gi=0;gi<LF.groups.length;gi++){ if(LF.groups[gi].groupIndex!==f.groupIndex){ otherGroup=LF.groups[gi]; break; } }
+   if(otherGroup) tfAll.push({s:"“"+shortTxt(f.text,60)+"” là ý chính của phần “"+shortTxt(otherGroup.title,45)+"”.", t:false});
+  }
+ });
+ var tfSeen={}, tfDedup=[];
+ tfAll.forEach(function(it){ var k=it.s.toLowerCase(); if(tfSeen[k]) return; tfSeen[k]=1; tfDedup.push(it); });
+ TF=shuffled(tfDedup).slice(0,6);
+ /* --- PAIRS: memory cards --- */
+ var pairs=[], seenTitles={};
+ LF.groups.forEach(function(g){
+  if(g.title.length<3 || g.title.length>26) return;
+  var bf=g.facts.filter(function(f){return !f.fromTitle;}); if(!bf.length) return;
+  var def=shortTxt(bf[0].text,80);
+  if(normTxt(def)===normTxt(g.title)) return;
+  var k=g.title.toLowerCase(); if(seenTitles[k]) return; seenTitles[k]=1;
+  pairs.push([g.title, def]);
+ });
+ PAIRS = pairs.length>=2 ? pairs.slice(0,6) : [];
+ /* --- CROSS: crossword words --- */
+ var stopSet={};
+ "là và của các một những được có trong cho với khi này đó thì từ ở trên người ta em anh chị bài học sinh trang sách phần ý chính mục tiêu tổng kết dặn dò luyện tập thêm mới không chưa cũng đã rất lắm mà nếu vì rồi còn lại cùng mỗi từng hết cả chỉ vẫn luôn hay hoặc nhưng tuy dù hai ba bốn năm sáu bảy tám chín mười".split(" ").forEach(function(w){ stopSet[w]=1; });
+ var used={}, cross=[];
+ LF.groups.forEach(function(g){
+  if(cross.length>=6) return;
+  var sources=[g.title].concat(g.facts.map(function(f){return f.text;}));
+  var perGroup=0;
+  for(var si=0;si<sources.length && perGroup<2 && cross.length<6;si++){
+   var words=String(sources[si]||"").match(/[\p{L}]+/gu)||[];
+   for(var wi=0;wi<words.length && perGroup<2 && cross.length<6;wi++){
+    var up=words[wi].toUpperCase();
+    var clean=up.replace(/[^\p{L}]/gu,"");
+    if(clean.length<3 || clean.length>8) continue;
+    if(stopSet[clean.toLowerCase()]) continue;
+    if(used[clean]) continue;
+    used[clean]=1;
+    var hint=String(sources[si]).replace(new RegExp(regEsc(words[wi]),"gi"),"___");
+    cross.push({w:clean, hint:shortTxt(hint,90)});
+    perGroup++;
+   }
+  }
+ });
+ CROSS = cross.length>=3 ? cross.slice(0,6) : [];
+ return {QBANK:QBANK, TF:TF, PAIRS:PAIRS, CROSS:CROSS, factCount:GAME_FACT_COUNT};
+}
+function noQuestionsHTML(){
+ var msg="📚 Chưa tạo được câu hỏi cho trò này. Bài “"+lessonTitle()+"” còn ít ý nên app chưa rút ra được câu hỏi từ nội dung Bước 1. Thầy cô quay lại Bước 1, thêm vài ý chính (mỗi dòng một ý, hoặc đưa thêm trang sách), rồi quay lại chơi nhé — câu hỏi sẽ bám đúng bài của thầy cô.";
+ return '<p style="font-size:17px;line-height:1.65">'+esc(msg)+'</p>';
+}
 
 var SAMPLE={topic:"Hành trình hạt gạo",level:"Tiểu học",subject:"Tự nhiên & Xã hội",pages:11,tpl:"lua",
  outline:"Hạt gạo đến từ cây lúa\nGieo hạt và nảy mầm\nChăm sóc cây lúa\nLúa chín vàng trên cánh đồng\nBác nông dân gặt lúa\nPhơi thóc và xay thành gạo\nTừ hạt gạo đến bát cơm\nVì sao phải quý trọng hạt gạo",
@@ -664,10 +785,14 @@ function renderTpls(){ var grid=document.getElementById("tplGrid"); grid.innerHT
   grid.appendChild(b); });
  if(!grid.children.length) grid.innerHTML='<p class="sub">Chưa có mẫu cho nhóm này — chọn “Tất cả” để xem mọi mẫu.</p>';
 }
-document.getElementById("btnTo3").addEventListener("click",function(){ goStep(3); });
+document.getElementById("btnTo3").addEventListener("click",function(){ renderGames(); goStep(3); });
 
 /* ============ STEP 3 : GAMES ============ */
-function renderGames(){ var grid=document.getElementById("gameGrid"); grid.innerHTML="";
+function renderGames(){ buildGameBanks(); var grid=document.getElementById("gameGrid"); grid.innerHTML="";
+ var note=document.createElement("div"); note.className="game-note";
+ if(GAME_FACT_COUNT>=3){ note.textContent="📚 Câu hỏi trong các trò chơi được tạo từ nội dung Bước 1 — bài “"+lessonTitle()+"”: "+QBANK.length+" câu trắc nghiệm · "+TF.length+" câu đúng/sai · "+PAIRS.length+" cặp thẻ · "+CROSS.length+" từ ô chữ. Sửa nội dung ở Bước 1 hoặc Bước 4 rồi chơi lại, câu hỏi sẽ đổi theo."; }
+ else { note.textContent="⚠️ Bài này còn ít ý ("+GAME_FACT_COUNT+" ý) nên một số trò chưa tạo được câu hỏi riêng. Thầy cô thêm vài ý chính ở Bước 1 (mỗi dòng một ý) rồi quay lại đây nhé."; }
+ grid.appendChild(note);
  GAMES.forEach(function(g){ var d=document.createElement("div"); d.className="game-card";
   d.innerHTML='<div class="ic" style="background:'+g.color+'">'+g.icon+'</div><h3>'+esc(g.name)+'</h3><p>'+esc(g.desc)+'</p><div class="row"><button class="btn sm" type="button">🎮 Chơi thử ngay</button><label class="toggle"><input type="checkbox" '+(state.games[g.id]?"checked":"")+'/> Chèn vào bài</label></div>';
   d.querySelector(".btn").addEventListener("click",function(){ openGame(g.id); });
@@ -801,7 +926,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
 /* ============ GAME ENGINE ============ */
 var gCur=null, gScore=0, timers=[];
 function stopTimers(){ timers.forEach(clearInterval); timers=[]; }
-function openGame(id){ stopTimers(); gCur=id; gScore=0; updScore("");
+function openGame(id){ buildGameBanks(); stopTimers(); gCur=id; gScore=0; updScore("");
  var g=null; GAMES.forEach(function(x){ if(x.id===id) g=x; });
  document.getElementById("gTitle").textContent=g.icon+" "+g.name;
  document.getElementById("ovGame").classList.add("open");
@@ -819,7 +944,7 @@ function bindMCQ(q,onDone){ document.querySelectorAll("#gBody .opt").forEach(fun
  else { b.classList.add("wrong"); document.querySelectorAll("#gBody .opt")[q.c].classList.add("right"); sndBad(); updScore("Chưa đúng — đáp án đúng đã được tô xanh."); }
  setTimeout(onDone,1300); }); }); }
 
-function playNhanh(){ var qs=shuffled(QBANK).slice(0,4), idx=0;
+function playNhanh(){ if(!QBANK.length){ gBody(noQuestionsHTML()); updScore(""); return; } var qs=shuffled(QBANK).slice(0,4), idx=0;
  function next(){ if(idx>=qs.length){ finishGame("Bạn trả lời đúng tốc độ thật ấn tượng!"); gBody('<h3>🏁 Hết lượt!</h3><p>Bạn được <b>'+gScore+' điểm</b>. Bấm Chơi lại để thử phá kỷ lục nhé.</p>'); return; }
   var q=qs[idx], left=10; gBody('<p class="hint">Câu '+(idx+1)+'/'+qs.length+' · ⏱ Còn <b id="tLeft">10</b> giây — trả lời càng nhanh điểm càng cao!</p>'+mcqHTML(q));
   var iv=setInterval(function(){ left--; var el=document.getElementById("tLeft"); if(el) el.textContent=left;
@@ -833,14 +958,14 @@ function playNhanh(){ var qs=shuffled(QBANK).slice(0,4), idx=0;
  }
  next(); }
 
-function playLeo(){ var qs=shuffled(QBANK).slice(0,5), idx=0;
+function playLeo(){ if(!QBANK.length){ gBody(noQuestionsHTML()); updScore(""); return; } var qs=shuffled(QBANK).slice(0,5), idx=0;
  function draw(){ var rungs=qs.map(function(_,i){ return '<div class="rung'+(i<idx?" hit":"")+'">Bậc '+(i+1)+(i===qs.length-1?" 🏔":"")+'</div>'; }).join("");
   if(idx>=qs.length){ gBody('<div class="ladder">'+rungs+'</div><h3>🏔 Đã lên đỉnh!</h3><p>Bạn chinh phục đủ '+qs.length+' bậc tri thức với <b>'+gScore+' điểm</b>.</p>'); finishGame(); return; }
   gBody('<div class="ladder">'+rungs+'</div><p class="hint">Trả lời đúng để leo lên bậc tiếp theo.</p>'+mcqHTML(qs[idx]));
   bindMCQ(qs[idx],function(){ idx++; draw(); }); }
  draw(); }
 
-function playDungSai(){ var qs=shuffled(TF), idx=0;
+function playDungSai(){ if(!TF.length){ gBody(noQuestionsHTML()); updScore(""); return; } var qs=shuffled(TF), idx=0;
  function next(){ if(idx>=qs.length){ gBody('<h3>🏁 Hết câu!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); return; }
   var it=qs[idx]; gBody('<p class="hint">Câu '+(idx+1)+'/'+qs.length+'</p><h3 style="font-size:20px">“'+esc(it.s)+'”</h3><button class="opt" type="button" data-v="1">✔ ĐÚNG</button><button class="opt" type="button" data-v="0">✘ SAI</button>');
   document.querySelectorAll("#gBody .opt").forEach(function(b){ b.addEventListener("click",function(){ var v=b.getAttribute("data-v")==="1";
@@ -850,7 +975,7 @@ function playDungSai(){ var qs=shuffled(TF), idx=0;
    idx++; setTimeout(next,1200); }); }); }
  next(); }
 
-function playHopQua(){ var opened=0, total=6, qs=shuffled(QBANK);
+function playHopQua(){ if(!QBANK.length){ gBody(noQuestionsHTML()); updScore(""); return; } var opened=0, total=6, qs=shuffled(QBANK);
  var kinds=shuffled(["q","q","q","bonus","bonus","q"]);
  gBody('<p class="hint">Có 6 hộp quà: một số hộp chứa câu hỏi (+10 điểm), một số chứa điểm thưởng bất ngờ. Mở hết các hộp nhé!</p><div class="boxes">'+kinds.map(function(k,i){ return '<button class="gift" type="button" data-i="'+i+'" style="background:'+["#E4572E","#0E7C6B","#1B7FB8","#D94F7A","#F2A007","#7A4FA3"][i]+'">🎁</button>'; }).join("")+'</div><div id="giftQ" style="margin-top:14px"></div>');
  document.querySelectorAll(".gift").forEach(function(b){ b.addEventListener("click",function(){ if(b.disabled) return; b.disabled=true; var i=parseInt(b.getAttribute("data-i"),10);
@@ -864,7 +989,7 @@ function playHopQua(){ var opened=0, total=6, qs=shuffled(QBANK);
  function check(){ if(opened>=total){ setTimeout(function(){ gBody('<h3>🎉 Đã mở hết quà!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); },600); } }
 }
 
-function playLatThe(){ var cards=shuffled(PAIRS.flatMap(function(p,i){ return [{t:p[0],pair:i,term:true},{t:p[1],pair:i,term:false}]; }));
+function playLatThe(){ if(!PAIRS.length){ gBody(noQuestionsHTML()); updScore(""); return; } var cards=shuffled(PAIRS.flatMap(function(p,i){ return [{t:p[0],pair:i,term:true},{t:p[1],pair:i,term:false}]; }));
  var open=[], done=0;
  gBody('<p class="hint">Lật 2 thẻ: một thẻ khái niệm và một thẻ định nghĩa đúng của nó sẽ thành một cặp. Tìm đủ '+PAIRS.length+' cặp!</p><div class="cards-mem">'+cards.map(function(c,i){ return '<button class="mem" type="button" data-i="'+i+'" style="background:#7A4FA3"><span class="back">?</span><span class="face hidden">'+esc(c.t)+'</span></button>'; }).join("")+'</div>');
  document.querySelectorAll(".mem").forEach(function(b){ b.addEventListener("click",function(){ if(b.classList.contains("open")||b.classList.contains("done")||open.length>=2) return;
@@ -876,7 +1001,7 @@ function playLatThe(){ var cards=shuffled(PAIRS.flatMap(function(p,i){ return [{
   }); });
 }
 
-function playOChu(){ var items=shuffled(CROSS), idx=0, tries=0;
+function playOChu(){ if(!CROSS.length){ gBody(noQuestionsHTML()); updScore(""); return; } var items=shuffled(CROSS), idx=0, tries=0;
  function next(){ if(idx>=items.length){ gBody('<h3>🏆 Giải xong ô chữ!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); return; }
   var it=items[idx]; tries=0;
   gBody('<p class="hint">Từ '+(idx+1)+'/'+items.length+' · Gợi ý: <b>'+esc(it.hint)+'</b> ('+it.w.length+' chữ cái)</p><div class="letters">'+it.w.split("").map(function(_,i){ return '<div class="letter" id="L'+i+'"></div>'; }).join("")+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="text" id="cwIn" placeholder="Nhập đáp án…" style="flex:1;min-width:180px;text-transform:uppercase"><button class="btn coral" id="cwGo" type="button">Kiểm tra</button><button class="btn outline" id="cwHint" type="button">Gợi ý 1 chữ (−2 điểm)</button></div>');
@@ -889,7 +1014,7 @@ function playOChu(){ var items=shuffled(CROSS), idx=0, tries=0;
  }
  next(); }
 
-function playVongQuay(){ var rounds=0;
+function playVongQuay(){ if(!QBANK.length){ gBody(noQuestionsHTML()); updScore(""); return; } var rounds=0;
  gBody('<div class="wheel-wrap"><div style="position:relative;width:230px;height:230px;flex:none"><div style="position:absolute;left:50%;top:-6px;transform:translateX(-50%);z-index:2;font-size:26px">▼</div><svg id="wheel" width="230" height="230" viewBox="0 0 200 200">'
   +[0,1,2,3,4,5].map(function(i){ var cols=["#E4572E","#F2A007","#0E7C6B","#1B7FB8","#D94F7A","#3E9B4F"]; var a1=i*60*Math.PI/180, a2=(i+1)*60*Math.PI/180;
     var x1=100+92*Math.cos(a1),y1=100+92*Math.sin(a1),x2=100+92*Math.cos(a2),y2=100+92*Math.sin(a2);
