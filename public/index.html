@@ -258,9 +258,9 @@ footer.site b{color:var(--ink)}
           <p class="hint" style="margin-top:12px">Mẹo: chụp / quét trang sách thẳng, đủ sáng, chữ rõ thì app đọc càng chính xác. Chữ đọc được luôn hiện lại để thầy cô sửa trước khi làm slide.</p>
         </div>
         <div class="cloudbox" id="cloudBox">
-          <h3>☁️ Đọc chữ bằng OCR đám mây (OCR.space) — không cần khóa</h3>
-          <p>Khi bấm đọc, app <b>nén ảnh trang sách xuống cạnh dài khoảng 1200px, dạng JPEG dưới 1MB</b> rồi gửi lên <b>máy chủ OCR.space chỉ để đọc chữ</b> (tiếng Việt, bật phóng to và tự xoay ảnh). Mỗi trang thường trả chữ về trong vài giây và hiện dần ngay bên dưới. Thầy cô <b>không cần dán khóa nào cả</b> — app dùng sẵn khóa miễn phí mặc định.</p>
-          <p>Nếu OCR đám mây <b>lỗi mạng, hết lượt miễn phí hoặc trả về rỗng</b>, app sẽ <b>báo rõ lý do ở từng trang</b> và <b>tự chuyển sang OCR trong trình duyệt</b> cho trang đó. File PDF có chữ sẵn vẫn được lấy thẳng chữ, không qua OCR.</p>
+          <h3>☁️ Đọc toàn bộ tài liệu &amp; tóm tắt ý chính (OCR.space) — không cần khóa</h3>
+          <p>Nút đọc bên dưới làm 3 việc: <b>(1)</b> đọc chữ của <b>toàn bộ các trang</b> thầy cô đã đưa vào, <b>(2)</b> <b>làm sạch chữ</b> — bỏ ký tự rác, nối các dòng bị ngắt giữa chừng, bỏ dòng đọc lỗi, <b>(3)</b> <b>tóm tắt thành ý chính</b> của cả tài liệu và của từng trang để dựng dàn ý slide. Khi bấm đọc, app nén ảnh trang sách xuống cạnh dài khoảng <b>2000px</b>, dạng JPEG dưới 1MB rồi gửi lên <b>máy chủ OCR.space chỉ để đọc chữ</b> (tiếng Việt, bật phóng to và tự xoay ảnh). Thầy cô <b>không cần dán khóa nào cả</b> — app dùng sẵn khóa miễn phí mặc định.</p>
+          <p>Nếu một trang <b>đọc ra còn nhiều chữ lỗi</b>, app sẽ <b>tự thử cách đọc khác</b> (bộ đọc thứ hai của OCR.space, rồi OCR trong trình duyệt) và <b>giữ lại bản chữ sạch hơn</b>. Trang nào vẫn chưa rõ, app <b>báo rõ ngay ở trang đó</b> và không lấy câu chữ lỗi làm ý chính hay câu hỏi trò chơi. Nếu OCR đám mây <b>lỗi mạng, hết lượt miễn phí hoặc trả về rỗng</b>, app cũng báo rõ lý do ở từng trang và tự chuyển sang OCR trong trình duyệt. File PDF có chữ sẵn vẫn được lấy thẳng chữ, không qua OCR.</p>
           <label class="fl" for="ocrApiKey">Khóa OCR.space của riêng thầy cô (tuỳ chọn — để trống vẫn chạy bằng khóa mặc định)</label>
           <input type="text" id="ocrApiKey" placeholder="Để trống = dùng khóa miễn phí mặc định của app" autocomplete="off" />
           <p class="hint">Chỉ khi muốn dùng nhiều hơn giới hạn của khóa mặc định, thầy cô mới dán khóa OCR.space miễn phí của riêng mình vào ô này. Khóa chỉ dùng trong lần mở app này để gọi OCR.space, app không lưu lại.</p>
@@ -268,7 +268,7 @@ footer.site b{color:var(--ink)}
         <p style="font-weight:800;margin:14px 0 4px">Đã chọn <span id="bookCount">0</span>/30 trang</p>
         <div class="book-grid" id="bookThumbs"></div>
         <div class="navrow" style="justify-content:flex-start">
-          <button class="btn coral" id="btnOcr" type="button" disabled>☁️ Đọc nhanh bằng OCR đám mây</button>
+          <button class="btn coral" id="btnOcr" type="button" disabled>☁️ Đọc toàn bộ &amp; tóm tắt ý chính</button>
           <button class="btn amber hidden" id="btnStopOcr" type="button">⏹ Dừng và dùng kết quả đã có</button>
           <button class="btn outline" id="btnClearBook" type="button">🗑 Xoá hết ảnh</button>
         </div>
@@ -289,8 +289,11 @@ footer.site b{color:var(--ink)}
         </div>
         <div id="bookResults" class="hidden">
           <hr style="border:none;border-top:2px solid var(--line);margin:20px 0">
-          <h2>✏️ Chữ app đọc được — thầy cô sửa lại nếu đọc sai</h2>
-          <p class="sub">App chỉ phân tích dựa trên đúng chữ đọc được trong ảnh sách, không thêm kiến thức ngoài sách. Trang nào đọc được ít chữ, app sẽ báo rõ để thầy cô gõ thêm ý chính.</p>
+          <h2>📌 Tóm tắt ý chính toàn bộ tài liệu</h2>
+          <p class="sub">App đã đọc toàn bộ các trang, làm sạch chữ rồi tự rút ra những ý chính dưới đây — đây là phần tóm tắt để thầy cô nắm nhanh nội dung trước khi duyệt dàn ý slide ở cuối.</p>
+          <div id="bookSummary"></div>
+          <h2 style="margin-top:22px">✏️ Chữ app đọc được — thầy cô sửa lại nếu đọc sai</h2>
+          <p class="sub">Chữ dưới đây là bản app đã tự làm sạch (bỏ ký tự rác, nối dòng bị ngắt). App chỉ tóm tắt dựa trên đúng chữ đọc được trong ảnh sách, không thêm kiến thức ngoài sách. Trang nào chữ còn lỗi nhiều, app sẽ báo rõ và không lấy câu lỗi làm ý chính — thầy cô sửa chữ hoặc gõ ý chính ngay ở trang đó.</p>
           <div id="bookPages"></div>
           <h2 style="margin-top:20px">🔎 Kết quả phân tích từ sách</h2>
           <label class="fl" for="bookTopic">Tên bài (app đoán từ trang đầu — sửa được)</label>
@@ -497,6 +500,38 @@ function negateFact(s){
  if(!best) return null;
  return str.slice(0,best.pos)+"không "+str.slice(best.pos);
 }
+var VI_VOWEL=/[aàáảãạăắằẳẵặâấầẩẫậeèéẻẽẹêếềểễệiìíỉĩịoòóỏõọôốồổỗộơớờởỡợuùúủũụưứừửữựyỳýỷỹỵđ]/i;
+function junkTokenRatio(s){
+ var words=String(s||"").toLowerCase().match(/[\p{L}]{2,}/gu)||[];
+ if(!words.length) return 1;
+ var junk=0; words.forEach(function(w){ if(!VI_VOWEL.test(w)) junk++; });
+ return junk/words.length;
+}
+function isReadableFact(s,isTitle){
+ var str=String(s||"").replace(/\s+/g," ").trim();
+ var minLen=isTitle?10:18;
+ if(str.length<minLen || str.length>220) return false;
+ /* +, = and % are NOT banned here: real Math facts need them ("3 + 2 = 5").
+    OCR symbol junk is still blocked by the remaining banned glyphs, the
+    letter-ratio check and junkTokenRatio below. */
+ if(/[¬^~`_<>|\\{}\[\]@#$*]/.test(str)) return false;
+ var letters=(str.match(/\p{L}/gu)||[]).length;
+ if(!letters) return false;
+ /* Digits and operators dilute the letter ratio of genuine Math sentences
+    without making them junk, so Math expressions get a lower ratio bar.
+    Junk like "chủ nì . ^ - = Nhớ em nghe" has no digit-operator pattern
+    (and still contains banned ^), so it stays blocked at the normal bar. */
+ var hasMath=/\d\s*[+\-=]\s*\d/.test(str) || /\d\s*%/.test(str);
+ if(letters/str.length<(hasMath?0.42:0.62)) return false;
+ if(junkTokenRatio(str)>0.3) return false;
+ return true;
+}
+function splitFactSentences(s){
+ /* Split a paragraph into single sentences so one hard fragment (e.g. a
+    short "Ví dụ 4 + 3 = 7.") cannot sink the readable sentences around it. */
+ var parts=String(s||"").split(/(?<=[.!?…])\s+/).map(function(x){return x.trim();}).filter(Boolean);
+ return parts.length?parts:[String(s||"").trim()].filter(Boolean);
+}
 function lessonFacts(){
  var groups=[], flat=[];
  var slides=(typeof state!=="undefined" && state.slides)?state.slides:[];
@@ -505,7 +540,12 @@ function lessonFacts(){
   var rawTitle=String(sl.title||"");
   if(rawTitle.indexOf("Mục tiêu")>=0 || rawTitle.indexOf("Tổng kết")>=0 || rawTitle.indexOf("Luyện tập")>=0) return;
   var title=coreTitle(rawTitle)||rawTitle.trim(); if(!title) return;
-  var bullets=parseBullets(sl).slice(0,4);
+  var bullets=[];
+  parseBullets(sl).forEach(function(b){
+   splitFactSentences(b).forEach(function(snt){ if(isReadableFact(snt,false)) bullets.push(snt); });
+  });
+  bullets=bullets.slice(0,4);
+  if(!bullets.length && !isReadableFact(title,true)) return;
   var facts=[], gi=groups.length;
   if(bullets.length){ bullets.forEach(function(b){ facts.push({text:b,fromTitle:false,title:title,groupIndex:gi}); }); }
   else { facts.push({text:title,fromTitle:true,title:title,groupIndex:gi}); }
@@ -666,7 +706,10 @@ function parseBullets(sl){
   var hadBullet=/^[•\-*–]/.test(ln);
   var clean=ln.replace(/^[•\-*–]\s*/,"").trim();
   if(!clean) return;
-  if(!hadBullet && clean.length>115){
+  if(!hadBullet){
+   /* Split every plain paragraph into single sentences (not only long
+      ones), so filtering later drops single bad sentences, not whole
+      paragraphs — e.g. a Math paragraph containing "3 + 2 = 5". */
    clean.split(/(?<=[.!?…])\s+/).forEach(function(snt){ snt=snt.trim(); if(snt) out.push(snt); });
   } else out.push(clean);
  });
@@ -1176,34 +1219,197 @@ $("btnSampleBook").addEventListener("click",async function(){
   if(b1) addBookBlob(b1,"Trang sách mẫu 1");
   if(b2) addBookBlob(b2,"Trang sách mẫu 2");
   renderBookThumbs();
-  toast("Đã nạp 2 trang sách mẫu — bấm “Đọc và phân tích” để xem app đọc nhé!");
+  toast("Đã nạp 2 trang sách mẫu — bấm “Đọc toàn bộ & tóm tắt ý chính” để xem app đọc và tóm tắt nhé!");
   $("btnOcr").focus();
 });
 
-/* ---- Analysis: strictly extractive from OCR text ---- */
-var STOP={}; "là và của các một những được có trong cho với khi này đó thì từ ở trên người ta em anh chị bài học sinh trang sách".split(" ").forEach(function(w){ STOP[w]=1; });
-function sentences(t){ return String(t||"").replace(/\s+/g," ").split(/(?<=[.!?…])\s+/).map(function(s){return s.trim();}).filter(function(s){return s.length>8;}); }
+/* ---- Analysis: clean OCR text, then extractive summary (main ideas) ----
+   Pipeline: cleanOcrText (drop junk chars/lines, rejoin wrapped lines)
+   -> splitSentences -> keep only readable sentences (isReadableSentence)
+   -> score by whole-document word frequency -> top sentences, in doc order.
+   Garbled fragments never become "ý chính", slide bullets or game questions. */
+var STOP={}; "là và của các một những được có trong cho với khi này đó thì từ ở trên người ta em anh chị bài học sinh trang sách nào gì sao thế hãy sau trước không chưa cũng rất mà vì rồi còn lại cùng mỗi từng hết cả chỉ vẫn luôn hay hoặc nhưng tuy dù chúng bạn cô thầy".split(" ").forEach(function(w){ STOP[w]=1; });
+function cleanOcrText(raw){
+  var t=String(raw||"");
+  try{ t=t.normalize("NFC"); }catch(e){}
+  t=t.replace(/\r\n?/g,"\n");
+  t=t.replace(/-\n(?=\p{Ll})/gu,"");
+  var lines=t.split("\n"), kept=[];
+  lines.forEach(function(ln){
+    var s=ln.replace(/[^\p{L}\p{N}\s\.,;:!?…()“”"'\-–—\/]/gu," ");
+    s=s.replace(/\s+/g," ").trim();
+    if(!s) return;
+    var letters=(s.match(/\p{L}/gu)||[]).length;
+    if(letters<2) return;
+    if(s.length>=4 && letters/s.length<0.45) return;
+    kept.push(s);
+  });
+  var merged=[];
+  kept.forEach(function(s){
+    if(merged.length){
+      var prev=merged[merged.length-1];
+      if(!/[.!?…:;”"]$/.test(prev) && /^\p{Ll}/u.test(s) && prev.length+s.length<420){
+        merged[merged.length-1]=prev+" "+s; return;
+      }
+    }
+    merged.push(s);
+  });
+  var out=[];
+  merged.forEach(function(s){ if(out.length && normTxt(out[out.length-1])===normTxt(s)) return; out.push(s); });
+  return out.join("\n").replace(/[ \t]+/g," ").replace(/\s+([.,;:!?…])/g,"$1").trim();
+}
+function readableYield(t){
+  /* How much genuinely readable content a (cleaned) OCR result holds:
+     number of summary-worthy sentences, weighted by their length.
+     Used to decide whether to retry a page with another OCR engine. */
+  var ss=splitSentences(t).filter(isReadableSentence);
+  var n=0; ss.forEach(function(s){ n+=s.length; });
+  return ss.length*10000+n;
+}
+function splitSentences(t){
+  var clean=cleanOcrText(t);
+  if(!clean) return [];
+  var parts=clean.split(/(?<=[.!?…])\s+|\n+/);
+  var out=[];
+  parts.forEach(function(p){
+    var s=String(p||"").replace(/^[•\-–—\s]+/,"").replace(/\s+/g," ").trim();
+    s=s.replace(/^\p{L}\s*[-–—]\s+(?=\p{Lu})/u,"");
+    if(s) out.push(s);
+  });
+  return out;
+}
+function isReadableSentence(s){
+  if(!s) return false;
+  if(s.length<28 || s.length>230) return false;
+  var words=s.split(/\s+/).filter(Boolean);
+  if(words.length<6) return false;
+  var letters=(s.match(/\p{L}/gu)||[]).length;
+  if(!letters) return false;
+  /* Same Math allowance as isReadableFact: this filter never banned +, = or
+     % by glyph, but its plain letter ratio would still drop genuine Math
+     sentences ("Phép cộng viết là 3 + 2 = 5.") from textbook summaries. */
+  var hasMath=/\d\s*[+\-=]\s*\d/.test(s) || /\d\s*%/.test(s);
+  if(letters/s.length<(hasMath?0.45:0.68)) return false;
+  if(junkTokenRatio(s)>0.3) return false;
+  if(!/^[\p{Lu}\p{N}“"«]/u.test(s)) return false;
+  var upper=0; (s.match(/\p{L}/gu)||[]).forEach(function(ch){ if(ch===ch.toUpperCase() && ch!==ch.toLowerCase()) upper++; });
+  if(upper/letters>0.6) return false;
+  return true;
+}
+function docWordFreq(text){
+  var freq={};
+  (String(text||"").toLowerCase().match(/[\p{L}]{3,}/gu)||[]).forEach(function(w){ if(!STOP[w]) freq[w]=(freq[w]||0)+1; });
+  return freq;
+}
+function wordOverlap(a,b){
+  function setOf(s){ var st={}; (String(s||"").toLowerCase().match(/[\p{L}]{3,}/gu)||[]).forEach(function(w){ st[w]=1; }); return st; }
+  var A=setOf(a), B=setOf(b), ka=Object.keys(A), kb=Object.keys(B);
+  if(!ka.length || !kb.length) return 0;
+  var inter=0; ka.forEach(function(w){ if(B[w]) inter++; });
+  return inter/Math.max(ka.length,kb.length);
+}
+function tidySentence(s){
+  var str=String(s||"").replace(/\s+/g," ").trim();
+  if(!str) return "";
+  str=str.charAt(0).toUpperCase()+str.slice(1);
+  if(!/[.!?…]$/.test(str)) str+=".";
+  return str;
+}
+function summarizeSentences(text,maxN,globalFreq){
+  var sents=splitSentences(text).filter(isReadableSentence);
+  if(!sents.length) return [];
+  var freq=globalFreq||docWordFreq(text);
+  var scored=sents.map(function(s,i){
+    var words=s.toLowerCase().match(/[\p{L}]{3,}/gu)||[];
+    var sc=0, seen={};
+    words.forEach(function(w){ if(!STOP[w] && !seen[w]){ sc+=Math.log(1+(freq[w]||0)); seen[w]=1; } });
+    sc=sc/Math.sqrt(Math.max(6,words.length));
+    if(i===0) sc*=1.15;
+    if(/\?$/.test(s)) sc*=1.05;
+    return {s:s,i:i,sc:sc};
+  });
+  var top=scored.slice().sort(function(a,b){ return b.sc-a.sc; }).slice(0,Math.max(1,maxN||3)*2);
+  var picked=[];
+  top.forEach(function(it){
+    if(picked.length>=(maxN||3)) return;
+    var dup=false;
+    for(var k=0;k<picked.length;k++){ if(wordOverlap(picked[k].s,it.s)>0.75){ dup=true; break; } }
+    if(!dup) picked.push(it);
+  });
+  picked.sort(function(a,b){ return a.i-b.i; });
+  return picked.map(function(it){ return tidySentence(it.s); });
+}
+function titleCaseVi(s){
+  return String(s||"").toLowerCase().split(/\s+/).map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(" ");
+}
+function detectHeading(text){
+  var lines=String(text||"").split("\n");
+  for(var li=0;li<lines.length;li++){
+    var words=lines[li].trim().split(/\s+/).filter(Boolean);
+    var run=[], best=[];
+    function flush(){ if(run.length>best.length) best=run.slice(); run=[]; }
+    words.forEach(function(w){
+      var letters=w.match(/\p{L}/gu)||[];
+      var upper=0; letters.forEach(function(ch){ if(ch===ch.toUpperCase() && ch!==ch.toLowerCase()) upper++; });
+      if(letters.length && upper/letters.length>=0.7) run.push(w); else flush();
+    });
+    flush();
+    while(best.length>3 && best[0].length<=3) best.shift();
+    while(best.length>3 && best[best.length-1].length<=3) best.pop();
+    if(best.length>=3){
+      var joined=best.join(" ");
+      if(joined.length>=10 && joined.length<=64 && junkTokenRatio(joined)<=0.34) return titleCaseVi(joined);
+    }
+  }
+  return "";
+}
+function sentences(t){ return splitSentences(t); }
 function firstLine(t){ var ls=String(t||"").split("\n").map(function(s){return s.trim();}).filter(Boolean); return ls.length?ls[0]:""; }
-function pageTitle(t,i){ var fl=firstLine(t); if(fl && fl.length>=6 && fl.length<=70) return fl.replace(/[:：]\s*$/,""); var ss=sentences(t); if(ss.length) return ss[0].slice(0,60)+(ss[0].length>60?"…":""); return "Trang "+(i+1); }
-function mainIdea(t){ var ss=sentences(t); if(!ss.length) return ""; return ss.slice(0,2).join(" ").slice(0,220); }
+function pageTitle(t,i){
+  var h=detectHeading(t); if(h) return h;
+  var sum=summarizeSentences(t,1);
+  if(sum.length) return shortTxt(sum[0].replace(/[.!?…]+$/,""),60);
+  var fl=firstLine(cleanOcrText(t));
+  if(fl && fl.length>=8 && fl.length<=70 && junkTokenRatio(fl)<=0.3) return fl.replace(/[:：]\s*$/,"");
+  return "Trang "+(i+1);
+}
+function mainIdea(t){ return summarizeSentences(t,2).join(" "); }
 function keywords(allText,n){
   var freq={}, words=String(allText||"").toLowerCase().replace(/[^a-zàáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ0-9\s]/gi," ").split(/\s+/);
   words.forEach(function(w){ if(w.length>=4 && !STOP[w]) freq[w]=(freq[w]||0)+1; });
   return Object.keys(freq).sort(function(a,b){ return freq[b]-freq[a]; }).slice(0,n||10);
 }
 function analyzeBook(){
+  bookPages.forEach(function(p){ if(p.text) p.text=cleanOcrText(p.text); });
   var all=bookPages.map(function(p){return p.text||"";}).join("\n");
-  var firstWithText=bookPages.filter(function(p){return (p.text||"").trim();})[0];
-  var topic=firstWithText?pageTitle(firstWithText.text||"",0):((bookPages[0]&&(bookPages[0].manualIdea||bookPages[0].idea))||"Bài học từ sách giáo khoa");
+  var gFreq=docWordFreq(all);
+  var docSummary=summarizeSentences(all,6,gFreq);
+  var topic=detectHeading(all)
+    || (docSummary.length?shortTxt(docSummary[0].replace(/[.!?…]+$/,""),60):"")
+    || ((bookPages[0]&&(bookPages[0].manualIdea||""))||"Bài học từ sách giáo khoa");
   $("bookTopic").value=topic;
   var kws=keywords(all,10);
   $("bookKeywords").innerHTML= kws.length? kws.map(function(k){return '<span class="kw">'+esc(k)+'</span>';}).join("") : '<span class="hint">Chưa tìm thấy từ khoá rõ ràng trong chữ đã đọc.</span>';
+  var sumWrap=$("bookSummary");
+  if(sumWrap){
+    if(docSummary.length){
+      sumWrap.innerHTML='<div class="page-card" style="margin-top:0">'+docSummary.map(function(s){ return '<p style="margin:7px 0;font-weight:600">• '+esc(s)+'</p>'; }).join("")+'</div>';
+    }else{
+      sumWrap.innerHTML='<div class="warn">⚠️ App chưa rút được ý chính rõ ràng từ chữ đã đọc — chữ ở các trang còn lỗi nhiều hoặc quá ít. Thầy cô sửa lại chữ ở từng trang bên dưới, hoặc gõ ý chính từng trang rồi bấm “Dùng ý chính đã gõ để tạo dàn ý ngay”.</div>';
+    }
+  }
   var pw=$("bookPages"); pw.innerHTML="";
   bookPages.forEach(function(p,i){
     if(p.text==null) p.text="";
-    var effIdea=(p.manualIdea||p.idea||mainIdea(p.text||""));
+    var pageSummary=summarizeSentences(p.text||"",4,gFreq);
+    p.pageSummary=pageSummary;
+    var autoIdea=pageSummary.slice(0,2).join(" ");
+    var manual=(p.manualIdea||"").trim();
+    var effIdea=manual||autoIdea;
     p.idea=effIdea;
-    var low=(p.text||"").replace(/\s/g,"").length<40;
+    var charCount=(p.text||"").replace(/\s/g,"").length;
+    var low=charCount<40;
+    var noisy=!low && !manual && !pageSummary.length;
     var srcTxt = p.source==="pdf" ? "📄 Chữ sẵn trong file PDF — app lấy thẳng chữ, không qua OCR."
       : p.source==="cloud" ? "☁️ Đọc bằng OCR đám mây (OCR.space)."
       : p.source==="browser" ? "🖥 Đọc bằng OCR trong trình duyệt (đường dự phòng)."
@@ -1213,25 +1419,29 @@ function analyzeBook(){
     d.innerHTML='<h3>Trang '+(i+1)+(p.name?' · '+esc(p.name):"")+'</h3>'
       +'<p class="srcnote">'+esc(srcTxt)+'</p>'
       +(p.cloudError?'<div class="warn">☁️ OCR đám mây ở trang này chưa được — lý do: '+esc(p.cloudError)+(p.source==="browser"?' App đã tự chuyển sang OCR trong trình duyệt cho trang này.':"")+'</div>':"")
-      +(low?'<div class="warn">⚠️ Trang này app đọc được rất ít chữ hoặc chữ chưa rõ. Thầy cô kiểm tra lại ảnh (chụp thẳng, đủ sáng) hoặc gõ thêm ý chính của trang vào ô bên dưới để dàn ý không bị thiếu.</div>':'<div class="oknote">✓ Đã đọc được '+(p.text||"").replace(/\s/g,"").length+' ký tự ở trang này.</div>')
-      +'<label class="fl">Chữ app đọc được ở trang '+(i+1)+' (sửa được)</label><textarea data-pt="'+i+'" placeholder="Chữ đọc được sẽ hiện ở đây…">'+esc(p.text||"")+'</textarea>'
-      +'<label class="fl">Ý chính của trang '+(i+1)+'</label><input type="text" data-pi="'+i+'" value="'+escA(effIdea)+'" placeholder="Ý chính app rút ra — thầy cô sửa / gõ thêm tại đây">'
+      +(low?'<div class="warn">⚠️ Trang này app đọc được rất ít chữ hoặc chữ chưa rõ. Thầy cô kiểm tra lại ảnh (chụp thẳng, đủ sáng) hoặc gõ thêm ý chính của trang vào ô bên dưới để dàn ý không bị thiếu.</div>'
+        : noisy?'<div class="warn">⚠️ Trang này chữ đọc còn nhiều lỗi nên app chưa rút được ý chính rõ ràng — app không lấy câu chữ lỗi làm ý chính. Thầy cô sửa lại chữ trong ô dưới cho đúng, hoặc gõ thẳng ý chính của trang vào ô “Tóm tắt ý chính”.</div>'
+        :'<div class="oknote">✓ Đã đọc được '+charCount+' ký tự ở trang này và đã làm sạch chữ.</div>')
+      +'<label class="fl">Chữ app đọc được ở trang '+(i+1)+' (đã làm sạch — sửa được)</label><textarea data-pt="'+i+'" placeholder="Chữ đọc được sẽ hiện ở đây…">'+esc(p.text||"")+'</textarea>'
+      +'<label class="fl">Tóm tắt ý chính của trang '+(i+1)+'</label><input type="text" data-pi="'+i+'" value="'+escA(effIdea)+'" placeholder="App tự tóm tắt từ chữ đã đọc — thầy cô sửa / gõ thêm tại đây">'
       +'<p class="hint">Từ khoá của trang: '+((keywords(p.text||"",5).map(function(k){return esc(k);}).join(", "))||"—")+'</p>';
     pw.appendChild(d);
   });
   pw.querySelectorAll("textarea[data-pt]").forEach(function(ta){ ta.addEventListener("input",function(){ var i=parseInt(ta.getAttribute("data-pt"),10); bookPages[i].text=ta.value; }); });
   pw.querySelectorAll("input[data-pi]").forEach(function(inp){ inp.addEventListener("input",function(){ var i=parseInt(inp.getAttribute("data-pi"),10); bookPages[i].idea=inp.value; bookPages[i].manualIdea=inp.value; }); });
-  /* outline: cover + 1 slide per page + summary — bullets are sentences taken from the book text only */
+  /* outline: cover + 1 slide per page + summary — bullets are the page's summary points only */
   bookOutlineData=[{title:topic, body:"Bài học được dựng từ sách giáo khoa — nội dung bám đúng các trang sách thầy cô vừa đưa vào.", note:"Giới thiệu bài: "+topic}];
   bookPages.forEach(function(p,i){
     var eff=(p.manualIdea||p.idea||"");
-    var ss=sentences(p.text||"");
-    var bullets=ss.slice(0,4).map(function(s){return "• "+s;}).join("\n");
+    var pts=(p.pageSummary&&p.pageSummary.length)?p.pageSummary:summarizeSentences(p.text||"",4,gFreq);
+    var bullets=pts.map(function(s){return "• "+s;}).join("\n");
     if(!bullets) bullets="• "+(eff||"Thầy cô gõ thêm ý chính của trang này ở phần trên.");
     var ttl=(p.text||"").trim()?pageTitle(p.text||"",i):(eff?eff.slice(0,60):("Trang "+(i+1)));
-    bookOutlineData.push({title:ttl, body:bullets, note:"Giảng theo nội dung trang "+(i+1)+" trong sách: "+(eff||mainIdea(p.text||""))});
+    bookOutlineData.push({title:ttl, body:bullets, note:"Giảng theo nội dung trang "+(i+1)+" trong sách: "+(eff||"")});
   });
-  bookOutlineData.push({title:"Tổng kết bài học", body:kws.length?("• Các từ khoá cần nhớ: "+kws.join(", ")+".\n• Nhắc lại ý chính của từng trang sách vừa học."):"• Nhắc lại ý chính của từng trang sách vừa học.", note:"Tổng kết: cho học sinh nhắc lại ý chính từng trang và các từ khoá của bài."});
+  var sumBullets=docSummary.slice(0,4).map(function(s){return "• "+s;});
+  if(kws.length) sumBullets.push("• Các từ khoá cần nhớ: "+kws.join(", ")+".");
+  bookOutlineData.push({title:"Tổng kết bài học", body:sumBullets.length?sumBullets.join("\n"):"• Nhắc lại ý chính của từng trang sách vừa học.", note:"Tổng kết: cho học sinh nhắc lại các ý chính trong phần tóm tắt và các từ khoá của bài."});
   renderBookOutline();
 }
 function renderBookOutline(){
@@ -1259,12 +1469,12 @@ function loadImgFromBlob(blob){
 }
 function canvasJpeg(cv,q){ return new Promise(function(res){ cv.toBlob(function(b){ res(b); },"image/jpeg",q); }); }
 async function compressForCloud(blob){
-  /* Nén xuống cạnh dài ~1200px, JPEG dưới 1MB */
+  /* Nén xuống cạnh dài ~2000px (đủ nét cho chữ nhỏ trong sách), JPEG dưới 1MB */
   var loaded=await loadImgFromBlob(blob); var img=loaded.img;
   try{
-    var maxSide=1200, scale=1, w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+    var maxSide=2000, scale=1, w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
     if(Math.max(w,h)>maxSide) scale=maxSide/Math.max(w,h);
-    var qualities=[0.85,0.75,0.65,0.55,0.45,0.35];
+    var qualities=[0.9,0.82,0.75,0.65,0.55,0.45,0.35];
     for(var attempt=0;attempt<3;attempt++){
       var cw=Math.max(1,Math.round(w*scale)), ch=Math.max(1,Math.round(h*scale));
       var cv=document.createElement("canvas"); cv.width=cw; cv.height=ch;
@@ -1291,7 +1501,7 @@ function cloudReason(status,msg,err){
   if(err) return "Lỗi khi gọi OCR đám mây: "+(err.message||String(err));
   return "OCR đám mây không đọc được trang này.";
 }
-async function cloudOcrPage(page,idx,total){
+async function cloudOcrPage(page,idx,total,engine){
   var jpeg=await compressForCloud(page.blob);
   var fd=new FormData();
   fd.append("apikey", getOcrKey());
@@ -1299,6 +1509,7 @@ async function cloudOcrPage(page,idx,total){
   fd.append("isOverlayRequired","false");
   fd.append("scale","true");
   fd.append("detectOrientation","true");
+  if(engine) fd.append("OCREngine", String(engine));
   fd.append("file", jpeg, "trang-sach-"+(idx+1)+".jpg");
   var ctrl=("AbortController" in window)?new AbortController():null;
   ocrAbort=ctrl;
@@ -1375,7 +1586,7 @@ $("btnOcr").addEventListener("click",async function(){
     $("ocrBar").style.width=Math.round(i/total*100)+"%";
     /* PDF có chữ sẵn: lấy thẳng, không qua OCR */
     if(p.pdfText){
-      p.text=p.pdfText; p.source="pdf"; p.cloudError="";
+      p.text=cleanOcrText(p.pdfText); p.source="pdf"; p.cloudError=""; p.lowQuality=false;
       p.idea=p.manualIdea||mainIdea(p.text);
       done++;
       $("ocrDetail").textContent="Trang "+(i+1)+": PDF có chữ sẵn — đã lấy thẳng "+p.text.replace(/\s/g,"").length+" ký tự, không qua OCR.";
@@ -1385,15 +1596,37 @@ $("btnOcr").addEventListener("click",async function(){
       continue;
     }
     /* Đường chính: OCR đám mây */
-    $("ocrDetail").textContent="Trang "+(i+1)+": đang nén ảnh (cạnh dài ~1200px, JPEG dưới 1MB) và gửi lên OCR.space…";
+    $("ocrDetail").textContent="Trang "+(i+1)+": đang nén ảnh (cạnh dài ~2000px, JPEG dưới 1MB) và gửi lên OCR.space…";
     var cloudErr="";
     try{
-      var txt=await cloudOcrPage(p,i,total);
+      var rawTxt=await cloudOcrPage(p,i,total);
       if(ocrStop) break;
-      p.text=txt; p.source="cloud"; p.cloudError="";
+      var bestText=cleanOcrText(rawTxt), bestSource="cloud", bestNote="";
+      var bestY=readableYield(bestText);
+      if(bestY<20000 && bestText.length>120 && !ocrStop){
+        /* Bản đọc đầu rút được quá ít câu rõ nghĩa: thử bộ đọc thứ hai của OCR.space, giữ bản đọc hiểu được nhiều hơn */
+        $("ocrDetail").textContent="Trang "+(i+1)+": bản đọc đầu còn nhiều chữ lỗi — đang thử cách đọc khác trên OCR.space…";
+        try{
+          var raw2=await cloudOcrPage(p,i,total,"2");
+          var c2=cleanOcrText(raw2);
+          if(readableYield(c2)>bestY){ bestText=c2; bestY=readableYield(c2); bestNote=" (đã giữ bản dễ đọc hơn ở lần đọc thứ hai)"; }
+        }catch(e2){ /* giữ bản đọc đầu */ }
+      }
+      if(bestY<20000 && bestText.length>120 && !ocrStop){
+        /* Vẫn ít câu rõ nghĩa: thử OCR trong trình duyệt, giữ bản tốt hơn */
+        $("ocrDetail").textContent="Trang "+(i+1)+": chữ vẫn còn lỗi nhiều — đang thử đọc bằng OCR trong trình duyệt để so bản dễ đọc hơn…";
+        try{
+          var braw=await browserOcrPage(p,i,total);
+          var cb=cleanOcrText(braw||"");
+          if(cb && readableYield(cb)>bestY){ bestText=cb; bestSource="browser"; bestY=readableYield(cb); bestNote=" (OCR đám mây đọc còn lỗi nên app đã đọc lại trong trình duyệt và giữ bản dễ đọc hơn)"; }
+        }catch(e3){ /* giữ bản đám mây */ }
+      }
+      if(ocrStop) break;
+      p.text=bestText; p.source=bestSource; p.cloudError="";
+      p.lowQuality=bestY===0;
       p.idea=p.manualIdea||mainIdea(p.text);
       done++;
-      appendLive(i,"✓ Trang "+(i+1)+" — ☁️ OCR đám mây đọc được "+p.text.replace(/\s/g,"").length+" ký tự.");
+      appendLive(i,"✓ Trang "+(i+1)+" — "+(bestSource==="browser"?"🖥":"☁️")+" đọc được "+p.text.replace(/\s/g,"").length+" ký tự, đã làm sạch chữ."+esc(bestNote)+(p.lowQuality?" Trang này chữ vẫn còn lỗi nhiều — xem cảnh báo ở phần kết quả bên dưới.":""));
     }catch(err){
       cloudErr=(err&&err.message)?err.message:"OCR đám mây không đọc được trang này.";
       p.cloudError=cloudErr;
@@ -1403,7 +1636,8 @@ $("btnOcr").addEventListener("click",async function(){
       try{
         var btxt=await browserOcrPage(p,i,total);
         if(btxt){
-          p.text=btxt; p.source="browser";
+          p.text=cleanOcrText(btxt); p.source="browser";
+          p.lowQuality=readableYield(p.text)===0;
           p.idea=p.manualIdea||mainIdea(p.text);
           done++;
           appendLive(i,"✓ Trang "+(i+1)+" — 🖥 OCR đám mây lỗi ("+esc(cloudErr)+") nên app đã đọc bằng OCR trong trình duyệt: "+p.text.replace(/\s/g,"").length+" ký tự.");
