@@ -1505,7 +1505,11 @@ async function cloudOcrPage(page,idx,total,engine){
   var jpeg=await compressForCloud(page.blob);
   var fd=new FormData();
   fd.append("apikey", getOcrKey());
-  fd.append("language","vie");
+  /* OCR.space dùng mã tiếng Việt vnm (khác mã của Tesseract trong trình duyệt).
+     Engine 1 (lần đọc chính): language=vnm.
+     Engine 2 (lần thử lại): OCREngine=2 kèm language=auto (tự nhận diện, theo tài liệu OCR.space). */
+  var isEngine2=String(engine||"")==="2";
+  fd.append("language", isEngine2?"auto":"vnm");
   fd.append("isOverlayRequired","false");
   fd.append("scale","true");
   fd.append("detectOrientation","true");
