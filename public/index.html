@@ -1,0 +1,1338 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Trợ Lý Slide Mr Quân</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<style>
+:root{
+  --bg:#FFF9F0; --surface:#FFFFFF; --ink:#1E2A32; --muted:#5B6B74; --line:#EADFCB;
+  --teal:#0E7C6B; --teal-d:#0A5F52; --coral:#E4572E; --amber:#F2A007; --sky:#1B7FB8;
+  --green:#3E9B4F; --pink:#D94F7A; --radius:14px;
+  --shadow:0 4px 18px rgba(30,42,50,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#17201F; --surface:#22302D; --ink:#F2EFE6; --muted:#B9C4BE; --line:#3A4A45; --shadow:0 4px 18px rgba(0,0,0,.35); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]),textarea{font-family:inherit}
+button{min-height:44px;cursor:pointer}
+a{color:var(--teal)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 40px}
+.topbar{background:var(--teal);color:#fff}
+.topbar-in{max-width:1120px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:900;font-size:20px;letter-spacing:.2px}
+.brand small{display:block;font-weight:500;font-size:12.5px;opacity:.9}
+.top-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:2px solid transparent;border-radius:10px;padding:10px 18px;font-weight:700;font-size:15px;background:var(--teal);color:#fff;display:inline-flex;align-items:center;gap:8px;justify-content:center;text-decoration:none}
+.btn:hover{background:var(--teal-d)}
+.btn.coral{background:var(--coral)} .btn.coral:hover{background:#C7451F}
+.btn.amber{background:var(--amber);color:#231a00} .btn.amber:hover{background:#D98F00}
+.btn.ghost{background:transparent;border-color:currentColor;color:inherit}
+.btn.white{background:#fff;color:var(--teal-d)}
+.btn.outline{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.outline:hover{border-color:var(--teal);color:var(--teal-d)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{min-height:38px;padding:6px 14px;font-size:14px}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0}
+.step-chip{flex:1;min-width:140px;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;font-weight:700;font-size:14.5px;color:var(--muted);display:flex;align-items:center;gap:9px;min-height:48px}
+.step-chip .n{width:28px;height:28px;border-radius:50%;background:var(--line);color:var(--ink);display:grid;place-items:center;font-weight:900;flex:none}
+.step-chip.on{border-color:var(--teal);color:var(--ink)}
+.step-chip.on .n{background:var(--teal);color:#fff}
+.step-chip.done .n{background:var(--green);color:#fff}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+h1{font-size:26px;margin:0 0 6px;font-weight:900}
+h2{font-size:20px;margin:0 0 10px;font-weight:800}
+h3{font-size:16.5px;margin:0 0 6px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 16px}
+label.fl{display:block;font-weight:700;margin:14px 0 6px;font-size:15px}
+input[type=text],input[type=number],select,textarea{width:100%;border:2px solid var(--line);border-radius:10px;padding:11px 12px;font-size:15.5px;background:var(--surface);color:var(--ink)}
+textarea{min-height:130px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(14,124,107,.3);border-color:var(--teal)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 16px;font-weight:700;font-size:14.5px;color:var(--ink);min-height:44px}
+.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.navrow{display:flex;gap:10px;justify-content:space-between;margin-top:20px;flex-wrap:wrap}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.tpl{border:3px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);cursor:pointer;padding:0;text-align:left;width:100%}
+.tpl.on{border-color:var(--coral);box-shadow:0 0 0 3px rgba(228,87,46,.25)}
+.tpl .prev{aspect-ratio:16/10;display:flex}
+.tpl .meta{padding:10px 12px}
+.tpl .meta b{font-size:15px}
+.tpl .meta span{display:block;color:var(--muted);font-size:13px}
+.cover-mini{flex:1;display:flex;align-items:stretch;width:100%;aspect-ratio:16/10}
+.cover-mini .art{flex:1;min-height:100%}
+.cover-mini .art svg{width:100%;height:100%;display:block}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.game-card{border:2px solid var(--line);border-radius:14px;padding:16px;background:var(--surface)}
+.game-card .ic{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;font-size:26px;color:#fff;margin-bottom:8px}
+.game-card p{color:var(--muted);font-size:14px;margin:4px 0 12px}
+.game-card .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toggle{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.toggle input{width:22px;height:22px;accent-color:var(--teal)}
+.slide-stage{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.slide-view{aspect-ratio:16/9;position:relative;display:flex}
+.slide-view .txt{flex:1.15;padding:5% 5%;display:flex;flex-direction:column;justify-content:center;color:#fff}
+.slide-view .txt h2{font-size:clamp(20px,4.2vw,38px);margin:0 0 8px;line-height:1.2}
+.slide-view .txt p{font-size:clamp(13px,2vw,18px);margin:0;opacity:.95;white-space:pre-line}
+.slide-view .art{flex:1}
+.slide-view .art svg{width:100%;height:100%;display:block}
+.slide-view.content{align-items:stretch}
+.slide-view.content .inner{flex:1;margin:3.2%;background:var(--surface);border-radius:12px;padding:2.6% 3.4%;color:var(--ink);overflow:hidden;display:flex;flex-direction:column;gap:2.2%;position:relative;text-align:left}
+.c-deco{position:absolute;border-radius:50%;pointer-events:none}
+.c-head{display:flex;align-items:flex-start;gap:10px}
+.c-title{color:var(--ink);font-size:clamp(20px,3.6vw,33px);margin:0;line-height:1.15;font-weight:900;flex:1}
+.c-part{flex:none;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,14px);border-radius:999px;padding:4px 12px;margin-top:4px}
+.c-prog{height:7px;border-radius:99px;background:var(--line);overflow:hidden;flex:none}
+.c-prog i{display:block;height:100%;border-radius:99px}
+.c-main{flex:1;display:flex;gap:3%;min-height:0}
+.c-left{flex:1.3;display:flex;flex-direction:column;gap:8px;min-width:0}
+.c-bullet{display:flex;gap:10px;align-items:flex-start;background:rgba(0,0,0,.035);border-radius:10px;padding:8px 11px}
+@media (prefers-color-scheme: dark){.c-bullet{background:rgba(255,255,255,.07)}}
+.c-ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#fff}
+.c-bullet p{margin:0;color:var(--ink);opacity:1;font-size:clamp(14px,2.05vw,19px);line-height:1.35;font-weight:600;white-space:normal;align-self:center}
+.c-hint{border:2.5px dashed var(--amber);border-radius:10px;padding:9px 12px;background:#FFF8E6;color:#5c4300}
+@media (prefers-color-scheme: dark){.c-hint{background:#3d3413;color:#ffe9a8}}
+.c-hint b{display:block;font-size:clamp(13px,1.9vw,17px);margin-bottom:2px}
+.c-hint p{margin:0;color:inherit;opacity:1;font-size:clamp(12px,1.7vw,15.5px);white-space:normal;line-height:1.4}
+.c-art{flex:1;border-radius:10px;overflow:hidden;position:relative;min-width:0}
+.c-art svg{width:100%;height:100%;display:block}
+.c-art .cap{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.5);color:#fff;border-radius:999px;padding:3px 11px;font-size:clamp(10px,1.4vw,13px);font-weight:700}
+.c-remember{flex:none;border-radius:10px;color:#fff;padding:9px 14px;font-size:clamp(13px,1.95vw,18px);line-height:1.35;display:flex;gap:9px;align-items:center}
+.c-remember .star{font-size:1.25em;flex:none}
+.c-remember p{margin:0;color:#fff;opacity:1;white-space:normal;font-size:inherit}
+.thumb .c-art{display:none}
+.thumb .c-title{font-size:8px}
+.thumb .c-part,.thumb .c-hint{display:none}
+.thumb .c-prog{height:2px}
+.thumb .c-bullet{padding:2px 3px;gap:3px;border-radius:3px}
+.thumb .c-ic{width:9px;height:9px;font-size:5px}
+.thumb .c-bullet p{font-size:5px;line-height:1.2}
+.thumb .c-remember{padding:2px 4px;font-size:5px;border-radius:3px}
+.thumb .slide-view.content .inner{margin:2%;padding:4px;gap:2px}
+.slide-view .badge{position:absolute;top:10px;right:12px;background:rgba(0,0,0,.45);color:#fff;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:10px 2px}
+.thumb{flex:none;width:104px;border:3px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;background:var(--surface);padding:0}
+.thumb.on{border-color:var(--coral)}
+.thumb .t{aspect-ratio:16/9}
+.thumb span{display:block;font-size:11.5px;padding:3px 6px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+footer.site{border-top:2px solid var(--line);margin-top:34px;padding:18px 16px;text-align:center;color:var(--muted);font-size:14.5px}
+footer.site b{color:var(--ink)}
+.overlay{position:fixed;inset:0;background:rgba(12,20,18,.72);z-index:60;display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:14px}
+.overlay.open{display:flex}
+.sheet{background:var(--surface);color:var(--ink);border-radius:16px;max-width:760px;width:100%;padding:22px;margin:auto 0;box-shadow:var(--shadow)}
+.sheet.wide{max-width:960px}
+.x{float:right;background:var(--line);border:none;border-radius:50%;width:40px;height:40px;font-size:18px;font-weight:900;color:var(--ink)}
+.scorebar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#FFF3D6;border:2px solid var(--amber);border-radius:12px;padding:10px 14px;font-weight:800;color:#5c4300}
+@media (prefers-color-scheme: dark){.scorebar{background:#3d3413;color:#ffe9a8}}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:13px 15px;font-size:16px;font-weight:600;margin:8px 0}
+.opt:hover{border-color:var(--teal)}
+.opt.right{background:#DFF3E2;border-color:var(--green)}
+.opt.wrong{background:#FBE3DC;border-color:var(--coral)}
+.boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gift{aspect-ratio:1;border:none;border-radius:14px;font-size:44px;color:#fff;min-height:96px}
+.cards-mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mem{aspect-ratio:.85;border:none;border-radius:12px;font-size:14px;font-weight:700;padding:8px;color:#fff;min-height:76px}
+.mem .back{font-size:30px}
+.mem.open{background:var(--surface)!important;color:var(--ink);border:2px solid var(--line)}
+.mem.done{background:#DFF3E2!important;color:#14532d;border:2px solid var(--green)}
+.ladder{display:flex;gap:6px;margin:10px 0}
+.rung{flex:1;text-align:center;padding:8px 2px;border-radius:8px;background:var(--line);font-weight:800;font-size:13px}
+.rung.hit{background:var(--amber)}
+.wheel-wrap{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+#wheel{transition:transform 3.2s cubic-bezier(.15,.9,.25,1)}
+.letters{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.letter{width:40px;height:48px;border-bottom:4px solid var(--teal);display:grid;place-items:center;font-size:24px;font-weight:900}
+.lesson-item{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;flex-wrap:wrap;background:var(--surface)}
+.lesson-item .grow{flex:1;min-width:180px}
+.lesson-item small{color:var(--muted);display:block}
+.present{position:fixed;inset:0;background:#101613;z-index:80;display:none;flex-direction:column}
+.present.open{display:flex}
+.present .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:14px;min-height:0}
+.present .stage .slide-view{width:min(1100px,100%);max-height:100%}
+.present .bar{display:flex;gap:8px;justify-content:center;align-items:center;padding:12px;flex-wrap:wrap;background:#1c2420}
+.present .bar button{background:#2c3833;color:#fff;border:1px solid #46564e}
+.present .bar .btn{background:var(--amber);color:#231a00;border:none}
+.present .note{color:#dfe8e2;text-align:center;padding:0 16px 10px;font-size:15px;background:#1c2420}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:99}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:700;z-index:120;display:none;max-width:92vw;text-align:center}
+.hint{font-size:13.5px;color:var(--muted)}
+.filebtn{display:inline-flex}
+.hidden{display:none!important}
+.kbd-num{font-variant-numeric:tabular-nums}
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:640px){.path-grid{grid-template-columns:1fr}}
+.path-card{border:3px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);text-align:left;width:100%;display:flex;gap:12px;align-items:flex-start;color:var(--ink)}
+.path-card .pic{font-size:34px;line-height:1;flex:none}
+.path-card b{font-size:18px;display:block}
+.path-card span{color:var(--muted);font-size:14px;display:block;margin-top:2px}
+.path-card.on-book{border-color:var(--sky);box-shadow:0 0 0 3px rgba(27,127,184,.22)}
+.path-card.on-lesson{border-color:var(--coral);box-shadow:0 0 0 3px rgba(228,87,46,.22)}
+.dropzone{border:3px dashed var(--sky);border-radius:14px;padding:22px 16px;text-align:center;background:rgba(27,127,184,.06)}
+.dropzone.drag{border-color:var(--coral);background:rgba(228,87,46,.08)}
+.dropzone .big{font-size:40px}
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;margin-top:14px}
+.book-thumb{border:2px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.book-thumb img{width:100%;height:150px;object-fit:cover;display:block;background:#eee}
+.book-thumb .cap{padding:6px 8px;font-weight:800;font-size:13.5px;display:flex;justify-content:space-between;align-items:center}
+.book-thumb .row{display:flex;gap:4px;padding:0 8px 8px}
+.book-thumb .row button{flex:1;min-height:36px;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;font-weight:800}
+.book-thumb .row button.del{color:#fff;background:var(--coral);border-color:var(--coral)}
+.prog{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin:8px 0}
+.prog i{display:block;height:100%;background:var(--sky);width:0;transition:width .3s}
+.page-card{border:2px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;background:var(--surface)}
+.page-card textarea{min-height:110px}
+.warn{background:#FFF3D6;border:2px solid var(--amber);border-radius:10px;padding:10px 12px;font-weight:600;color:#5c4300;margin:8px 0}
+@media (prefers-color-scheme: dark){.warn{background:#3d3413;color:#ffe9a8}}
+.oknote{background:#DFF3E2;border:2px solid var(--green);border-radius:10px;padding:10px 12px;font-weight:600;color:#14532d;margin:8px 0}
+.kw{display:inline-block;background:rgba(14,124,107,.14);border:1.5px solid var(--teal);border-radius:999px;padding:4px 12px;margin:3px 4px 3px 0;font-weight:700;font-size:14px}
+.outline-item{border:2px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.outline-item textarea{min-height:74px}
+.cloudbox{border:2px solid var(--sky);background:rgba(27,127,184,.07);border-radius:12px;padding:14px 16px;margin:16px 0}
+.cloudbox h3{margin-top:0}
+.cloudbox p{margin:6px 0}
+.srcnote{font-weight:700;font-size:13.5px;color:var(--muted);margin:2px 0 6px}
+.live-item{border:2px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;background:var(--surface)}
+.manual-item{border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--surface)}
+.manual-item label{font-weight:700;display:block;margin-bottom:5px;font-size:14.5px}
+</style>
+</head>
+<body>
+<canvas id="confetti" width="0" height="0"></canvas>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">Trợ Lý Slide Mr Quân<small>Tạo bài giảng đẹp trong 4 bước — mở vào làm ngay</small></div>
+    <div class="top-actions">
+      <button class="btn white" id="btnMyLessons" type="button">📚 Bài của tôi (<span id="myCount">1</span>)</button>
+      <button class="btn amber" id="btnNewTop" type="button">＋ Bài mới</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="steps" id="stepsBar" aria-label="Các bước">
+    <button class="step-chip on" data-go="1" type="button"><span class="n">1</span> Nội dung</button>
+    <button class="step-chip" data-go="2" type="button"><span class="n">2</span> Chọn mẫu</button>
+    <button class="step-chip" data-go="3" type="button"><span class="n">3</span> Thêm trò chơi</button>
+    <button class="step-chip" data-go="4" type="button"><span class="n">4</span> Xem &amp; xuất file</button>
+  </nav>
+
+  <!-- STEP 1 -->
+  <section id="view1">
+    <div class="card">
+      <h1>Bước 1 · Nội dung bài giảng</h1>
+      <p class="sub">Chọn một trong hai cách bắt đầu — cả hai đều đưa thầy cô tới dàn ý slide để duyệt trước khi chọn mẫu.</p>
+      <div class="path-grid" role="group" aria-label="Chọn cách tạo nội dung">
+        <button class="path-card on-book" id="tabBook" type="button"><span class="pic">📖</span><span><b>Từ sách giáo khoa</b><span>Chụp / tải ảnh các trang sách lên — app đọc chữ trong ảnh, phân tích ý chính và dựng dàn ý slide bám đúng nội dung sách.</span></span></button>
+        <button class="path-card" id="tabLesson" type="button"><span class="pic">📝</span><span><b>Từ giáo án có sẵn</b><span>Đã có giáo án hoặc dàn ý sẵn? Dán vào đây, app tự chia thành từng trang slide như trước nay.</span></span></button>
+      </div>
+
+      <!-- ===== PATH: TEXTBOOK ===== -->
+      <div id="panelBook">
+        <h2>📖 Từ sách giáo khoa — đưa ảnh trang sách vào</h2>
+        <p class="sub">Bấm để chọn nhiều ảnh cùng lúc, kéo–thả ảnh vào khung, dán ảnh bằng <b>Ctrl+V</b>, hoặc dùng điện thoại chụp thẳng trang sách. Nhận ảnh <b>JPG / PNG</b> và cả <b>file PDF</b> sách giáo khoa (app tự tách PDF thành từng trang; PDF có chữ sẵn thì app lấy thẳng chữ, không qua OCR). Tối đa <b>30 trang</b> cho một bài. Chữ trong ảnh được đọc bằng <b>OCR đám mây</b> — xem khung xanh ngay dưới khung tải ảnh.</p>
+        <div class="dropzone" id="bookDrop" tabindex="0">
+          <div class="big">📚</div>
+          <p style="margin:6px 0 12px"><b>Kéo–thả ảnh trang sách vào đây</b><br><span class="hint">hoặc dùng các nút bên dưới · bấm vào khung rồi nhấn Ctrl+V để dán ảnh</span></p>
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+            <label class="btn sm" for="bookFiles" style="background:var(--sky)">🖼 Chọn nhiều ảnh / PDF</label>
+            <input type="file" id="bookFiles" accept="image/jpeg,image/png,image/jpg,.pdf,application/pdf" multiple class="hidden" />
+            <label class="btn coral sm" for="bookCamera">📷 Chụp trang sách</label>
+            <input type="file" id="bookCamera" accept="image/*" capture="environment" class="hidden" />
+            <button class="btn amber sm" id="btnSampleBook" type="button">⚡ Thử nhanh với 2 trang sách mẫu</button>
+          </div>
+          <p class="hint" style="margin-top:12px">Mẹo: chụp / quét trang sách thẳng, đủ sáng, chữ rõ thì app đọc càng chính xác. Chữ đọc được luôn hiện lại để thầy cô sửa trước khi làm slide.</p>
+        </div>
+        <div class="cloudbox" id="cloudBox">
+          <h3>☁️ Đọc chữ bằng OCR đám mây (OCR.space) — không cần khóa</h3>
+          <p>Khi bấm đọc, app <b>nén ảnh trang sách xuống cạnh dài khoảng 1200px, dạng JPEG dưới 1MB</b> rồi gửi lên <b>máy chủ OCR.space chỉ để đọc chữ</b> (tiếng Việt, bật phóng to và tự xoay ảnh). Mỗi trang thường trả chữ về trong vài giây và hiện dần ngay bên dưới. Thầy cô <b>không cần dán khóa nào cả</b> — app dùng sẵn khóa miễn phí mặc định.</p>
+          <p>Nếu OCR đám mây <b>lỗi mạng, hết lượt miễn phí hoặc trả về rỗng</b>, app sẽ <b>báo rõ lý do ở từng trang</b> và <b>tự chuyển sang OCR trong trình duyệt</b> cho trang đó. File PDF có chữ sẵn vẫn được lấy thẳng chữ, không qua OCR.</p>
+          <label class="fl" for="ocrApiKey">Khóa OCR.space của riêng thầy cô (tuỳ chọn — để trống vẫn chạy bằng khóa mặc định)</label>
+          <input type="text" id="ocrApiKey" placeholder="Để trống = dùng khóa miễn phí mặc định của app" autocomplete="off" />
+          <p class="hint">Chỉ khi muốn dùng nhiều hơn giới hạn của khóa mặc định, thầy cô mới dán khóa OCR.space miễn phí của riêng mình vào ô này. Khóa chỉ dùng trong lần mở app này để gọi OCR.space, app không lưu lại.</p>
+        </div>
+        <p style="font-weight:800;margin:14px 0 4px">Đã chọn <span id="bookCount">0</span>/30 trang</p>
+        <div class="book-grid" id="bookThumbs"></div>
+        <div class="navrow" style="justify-content:flex-start">
+          <button class="btn coral" id="btnOcr" type="button" disabled>☁️ Đọc nhanh bằng OCR đám mây</button>
+          <button class="btn amber hidden" id="btnStopOcr" type="button">⏹ Dừng và dùng kết quả đã có</button>
+          <button class="btn outline" id="btnClearBook" type="button">🗑 Xoá hết ảnh</button>
+        </div>
+        <div id="ocrProgress" class="hidden">
+          <p style="font-weight:700;margin:12px 0 2px" id="ocrStatus">Đang đọc chữ…</p>
+          <div class="prog"><i id="ocrBar"></i></div>
+          <p class="hint" id="ocrDetail"></p>
+          <div id="ocrLive" aria-live="polite"></div>
+        </div>
+        <div id="manualWrap" class="hidden">
+          <hr style="border:none;border-top:2px solid var(--line);margin:20px 0">
+          <h3>✍️ Gõ ý chính từng trang (đường dự phòng — 1 dòng mỗi trang)</h3>
+          <p class="sub">Khi một trang khó đọc hoặc thầy cô muốn chốt ý ngay, gõ 1 dòng ý chính cho trang đó rồi bấm nút bên dưới — app dựng dàn ý ngay từ chữ đã đọc được cộng với các ý chính đã gõ, không chờ đọc lại.</p>
+          <div id="manualIdeas"></div>
+          <div class="navrow" style="justify-content:flex-start">
+            <button class="btn amber" id="btnUseManualIdeas" type="button">✍️ Dùng ý chính đã gõ để tạo dàn ý ngay</button>
+          </div>
+        </div>
+        <div id="bookResults" class="hidden">
+          <hr style="border:none;border-top:2px solid var(--line);margin:20px 0">
+          <h2>✏️ Chữ app đọc được — thầy cô sửa lại nếu đọc sai</h2>
+          <p class="sub">App chỉ phân tích dựa trên đúng chữ đọc được trong ảnh sách, không thêm kiến thức ngoài sách. Trang nào đọc được ít chữ, app sẽ báo rõ để thầy cô gõ thêm ý chính.</p>
+          <div id="bookPages"></div>
+          <h2 style="margin-top:20px">🔎 Kết quả phân tích từ sách</h2>
+          <label class="fl" for="bookTopic">Tên bài (app đoán từ trang đầu — sửa được)</label>
+          <input type="text" id="bookTopic" placeholder="Tên bài học đọc được từ sách" />
+          <label class="fl">Từ khoá quan trọng trong bài</label>
+          <div id="bookKeywords"></div>
+          <h2 style="margin-top:20px">🗂 Dàn ý slide — duyệt và sửa trước khi sang Bước 2</h2>
+          <p class="sub">Mỗi mục dưới đây sẽ thành một trang slide: tiêu đề, các gạch đầu dòng lấy từ chữ trong sách, và lời giảng gợi ý. Sửa thoải mái, xoá mục không cần, hoặc thêm mục mới.</p>
+          <div id="bookOutline"></div>
+          <div class="navrow">
+            <button class="btn outline" id="btnAddOutline" type="button">＋ Thêm mục slide</button>
+            <button class="btn coral" id="btnBookTo2" type="button">Dùng dàn ý này · Sang Bước 2 Chọn mẫu →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PATH: LESSON PLAN (original, unchanged) ===== -->
+      <div id="panelLesson" class="hidden">
+      <h2>📝 Từ giáo án có sẵn</h2>
+      <p class="sub">Nhập chủ đề, chọn cấp học rồi dán giáo án hoặc dàn ý. App tự chia thành từng trang slide cho thầy cô.</p>
+      <label class="fl" for="fTopic">Chủ đề bài học *</label>
+      <input type="text" id="fTopic" placeholder="Ví dụ: Hành trình hạt gạo" />
+      <div class="grid2">
+        <div>
+          <label class="fl">Cấp học / đối tượng</label>
+          <div class="chips" id="levelChips"></div>
+        </div>
+        <div>
+          <label class="fl" for="fPages">Số trang slide</label>
+          <select id="fPages">
+            <option value="8">8 trang</option>
+            <option value="10">10 trang</option>
+            <option value="11" selected>11 trang</option>
+            <option value="12">12 trang</option>
+            <option value="15">15 trang</option>
+            <option value="18">18 trang</option>
+          </select>
+          <label class="fl" for="fSubject">Môn học</label>
+          <select id="fSubject">
+            <option>Tự nhiên &amp; Xã hội</option><option>Tiếng Việt</option><option>Toán</option>
+            <option>Khoa học</option><option>Lịch sử &amp; Địa lí</option><option>Đạo đức</option>
+            <option>Âm nhạc</option><option>Mĩ thuật</option><option>Tin học</option><option>Hoạt động trải nghiệm</option>
+          </select>
+        </div>
+      </div>
+      <label class="fl" for="fOutline">Giáo án / dàn ý (mỗi dòng là một ý chính)</label>
+      <textarea id="fOutline" placeholder="Dán giáo án hoặc dàn ý vào đây. Mỗi dòng sẽ thành một trang nội dung."></textarea>
+      <p class="hint">Hoặc tải file giáo án dạng .txt / .md: <label class="btn outline sm filebtn" for="fFile">📄 Chọn file</label>
+      <input type="file" id="fFile" accept=".txt,.md" class="hidden" /></p>
+      <div class="navrow" style="justify-content:flex-end">
+        <button class="btn coral" id="btnTo2" type="button">Tiếp tục · Chọn mẫu →</button>
+      </div>
+      </div><!-- /panelLesson -->
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section id="view2" class="hidden">
+    <h1>Bước 2 · Chọn mẫu trình bày</h1>
+    <p class="sub">Mỗi mẫu có tranh minh họa phẳng vẽ riêng theo chủ đề. Trang bìa: chữ một bên, tranh một bên. Trang nội dung: tiêu đề ở trên, ý chính có biểu tượng ở bên trái, tranh minh họa của mẫu ở bên phải, hộp “Điểm cần nhớ” ở cuối trang — trang nào cũng đầy đặn, dễ đọc từ máy chiếu.</p>
+    <div class="chips" id="tplFilter" style="margin-bottom:14px"></div>
+    <div class="tpl-grid" id="tplGrid"></div>
+    <div class="navrow">
+      <button class="btn outline" data-back="1" type="button">← Quay lại</button>
+      <button class="btn coral" id="btnTo3" type="button">Tiếp tục · Thêm trò chơi →</button>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section id="view3" class="hidden">
+    <h1>Bước 3 · Thêm trò chơi vào bài</h1>
+    <p class="sub">Bấm <b>Chơi thử ngay</b> để chơi thử từng trò ngay tại đây — chấm đúng/sai, tính điểm, có pháo giấy và âm báo. Trò được bật sẽ chèn vào cuối bài và chơi được ngay khi trình chiếu.</p>
+    <div class="game-grid" id="gameGrid"></div>
+    <div class="navrow">
+      <button class="btn outline" data-back="2" type="button">← Quay lại</button>
+      <button class="btn coral" id="btnTo4" type="button">Tiếp tục · Xem &amp; xuất file →</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section id="view4" class="hidden">
+    <h1>Bước 4 · Xem, sửa và xuất file</h1>
+    <p class="sub">Bấm vào trang thu nhỏ để xem và sửa chữ từng trang. Khi ưng ý, bấm <b>Trình chiếu</b> để dạy thử hoặc <b>Tải PowerPoint</b> để lấy file .pptx thật về máy.</p>
+    <div class="slide-stage"><div id="stageMain"></div></div>
+    <div class="thumbs" id="thumbs"></div>
+    <div class="card" style="margin-top:8px">
+      <h3>Sửa trang đang chọn</h3>
+      <label class="fl" for="eTitle">Tiêu đề trang</label>
+      <input type="text" id="eTitle" />
+      <label class="fl" for="eBody">Nội dung</label>
+      <textarea id="eBody" style="min-height:90px"></textarea>
+      <label class="fl" for="eNote">Lời giảng của thầy cô (hiện khi trình chiếu)</label>
+      <textarea id="eNote" style="min-height:64px"></textarea>
+      <div class="navrow">
+        <button class="btn outline" id="btnAddSlide" type="button">＋ Thêm trang</button>
+        <button class="btn outline" id="btnDelSlide" type="button">🗑 Xoá trang này</button>
+      </div>
+    </div>
+    <div class="navrow">
+      <button class="btn outline" data-back="3" type="button">← Quay lại</button>
+      <span style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="btnPresent" type="button">▶ Trình chiếu</button>
+        <button class="btn amber" id="btnSaveLesson" type="button">💾 Lưu vào Bài của tôi</button>
+        <button class="btn coral" id="btnPptx" type="button">⬇ Tải PowerPoint (.pptx)</button>
+      </span>
+    </div>
+  </section>
+
+  <footer class="site"><b>Mr Quân - Đồng hành cùng giáo viên</b> · Liên hệ: <b>0982.521.721</b></footer>
+</div>
+
+<!-- MY LESSONS -->
+<div class="overlay" id="ovLessons"><div class="sheet">
+  <button class="x" data-close="ovLessons" type="button" aria-label="Đóng">✕</button>
+  <h2>📚 Bài của tôi</h2>
+  <p class="sub">Các bài đã lưu trong lần làm việc này. Bấm Mở để xem lại, sửa tiếp hoặc xuất file. Muốn giữ lâu dài, hãy tải file PowerPoint về máy.</p>
+  <div id="lessonList"></div>
+  <div class="navrow"><button class="btn outline" id="btnExportBak" type="button">⬇ Tải bản sao lưu (.json)</button>
+  <label class="btn outline filebtn" for="fImport">⬆ Nạp bản sao lưu</label><input type="file" id="fImport" accept=".json" class="hidden"></div>
+</div></div>
+
+<!-- GAME PLAYER -->
+<div class="overlay" id="ovGame"><div class="sheet wide">
+  <button class="x" data-close="ovGame" type="button" aria-label="Đóng">✕</button>
+  <h2 id="gTitle">Trò chơi</h2>
+  <div class="scorebar">⭐ Điểm: <span id="gScore" class="kbd-num">0</span> <span id="gMsg" style="font-weight:600"></span></div>
+  <div id="gBody" style="margin-top:14px"></div>
+  <div class="navrow"><button class="btn outline" data-close="ovGame" type="button">Đóng</button>
+  <button class="btn coral" id="gRestart" type="button">↻ Chơi lại</button></div>
+</div></div>
+
+<!-- PRESENTATION -->
+<div class="present" id="presenter">
+  <div class="stage"><div id="pStage" style="width:100%;display:flex;justify-content:center"></div></div>
+  <div class="note" id="pNote"></div>
+  <div class="bar">
+    <button class="btn sm" id="pPrev" type="button">← Trước</button>
+    <span id="pCount" style="color:#fff;font-weight:700"></span>
+    <button class="btn sm" id="pNext" type="button">Tiếp →</button>
+    <button class="btn sm hidden" id="pPlay" type="button">🎮 Chơi ngay</button>
+    <button class="btn sm" id="pExit" type="button" style="background:#E4572E;color:#fff">✕ Thoát</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============ DATA ============ */
+var LEVELS=["Mầm non","Tiểu học","THCS","THPT","Đại học","Doanh nghiệp"];
+var TEMPLATES=[
+ {id:"lua", name:"Đồng Lúa", cat:"Tiểu học", bg:"#F2A007", deep:"#B97A04", art:"rice", desc:"Cánh đồng lúa chín vàng, nông dân Việt gặt lúa"},
+ {id:"bien", name:"Biển Xanh", cat:"Tiểu học", bg:"#1B7FB8", deep:"#0F5E8A", art:"sea", desc:"Thuyền buồm và sóng biển quê hương"},
+ {id:"vutru", name:"Vũ Trụ", cat:"THCS", bg:"#2E4057", deep:"#1D2B3C", art:"space", desc:"Tên lửa, hành tinh và các vì sao"},
+ {id:"rung", name:"Rừng Xanh", cat:"Mầm non", bg:"#3E9B4F", deep:"#2A7038", art:"forest", desc:"Rừng cây, chim muông và nắng sớm"},
+ {id:"sach", name:"Trang Sách", cat:"Tiểu học", bg:"#D94F7A", deep:"#A83459", art:"book", desc:"Sách mở, bút chì và niềm vui đọc sách"},
+ {id:"toan", name:"Số Học Vui", cat:"Tiểu học", bg:"#0E7C6B", deep:"#0A5F52", art:"math", desc:"Con số, hình khối rực rỡ cho giờ Toán"},
+ {id:"que", name:"Quê Hương", cat:"THCS", bg:"#E4572E", deep:"#B03E1D", art:"village", desc:"Đình làng, cây đa và đường làng Việt Nam"},
+ {id:"nhac", name:"Giai Điệu", cat:"Mầm non", bg:"#7A4FA3", deep:"#5B3880", art:"music", desc:"Nốt nhạc bay lên cho giờ Âm nhạc"},
+ {id:"lop", name:"Lớp Học Vui", cat:"Mầm non", bg:"#E8890C", deep:"#B96A05", art:"class", desc:"Lớp học Việt Nam, cô giáo và học trò"},
+ {id:"khoa", name:"Thí Nghiệm", cat:"THPT", bg:"#20736B", deep:"#15524C", art:"science", desc:"Ống nghiệm và khám phá khoa học"},
+ {id:"su", name:"Dòng Sử Việt", cat:"THPT", bg:"#9C6642", deep:"#744A2E", art:"history", desc:"Trống đồng và di sản cha ông"},
+ {id:"tin", name:"Công Nghệ", cat:"Đại học", bg:"#33658A", deep:"#244A66", art:"tech", desc:"Máy tính, mạch điện tử cho thời đại số"}
+];
+var GAMES=[
+ {id:"nhanh", name:"Ai Nhanh Tay Hơn", icon:"⚡", color:"#E4572E", desc:"Trả lời nhanh trong 10 giây, càng nhanh điểm càng cao."},
+ {id:"leo", name:"Leo Đỉnh Tri Thức", icon:"⛰️", color:"#0E7C6B", desc:"Trả lời đúng để leo từng bậc lên đỉnh núi tri thức."},
+ {id:"dungsai", name:"Đúng Hay Sai", icon:"✅", color:"#1B7FB8", desc:"Đọc câu khẳng định và phán đoán Đúng hay Sai."},
+ {id:"hopqua", name:"Hộp Quà Bí Mật", icon:"🎁", color:"#D94F7A", desc:"Mở hộp quà: có câu hỏi, có điểm thưởng bất ngờ."},
+ {id:"latthe", name:"Lật Thẻ Ghi Nhớ", icon:"🃏", color:"#7A4FA3", desc:"Lật thẻ tìm cặp khái niệm — định nghĩa đúng đôi."},
+ {id:"ochu", name:"Giải Ô Chữ", icon:"🔤", color:"#B97A04", desc:"Đọc gợi ý, đoán từ khoá của bài học."},
+ {id:"vongquay", name:"Vòng Quay May Mắn", icon:"🎡", color:"#3E9B4F", desc:"Quay bánh xe chọn điểm và câu hỏi ngẫu nhiên."}
+];
+var QBANK=[
+ {q:"Hạt gạo bắt đầu từ đâu?", a:["Hạt thóc gieo xuống ruộng","Cái bánh chưng","Chợ bán gạo","Nhà máy xay xát"], c:0},
+ {q:"Để lúa lớn, cây lúa cần nhất điều gì?", a:["Nước, nắng và bàn tay chăm sóc","Ti vi và điện thoại","Bóng râm cả ngày","Không cần gì"], c:0},
+ {q:"Khi lúa chín, bông lúa có màu gì?", a:["Vàng óng","Xanh dương","Tím","Đen"], c:0},
+ {q:"Ai là người vất vả trồng lúa ngoài đồng?", a:["Bác nông dân","Phi hành gia","Ca sĩ","Đầu bếp"], c:0},
+ {q:"Câu nói nào nhắc ta quý hạt gạo?", a:["Ai ơi bưng bát cơm đầy, dẻo thơm một hạt đắng cay muôn phần","Ăn xong thì bỏ","Cơm để nguội cũng được","Không cần cảm ơn ai"], c:0},
+ {q:"Thóc sau khi gặt được làm gì tiếp theo?", a:["Phơi khô rồi xay thành gạo","Cất vào tủ lạnh","Đem sơn màu","Trồng xuống biển"], c:0}
+];
+var TF=[
+ {s:"Hạt gạo làm ra từ cây lúa.", t:true},{s:"Cây lúa trồng được ở dưới biển.", t:false},
+ {s:"Bác nông dân phải chăm lúa nhiều tháng mới có hạt gạo.", t:true},{s:"Ta nên lãng phí cơm vì gạo rất dễ làm ra.", t:false},
+ {s:"Bông lúa chín có màu vàng.", t:true}
+];
+var PAIRS=[["Thóc","Hạt còn vỏ trấu"],["Gạo","Hạt đã xay vỏ"],["Bông lúa","Nơi kết hạt của cây lúa"],["Phơi nắng","Làm khô thóc sau gặt"],["Bác nông dân","Người trồng lúa"],["Cơm","Món ăn nấu từ gạo"]];
+var CROSS=[{w:"GẠO",hint:"Hạt trắng nấu thành cơm"},{w:"LÚA",hint:"Cây trồng cho hạt gạo"},{w:"RUỘNG",hint:"Nơi cây lúa mọc"},{w:"THÓC",hint:"Hạt lúa còn vỏ trấu"}];
+
+var SAMPLE={topic:"Hành trình hạt gạo",level:"Tiểu học",subject:"Tự nhiên & Xã hội",pages:11,tpl:"lua",
+ outline:"Hạt gạo đến từ cây lúa\nGieo hạt và nảy mầm\nChăm sóc cây lúa\nLúa chín vàng trên cánh đồng\nBác nông dân gặt lúa\nPhơi thóc và xay thành gạo\nTừ hạt gạo đến bát cơm\nVì sao phải quý trọng hạt gạo",
+ games:["leo","dungsai"]};
+
+function sampleSlides(){
+ var T=SAMPLE.topic;
+ return [
+  {type:"cover",title:T,body:"Môn Tự nhiên & Xã hội · Lớp 3\nCùng khám phá hành trình từ hạt thóc đến bát cơm thơm.",note:"Chào các con! Hôm nay chúng ta cùng theo chân một hạt gạo nhỏ bé xem bạn ấy đã đi qua những chặng đường nào để đến được bát cơm của chúng ta nhé."},
+  {type:"content",title:"Mục tiêu bài học",body:"• Kể được hành trình của hạt gạo từ đồng ruộng đến bát cơm.\n• Nêu được công việc của bác nông dân.\n• Biết quý trọng hạt gạo và công sức lao động.",note:"Đọc mục tiêu cùng cả lớp, nhấn mạnh ý cuối: quý trọng hạt gạo."},
+  {type:"content",title:"Hạt gạo đến từ cây lúa",body:"Hạt gạo không tự nhiên có trong bếp. Gạo được xay ra từ hạt thóc — hạt của cây lúa, loài cây được trồng nhiều ở các cánh đồng Việt Nam.",note:"Hỏi nhanh: Bạn nào đã nhìn thấy cây lúa ngoài đồng rồi?"},
+  {type:"content",title:"Gieo hạt và nảy mầm",body:"Bác nông dân gieo hạt thóc xuống ruộng ngập nước. Nhờ nắng ấm và nước, hạt nứt vỏ, nhú mầm xanh bé xíu.",note:"Cho học sinh xem tranh: mầm lúa non xanh mướt."},
+  {type:"content",title:"Chăm sóc cây lúa",body:"Cây lúa lớn dần nhờ bàn tay chăm sóc: bón phân, làm cỏ, giữ nước cho ruộng. Nhiều tháng trời, bác nông dân lội ruộng bất kể nắng mưa.",note:"Nhấn mạnh sự vất vả: nắng mưa nhiều tháng mới có hạt gạo."},
+  {type:"content",title:"Lúa chín vàng trên cánh đồng",body:"Khi lúa chín, cả cánh đồng nhuộm màu vàng óng. Bông lúa trĩu hạt, cúi đầu như cảm ơn đất trời và người chăm sóc.",note:"Hỏi: Bông lúa cúi đầu nhắc chúng ta điều gì?"},
+  {type:"content",title:"Bác nông dân gặt lúa",body:"Đến mùa gặt, bác nông dân ra đồng từ sớm, cắt từng bó lúa, đập lấy hạt thóc. Ngày nay nhiều nơi đã có máy gặt giúp đỡ.",note:"Kể thêm về ngày mùa rộn ràng ở quê."},
+  {type:"content",title:"Phơi thóc và xay thành gạo",body:"Thóc được phơi nắng cho thật khô, rồi đưa vào máy xay bỏ lớp vỏ trấu. Hạt gạo trắng ngần hiện ra.",note:"Phân biệt: thóc còn vỏ trấu, gạo đã xay vỏ."},
+  {type:"content",title:"Từ hạt gạo đến bát cơm",body:"Gạo vo sạch, nấu với nước thành cơm dẻo thơm. Bát cơm là kết quả của cả một hành trình dài nhiều tháng trời.",note:"Cho lớp nhắc lại nhanh 4 chặng: gieo — chăm — gặt — xay."},
+  {type:"content",title:"Vì sao phải quý trọng hạt gạo?",body:"“Ai ơi bưng bát cơm đầy\nDẻo thơm một hạt, đắng cay muôn phần.”\nMỗi hạt cơm chứa mồ hôi của bác nông dân, nên ta ăn hết suất, không lãng phí.",note:"Dặn dò: từ hôm nay, ăn hết phần cơm của mình nhé."},
+  {type:"content",title:"Tổng kết và dặn dò",body:"• Nhắc lại hành trình hạt gạo: gieo hạt → chăm sóc → gặt → phơi, xay → nấu cơm.\n• Dặn dò: về nhà kể lại cho bố mẹ nghe và luôn ăn hết bát cơm.",note:"Kết thúc bài, chuyển sang phần trò chơi củng cố."}
+ ];
+}
+
+/* ============ STATE ============ */
+var state={step:1, topic:"", level:SAMPLE.level, subject:SAMPLE.subject, pages:11,
+ tplId:"lua", outline:"", games:{leo:true,dungsai:true}, slides:sampleSlides(), cur:0};
+var myLessons=[{name:"Hành trình hạt gạo (bài mẫu)", topic:SAMPLE.topic, level:SAMPLE.level, subject:SAMPLE.subject, pages:11, tplId:"lua", outline:SAMPLE.outline, games:{leo:true,dungsai:true}, slides:sampleSlides()}];
+var tplFilter="Tất cả";
+
+/* ============ ART (flat SVG illustrations) ============ */
+function artSVG(kind, bg){
+ var s="";
+ var open='<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><rect width="400" height="250" fill="'+bg+'"/>';
+ if(kind==="rice"){ s='<circle cx="330" cy="46" r="26" fill="#FFE9A8"/><path d="M0 170 Q100 140 200 165 T400 160 V250 H0 Z" fill="#D98F00"/><path d="M0 200 Q120 178 240 198 T400 195 V250 H0 Z" fill="#B97A04"/>'
+  +[40,90,150,210,270,330].map(function(x){return '<g stroke="#FFE066" stroke-width="4" fill="none"><path d="M'+x+' 250 V'+(185+ (x%3)*8)+'"/><path d="M'+x+' '+(190+(x%3)*8)+' q-14 -16 -22 -14 M'+x+' '+(190+(x%3)*8)+' q14 -16 22 -14"/></g><ellipse cx="'+x+'" cy="'+(178+(x%3)*8)+'" rx="6" ry="12" fill="#FFD43B"/>';}).join("")
+  +'<circle cx="120" cy="150" r="13" fill="#8D5524"/><path d="M100 165 q20 -12 40 0 l6 34 h-52 Z" fill="#1B7FB8"/><path d="M96 148 l24 -14 24 14 -8 4 h-32 Z" fill="#F8E3B0"/>'; }
+ else if(kind==="sea"){ s='<path d="M0 150 Q60 132 120 150 T240 150 T400 148 V250 H0 Z" fill="#0F5E8A"/><path d="M0 185 Q70 168 140 185 T280 185 T400 182 V250 H0 Z" fill="#0A4566"/><circle cx="52" cy="42" r="20" fill="#FFE9A8"/><path d="M180 150 l14 -74 54 74 Z" fill="#FFF7E6"/><path d="M196 150 l4 -52 34 52 Z" fill="#F6C453"/><path d="M150 150 h110 l-14 26 h-80 Z" fill="#8D5524"/><path d="M60 90 q10 -8 20 0 M96 74 q10 -8 20 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>'; }
+ else if(kind==="space"){ s='<g fill="#fff"><circle cx="40" cy="40" r="3"/><circle cx="120" cy="24" r="2"/><circle cx="300" cy="30" r="3"/><circle cx="360" cy="90" r="2"/><circle cx="70" cy="110" r="2"/><circle cx="210" cy="60" r="2"/></g><circle cx="322" cy="180" r="42" fill="#F2A007"/><ellipse cx="322" cy="180" rx="66" ry="16" fill="none" stroke="#F6C453" stroke-width="7"/><path d="M150 190 q-26 -60 10 -112 q14 -20 30 0 q36 52 10 112 Z" fill="#FFF7E6"/><circle cx="175" cy="96" r="13" fill="#1B7FB8"/><path d="M150 190 l-24 26 30 -4 M200 190 l24 26 -30 -4" fill="#E4572E"/><path d="M175 214 q-10 18 0 30 q10 -12 0 -30" fill="#F2A007"/>'; }
+ else if(kind==="forest"){ s='<circle cx="60" cy="44" r="22" fill="#FFE9A8"/><rect y="200" width="400" height="50" fill="#2A7038"/>'
+  +[70,160,250,340].map(function(x,i){return '<rect x="'+(x-6)+'" y="130" width="12" height="76" fill="#8D5524"/><circle cx="'+x+'" cy="'+(105+i*6)+'" r="'+(42-(i%2)*8)+'" fill="'+(i%2?"#57B25E":"#43A047")+'"/>';}).join("")
+  +'<path d="M110 84 q10 -10 20 0 M140 66 q10 -10 20 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="205" cy="222" rx="16" ry="10" fill="#F6C453"/><circle cx="222" cy="216" r="7" fill="#F6C453"/>'; }
+ else if(kind==="book"){ s='<path d="M70 70 q65 -22 130 0 v120 q-65 -22 -130 0 Z" fill="#FFF7E6"/><path d="M330 70 q-65 -22 -130 0 v120 q65 -22 130 0 Z" fill="#FFEFC7"/><rect x="196" y="52" width="8" height="140" fill="#A83459"/><g stroke="#D94F7A" stroke-width="5" stroke-linecap="round"><path d="M92 96 h84 M92 122 h84 M92 148 h60"/></g><path d="M268 176 l64 -64 16 16 -64 64 -22 6 Z" fill="#F2A007"/><circle cx="96" cy="196" r="10" fill="#1B7FB8"/><circle cx="310" cy="52" r="9" fill="#3E9B4F"/>'; }
+ else if(kind==="math"){ s='<g font-family="Verdana" font-weight="bold" fill="#fff"><text x="52" y="96" font-size="64">3</text><text x="150" y="70" font-size="44" fill="#F6C453">+</text><text x="212" y="110" font-size="72" fill="#FFE066">5</text><text x="300" y="76" font-size="44" fill="#F6C453">=</text><text x="330" y="130" font-size="60">8</text></g><rect x="56" y="150" width="56" height="56" rx="8" fill="#E4572E"/><circle cx="180" cy="180" r="30" fill="#F2A007"/><path d="M262 208 l30 -52 30 52 Z" fill="#D94F7A"/><rect x="330" y="160" width="44" height="44" rx="22" fill="#1B7FB8"/>'; }
+ else if(kind==="village"){ s='<circle cx="344" cy="40" r="20" fill="#FFE9A8"/><rect y="196" width="400" height="54" fill="#C96F4A"/><path d="M120 196 q-6 -70 30 -104 M132 196 q10 -52 44 -78" stroke="#2A7038" stroke-width="10" fill="none"/><circle cx="128" cy="86" r="46" fill="#3E9B4F"/><path d="M196 196 v-64 h96 v64 Z" fill="#FFF3D6"/><path d="M186 132 L244 92 L302 132 Z" fill="#A83424"/><rect x="232" y="156" width="24" height="40" fill="#744A2E"/><path d="M20 196 q30 -20 60 0 M320 210 q30 -18 60 0" stroke="#7A9B4F" stroke-width="6" fill="none"/>'; }
+ else if(kind==="music"){ s='<g fill="#fff"><circle cx="90" cy="180" r="14"/><rect x="100" y="96" width="8" height="84"/><circle cx="200" cy="196" r="14"/><rect x="210" y="112" width="8" height="84"/><path d="M100 96 q60 -22 118 0 v22 q-58 -22 -118 0 Z"/></g><g fill="#F6C453"><circle cx="300" cy="90" r="11"/><rect x="308" y="30" width="7" height="60"/><path d="M308 30 q26 6 22 30 q-4 -16 -22 -18 Z"/></g><path d="M52 70 q12 -12 24 0 M340 170 q12 -12 24 0" stroke="#FFE9A8" stroke-width="5" fill="none" stroke-linecap="round"/>'; }
+ else if(kind==="class"){ s='<rect x="36" y="36" width="220" height="130" rx="8" fill="#FFF7E6"/><rect x="48" y="48" width="196" height="106" rx="4" fill="#2A7038"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M66 78 h90 M66 104 h120 M66 130 h70"/></g><circle cx="300" cy="92" r="17" fill="#8D5524"/><path d="M282 112 q18 -10 36 0 l4 44 h-44 Z" fill="#D94F7A"/><rect x="60" y="196" width="120" height="16" rx="4" fill="#8D5524"/><circle cx="86" cy="182" r="12" fill="#6B4423"/><circle cx="140" cy="182" r="12" fill="#4A2F1B"/><path d="M66 196 q20 -12 40 0 M120 196 q20 -12 40 0" fill="#1B7FB8"/>'; }
+ else if(kind==="science"){ s='<path d="M170 40 h60 M185 40 v60 l-42 84 q-6 14 12 14 h90 q18 0 12 -14 l-42 -84 v-60" fill="none" stroke="#fff" stroke-width="9"/><path d="M152 168 h96 l10 16 q6 14 -12 14 h-92 q-18 0 -12 -14 Z" fill="#57C7E3"/><circle cx="180" cy="182" r="6" fill="#fff"/><circle cx="214" cy="176" r="8" fill="#fff"/><path d="M290 70 q26 30 0 52 q-26 -22 0 -52" fill="#F2A007"/><circle cx="86" cy="180" r="24" fill="#D94F7A"/><circle cx="86" cy="180" r="10" fill="#fff"/>'; }
+ else if(kind==="history"){ s='<circle cx="200" cy="118" r="76" fill="#C98A4B"/><circle cx="200" cy="118" r="60" fill="none" stroke="#744A2E" stroke-width="5"/><circle cx="200" cy="118" r="20" fill="#744A2E"/><g stroke="#744A2E" stroke-width="5"><path d="M200 62 v22 M200 152 v22 M144 118 h22 M234 118 h22 M160 78 l16 16 M224 142 l16 16 M240 78 l-16 16 M176 142 l-16 16"/></g><path d="M52 210 q148 -26 296 0" stroke="#F6C453" stroke-width="8" fill="none"/>'; }
+ else { s='<rect x="120" y="60" width="160" height="104" rx="10" fill="#FFF7E6"/><rect x="134" y="74" width="132" height="66" fill="#57C7E3"/><rect x="176" y="146" width="48" height="10" rx="5" fill="#244A66"/><rect x="104" y="176" width="192" height="14" rx="7" fill="#244A66"/><g fill="#F6C453"><circle cx="66" cy="80" r="9"/><circle cx="338" cy="66" r="7"/><circle cx="330" cy="150" r="10"/></g><path d="M66 89 v40 M338 73 v34 M330 160 v26" stroke="#F6C453" stroke-width="4"/>'; }
+ return open+s+"</svg>";
+}
+function tplById(id){ for(var i=0;i<TEMPLATES.length;i++) if(TEMPLATES[i].id===id) return TEMPLATES[i]; return TEMPLATES[0]; }
+var BULLET_ICONS=["🌟","🔎","🧠","✅"];
+function coreTitle(t){ return String(t==null?"":t).replace(/^Phần\s*\d+\s*[:：.]\s*/i,"").trim(); }
+function normTxt(s){ return String(s==null?"":s).toLowerCase().replace(/\s+/g," ").trim().replace(/[\s.•·–—-]+$/,""); }
+function partLabel(sl, idx, total){
+ var m=String(sl.title||"").match(/Phần\s*(\d+)/i);
+ if(m){ var tot=0; return "Phần "+m[1]; }
+ return "Nội dung";
+}
+function parseBullets(sl){
+ var titleN=normTxt(sl.title), coreN=normTxt(coreTitle(sl.title));
+ var lines=String(sl.body==null?"":sl.body).split("\n").map(function(s){return s.trim();}).filter(Boolean);
+ var out=[];
+ lines.forEach(function(ln){
+  var hadBullet=/^[•\-*–]/.test(ln);
+  var clean=ln.replace(/^[•\-*–]\s*/,"").trim();
+  if(!clean) return;
+  if(!hadBullet && clean.length>115){
+   clean.split(/(?<=[.!?…])\s+/).forEach(function(snt){ snt=snt.trim(); if(snt) out.push(snt); });
+  } else out.push(clean);
+ });
+ var seen={}, res=[];
+ out.forEach(function(b){
+  var n=normTxt(b);
+  if(!n || n===titleN || n===coreN || seen[n]) return;
+  seen[n]=1; res.push(b);
+ });
+ return res.slice(0,4);
+}
+function rememberFor(sl, bullets){
+ var core=coreTitle(sl.title)||sl.title||"ý chính của trang này";
+ var txt="";
+ if(bullets && bullets.length) txt=bullets[0];
+ else txt=core;
+ txt=String(txt).replace(/\s+/g," ").trim();
+ if(txt.length>120) txt=txt.slice(0,117).replace(/\s+\S*$/,"")+"…";
+ if(!/[.!?…]$/.test(txt)) txt+=".";
+ return txt;
+}
+function slideHTML(sl, tpl, idx, total){
+ if(sl.type==="cover") return '<div class="slide-view" style="background:'+tpl.bg+'"><div class="txt"><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body)+'</p></div><div class="art">'+artSVG(tpl.art,tpl.bg)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
+ if(sl.type==="game") return '<div class="slide-view" style="background:'+tpl.bg+'"><div class="txt"><h2>🎮 '+esc(sl.title)+'</h2><p>Đến giờ chơi rồi! Bấm nút Chơi ngay để bắt đầu.</p></div><div class="art">'+artSVG(tpl.art,tpl.bg)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
+ var bullets=parseBullets(sl);
+ var pct=Math.max(4,Math.round((idx+1)/Math.max(1,total)*100));
+ var left="";
+ if(bullets.length){
+  left=bullets.map(function(b,i){ return '<div class="c-bullet"><span class="c-ic" style="background:'+(i%2?tpl.deep:tpl.bg)+'">'+BULLET_ICONS[i%BULLET_ICONS.length]+'</span><p>'+esc(b)+'</p></div>'; }).join("");
+  if(bullets.length<3) left+='<div class="c-hint"><b>💡 Trang này còn ít ý</b><p>Thầy cô thêm '+(bullets.length===1?"2":"1")+'–2 ý chính nữa ở ô “Nội dung” bên dưới (mỗi dòng một ý), hoặc thêm một ví dụ / câu hỏi cho học sinh — trang sẽ đầy đặn và dễ dạy hơn.</p></div>';
+ } else {
+  left='<div class="c-hint" style="flex:1;display:flex;flex-direction:column;justify-content:center"><b>✏️ Phần này chưa có ý chính</b><p>Thầy cô bổ sung ở ô “Nội dung” bên dưới, mỗi dòng một ý — ví dụ:</p><p>• Ý chính thứ nhất của phần “'+esc(coreTitle(sl.title)||sl.title)+'”<br>• Một ví dụ hoặc hình ảnh minh họa<br>• Một câu hỏi để học sinh suy nghĩ</p><p style="margin-top:6px">Trong lúc chờ bổ sung, xem tranh minh họa của mẫu ở bên phải để hình dung không khí của phần này nhé.</p></div>';
+ }
+ return '<div class="slide-view content" style="background:'+tpl.bg+'"><div class="inner">'
+  +'<span class="c-deco" style="width:74px;height:74px;right:-26px;top:-26px;background:'+tpl.bg+';opacity:.16"></span>'
+  +'<span class="c-deco" style="width:34px;height:34px;right:34px;top:-14px;background:'+tpl.deep+';opacity:.14"></span>'
+  +'<div class="c-head"><h2 class="c-title">'+esc(sl.title)+'</h2><span class="c-part" style="background:'+tpl.deep+'">'+esc(partLabel(sl,idx,total))+' · Trang '+(idx+1)+'/'+total+'</span></div>'
+  +'<div class="c-prog"><i style="width:'+pct+'%;background:'+tpl.bg+'"></i></div>'
+  +'<div class="c-main"><div class="c-left">'+left+'</div>'
+  +'<div class="c-art art">'+artSVG(tpl.art,tpl.bg)+'<span class="cap">Tranh minh họa · Mẫu '+esc(tpl.name)+'</span></div></div>'
+  +'<div class="c-remember" style="background:'+tpl.deep+'"><span class="star">⭐</span><p><b>Điểm cần nhớ:</b> '+esc(rememberFor(sl,bullets))+'</p></div>'
+  +'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
+}
+function esc(t){ return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ============ SOUND & CONFETTI ============ */
+var AC=null;
+function beep(freq,dur,type){ try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended")AC.resume(); var o=AC.createOscillator(),g=AC.createGain(); o.type=type||"sine"; o.frequency.value=freq; g.gain.setValueAtTime(.18,AC.currentTime); g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+dur); o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+dur);}catch(e){} }
+function sndGood(){ beep(660,.12); setTimeout(function(){beep(880,.2)},110); }
+function sndBad(){ beep(180,.25,"sawtooth"); }
+function sndWin(){ [523,659,784,1046].forEach(function(f,i){ setTimeout(function(){beep(f,.22)},i*120); }); }
+function confetti(){ var c=document.getElementById("confetti"),x=c.getContext("2d"); c.width=innerWidth; c.height=innerHeight;
+ var cols=["#E4572E","#F2A007","#0E7C6B","#1B7FB8","#D94F7A","#3E9B4F"], ps=[];
+ for(var i=0;i<130;i++) ps.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,w:6+Math.random()*7,h:8+Math.random()*8,vy:2.4+Math.random()*3.4,vx:-1.4+Math.random()*2.8,r:Math.random()*Math.PI,vr:-.1+Math.random()*.2,col:cols[i%cols.length]});
+ var t0=Date.now();
+ (function tick(){ var el=Date.now()-t0; x.clearRect(0,0,c.width,c.height);
+  ps.forEach(function(p){ p.y+=p.vy; p.x+=p.vx; p.r+=p.vr; x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle=p.col; x.fillRect(-p.w/2,-p.h/2,p.w,p.h); x.restore(); });
+  if(el<2600) requestAnimationFrame(tick); else { x.clearRect(0,0,c.width,c.height); c.width=0; } })();
+}
+function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.style.display="block"; setTimeout(function(){t.style.display="none"},2800); }
+
+/* ============ STEP NAV ============ */
+function goStep(n){ state.step=n;
+ [1,2,3,4].forEach(function(i){ document.getElementById("view"+i).classList.toggle("hidden", i!==n); });
+ var chips=document.querySelectorAll("#stepsBar .step-chip");
+ chips.forEach(function(ch,i){ ch.classList.toggle("on", i===n-1); ch.classList.toggle("done", i<n-1); });
+ window.scrollTo({top:0,behavior:"smooth"});
+ if(n===4) renderStage();
+}
+document.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click",function(){ syncForm(); goStep(parseInt(b.getAttribute("data-go"),10)); }); });
+document.querySelectorAll("[data-back]").forEach(function(b){ b.addEventListener("click",function(){ goStep(parseInt(b.getAttribute("data-back"),10)); }); });
+document.querySelectorAll("[data-close]").forEach(function(b){ b.addEventListener("click",function(){ document.getElementById(b.getAttribute("data-close")).classList.remove("open"); stopTimers(); }); });
+
+/* ============ STEP 1 ============ */
+var levelWrap=document.getElementById("levelChips");
+LEVELS.forEach(function(lv){ var b=document.createElement("button"); b.type="button"; b.className="chip"+(lv===state.level?" on":""); b.textContent=lv;
+ b.addEventListener("click",function(){ state.level=lv; levelWrap.querySelectorAll(".chip").forEach(function(c){c.classList.remove("on")}); b.classList.add("on"); renderTpls(); });
+ levelWrap.appendChild(b); });
+function fillForm(){ document.getElementById("fTopic").value=state.topic; document.getElementById("fOutline").value=state.outline;
+ document.getElementById("fPages").value=String(state.pages); document.getElementById("fSubject").value=state.subject;
+ levelWrap.querySelectorAll(".chip").forEach(function(c){ c.classList.toggle("on", c.textContent===state.level); }); }
+function syncForm(){ state.topic=document.getElementById("fTopic").value.trim()||"Bài học mới";
+ state.outline=document.getElementById("fOutline").value; state.pages=parseInt(document.getElementById("fPages").value,10)||11;
+ state.subject=document.getElementById("fSubject").value; }
+document.getElementById("fFile").addEventListener("change",function(e){ var f=e.target.files[0]; if(!f) return;
+ var r=new FileReader(); r.onload=function(){ document.getElementById("fOutline").value=String(r.result||"").slice(0,20000); toast("Đã nạp nội dung từ file ✓"); }; r.readAsText(f); });
+document.getElementById("btnNewTop").addEventListener("click",function(){ state.topic=""; state.outline=""; state.slides=[]; state.cur=0; state.games={}; fillForm(); document.getElementById("fTopic").value=""; document.getElementById("fOutline").value=""; renderGames(); goStep(1); document.getElementById("fTopic").focus(); });
+
+function buildSlides(){ syncForm();
+ var lines=state.outline.split("\n").map(function(s){return s.trim()}).filter(Boolean);
+ var slides=[{type:"cover",title:state.topic,body:"Môn "+state.subject+" · "+state.level+"\nBài giảng do thầy cô biên soạn cùng Trợ Lý Slide Mr Quân.",note:"Giới thiệu bài học: "+state.topic}];
+ slides.push({type:"content",title:"Mục tiêu bài học",body:"• Hiểu được nội dung chính của bài: "+state.topic+".\n• Vận dụng kiến thức vào bài tập và cuộc sống.\n• Tích cực tham gia các hoạt động và trò chơi trong giờ học.",note:"Đọc mục tiêu cùng cả lớp trước khi vào bài."});
+ var target=Math.max(3,state.pages-4);
+ lines.slice(0,target).forEach(function(ln,i){ var parts=ln.split(/[:：]/); var t,b;
+  if(parts.length>1){ t=parts[0].trim(); b=parts.slice(1).join(":").trim(); if(normTxt(b)===normTxt(t)||normTxt(b)===normTxt(coreTitle(t))) b=""; }
+  else { t="Phần "+(i+1)+": "+ln.slice(0,42); b=ln.length<=50?"":ln; }
+  slides.push({type:"content",title:t,body:b,note:"Giảng phần: "+t}); });
+ while(slides.length<state.pages-2 && lines.length){ var ln2=lines[slides.length%lines.length]; slides.push({type:"content",title:"Luyện tập thêm",body:ln2+"\nHãy thảo luận nhóm đôi và trình bày trước lớp.",note:"Cho học sinh thảo luận nhóm đôi."}); }
+ var chosen=GAMES.filter(function(g){return state.games[g.id]});
+ chosen.forEach(function(g){ slides.push({type:"game",title:g.name,body:"",note:"Chuyển sang trò chơi "+g.name+" để củng cố bài.",gameId:g.id}); });
+ slides.push({type:"content",title:"Tổng kết và dặn dò",body:"• Nhắc lại những ý chính của bài "+state.topic+".\n• Dặn dò: ôn lại bài ở nhà và chuẩn bị bài tiếp theo.",note:"Tổng kết bài và dặn dò học sinh."});
+ state.slides=slides.slice(0,Math.max(slides.length,3)); state.cur=0;
+}
+document.getElementById("btnTo2").addEventListener("click",function(){ if(!document.getElementById("fTopic").value.trim()){ toast("Thầy cô nhập chủ đề bài học trước nhé!"); document.getElementById("fTopic").focus(); return; } buildSlides(); goStep(2); });
+
+/* ============ STEP 2 ============ */
+var filters=["Tất cả","Mầm non","Tiểu học","THCS","THPT","Đại học","Doanh nghiệp"];
+var fwrap=document.getElementById("tplFilter");
+filters.forEach(function(f){ var b=document.createElement("button"); b.type="button"; b.className="chip"+(f==="Tất cả"?" on":""); b.textContent=f;
+ b.addEventListener("click",function(){ tplFilter=f; fwrap.querySelectorAll(".chip").forEach(function(c){c.classList.remove("on")}); b.classList.add("on"); renderTpls(); }); fwrap.appendChild(b); });
+function renderTpls(){ var grid=document.getElementById("tplGrid"); grid.innerHTML="";
+ TEMPLATES.filter(function(t){ return tplFilter==="Tất cả"||t.cat===tplFilter||t.cat===state.level; }).forEach(function(t){
+  var b=document.createElement("button"); b.type="button"; b.className="tpl"+(t.id===state.tplId?" on":"");
+  b.innerHTML='<span class="cover-mini"><span class="art">'+artSVG(t.art,t.bg)+'</span></span><span class="meta"><b>'+esc(t.name)+(t.id===state.tplId?" · ✓ Đang chọn":"")+'</b><span>'+esc(t.desc)+'</span></span>';
+  b.addEventListener("click",function(){ state.tplId=t.id; renderTpls(); });
+  grid.appendChild(b); });
+ if(!grid.children.length) grid.innerHTML='<p class="sub">Chưa có mẫu cho nhóm này — chọn “Tất cả” để xem mọi mẫu.</p>';
+}
+document.getElementById("btnTo3").addEventListener("click",function(){ goStep(3); });
+
+/* ============ STEP 3 : GAMES ============ */
+function renderGames(){ var grid=document.getElementById("gameGrid"); grid.innerHTML="";
+ GAMES.forEach(function(g){ var d=document.createElement("div"); d.className="game-card";
+  d.innerHTML='<div class="ic" style="background:'+g.color+'">'+g.icon+'</div><h3>'+esc(g.name)+'</h3><p>'+esc(g.desc)+'</p><div class="row"><button class="btn sm" type="button">🎮 Chơi thử ngay</button><label class="toggle"><input type="checkbox" '+(state.games[g.id]?"checked":"")+'/> Chèn vào bài</label></div>';
+  d.querySelector(".btn").addEventListener("click",function(){ openGame(g.id); });
+  d.querySelector("input").addEventListener("change",function(e){ state.games[g.id]=e.target.checked; if(state.step===4||state.slides.length) rebuildGameSlides(); });
+  grid.appendChild(d); });
+}
+function rebuildGameSlides(){ state.slides=state.slides.filter(function(s){return s.type!=="game"});
+ var chosen=GAMES.filter(function(g){return state.games[g.id]});
+ var insertAt=Math.max(1,state.slides.length-1);
+ chosen.forEach(function(g,i){ state.slides.splice(insertAt+i,0,{type:"game",title:g.name,body:"",note:"Chuyển sang trò chơi "+g.name+" để củng cố bài.",gameId:g.id}); });
+ if(state.step===4) renderStage();
+}
+document.getElementById("btnTo4").addEventListener("click",function(){ rebuildGameSlides(); goStep(4); });
+
+/* ============ STEP 4 ============ */
+function renderStage(){ var tpl=tplById(state.tplId); var sl=state.slides[state.cur];
+ if(!sl){ document.getElementById("stageMain").innerHTML='<div class="card">Chưa có trang nào — quay lại Bước 1 và bấm Tiếp tục.</div>'; document.getElementById("thumbs").innerHTML=""; return; }
+ document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length);
+ var th=document.getElementById("thumbs"); th.innerHTML="";
+ state.slides.forEach(function(s,i){ var b=document.createElement("button"); b.type="button"; b.className="thumb"+(i===state.cur?" on":"");
+  b.innerHTML='<div class="t">'+slideHTML(s,tpl,i,state.slides.length)+'</div><span>'+(i+1)+'. '+esc(s.title)+'</span>';
+  b.querySelector(".slide-view").style.aspectRatio="16/9"; b.querySelector(".slide-view").style.fontSize="4px";
+  var art=b.querySelector(".art"); if(art) art.style.display="none"; var tx=b.querySelector(".txt h2"); if(tx) tx.style.fontSize="9px"; var bd=b.querySelector(".badge"); if(bd) bd.style.display="none";
+  b.addEventListener("click",function(){ state.cur=i; renderStage(); });
+  th.appendChild(b); });
+ document.getElementById("eTitle").value=sl.title||""; document.getElementById("eBody").value=sl.body||""; document.getElementById("eNote").value=sl.note||"";
+}
+["eTitle","eBody","eNote"].forEach(function(id){ document.getElementById(id).addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return;
+ sl.title=document.getElementById("eTitle").value; sl.body=document.getElementById("eBody").value; sl.note=document.getElementById("eNote").value;
+ var tpl=tplById(state.tplId); document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length); }); });
+document.getElementById("btnAddSlide").addEventListener("click",function(){ state.slides.splice(state.cur+1,0,{type:"content",title:"Trang mới",body:"Nhập nội dung trang này…",note:""}); state.cur++; renderStage(); });
+document.getElementById("btnDelSlide").addEventListener("click",function(){ if(state.slides.length<=1){ toast("Bài cần ít nhất 1 trang."); return; } state.slides.splice(state.cur,1); state.cur=Math.max(0,state.cur-1); renderStage(); });
+
+/* ---- Presentation ---- */
+var pIdx=0;
+function openPresent(){ pIdx=0; document.getElementById("presenter").classList.add("open"); renderPresent(); }
+function renderPresent(){ var tpl=tplById(state.tplId); var sl=state.slides[pIdx]; if(!sl) return;
+ document.getElementById("pStage").innerHTML=slideHTML(sl,tpl,pIdx,state.slides.length);
+ document.getElementById("pNote").textContent=sl.note?("🎙 Lời giảng: "+sl.note):"";
+ document.getElementById("pCount").textContent="Trang "+(pIdx+1)+" / "+state.slides.length;
+ document.getElementById("pPlay").classList.toggle("hidden", sl.type!=="game");
+ document.getElementById("pPlay").onclick=function(){ if(sl.gameId) openGame(sl.gameId); };
+}
+document.getElementById("btnPresent").addEventListener("click",openPresent);
+document.getElementById("pPrev").addEventListener("click",function(){ if(pIdx>0){pIdx--; renderPresent();} });
+document.getElementById("pNext").addEventListener("click",function(){ if(pIdx<state.slides.length-1){pIdx++; renderPresent();} });
+document.getElementById("pExit").addEventListener("click",function(){ document.getElementById("presenter").classList.remove("open"); });
+document.addEventListener("keydown",function(e){ if(!document.getElementById("presenter").classList.contains("open")) return;
+ if(e.key==="ArrowRight") document.getElementById("pNext").click(); if(e.key==="ArrowLeft") document.getElementById("pPrev").click(); if(e.key==="Escape") document.getElementById("pExit").click(); });
+
+/* ---- Save / My lessons ---- */
+function snapshot(){ return {name:state.topic, topic:state.topic, level:state.level, subject:state.subject, pages:state.pages, tplId:state.tplId, outline:state.outline, games:Object.assign({},state.games), slides:JSON.parse(JSON.stringify(state.slides))}; }
+function loadLesson(L){ state.topic=L.topic; state.level=L.level; state.subject=L.subject; state.pages=L.pages||L.slides.length; state.tplId=L.tplId; state.outline=L.outline||""; state.games=Object.assign({},L.games); state.slides=JSON.parse(JSON.stringify(L.slides)); state.cur=0; fillForm(); renderTpls(); renderGames(); }
+document.getElementById("btnSaveLesson").addEventListener("click",function(){ var s=snapshot();
+ var ex=-1; for(var i=0;i<myLessons.length;i++) if(myLessons[i].topic===s.topic) ex=i;
+ if(ex>=0) myLessons[ex]=s; else myLessons.push(s);
+ document.getElementById("myCount").textContent=myLessons.length; toast("Đã lưu “"+s.topic+"” vào Bài của tôi ✓"); });
+function renderLessonList(){ var w=document.getElementById("lessonList"); w.innerHTML="";
+ if(!myLessons.length) w.innerHTML='<p class="sub">Chưa có bài nào. Tạo bài ở Bước 1 rồi bấm “Lưu vào Bài của tôi” ở Bước 4.</p>';
+ myLessons.forEach(function(L,i){ var d=document.createElement("div"); d.className="lesson-item";
+  d.innerHTML='<div class="grow"><b>'+esc(L.topic)+'</b><small>'+esc(L.subject||"")+' · '+esc(L.level||"")+' · '+L.slides.length+' trang · Mẫu '+esc(tplById(L.tplId).name)+'</small></div>';
+  var open=document.createElement("button"); open.className="btn sm"; open.type="button"; open.textContent="Mở bài";
+  open.addEventListener("click",function(){ loadLesson(L); document.getElementById("ovLessons").classList.remove("open"); goStep(4); });
+  var del=document.createElement("button"); del.className="btn outline sm"; del.type="button"; del.textContent="Xoá";
+  del.addEventListener("click",function(){ myLessons.splice(i,1); document.getElementById("myCount").textContent=myLessons.length; renderLessonList(); });
+  d.appendChild(open); d.appendChild(del); w.appendChild(d); });
+ document.getElementById("myCount").textContent=myLessons.length;
+}
+document.getElementById("btnMyLessons").addEventListener("click",function(){ renderLessonList(); document.getElementById("ovLessons").classList.add("open"); });
+document.getElementById("btnExportBak").addEventListener("click",function(){ var blob=new Blob([JSON.stringify(myLessons,null,2)],{type:"application/json"}); dl(URL.createObjectURL(blob),"bai-cua-toi-mr-quan.json"); });
+document.getElementById("fImport").addEventListener("change",function(e){ var f=e.target.files[0]; if(!f) return; var r=new FileReader();
+ r.onload=function(){ try{ var arr=JSON.parse(String(r.result)); if(Array.isArray(arr)&&arr.length){ myLessons=arr; renderLessonList(); toast("Đã nạp "+arr.length+" bài ✓"); } }catch(err){ toast("File sao lưu không hợp lệ."); } }; r.readAsText(f); });
+function dl(href,name){ var a=document.createElement("a"); a.href=href; a.download=name; document.body.appendChild(a); a.click(); a.remove(); }
+
+/* ---- PowerPoint export ---- */
+function artToPngData(tpl,wIn,hIn){
+ return new Promise(function(resolve){
+  try{
+   var pxW=Math.max(2,Math.round(wIn*200)), pxH=Math.max(2,Math.round(hIn*200));
+   var svg=artSVG(tpl.art,tpl.bg).replace('<svg ','<svg width="'+pxW+'" height="'+pxH+'" ');
+   var url=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml;charset=utf-8"}));
+   var img=new Image();
+   img.onload=function(){
+    try{
+     var cv=document.createElement("canvas"); cv.width=pxW; cv.height=pxH;
+     var cx=cv.getContext("2d"); cx.fillStyle=tpl.bg; cx.fillRect(0,0,pxW,pxH);
+     cx.drawImage(img,0,0,pxW,pxH);
+     URL.revokeObjectURL(url); resolve(cv.toDataURL("image/png"));
+    }catch(e){ URL.revokeObjectURL(url); resolve(null); }
+   };
+   img.onerror=function(){ URL.revokeObjectURL(url); resolve(null); };
+   img.src=url;
+  }catch(e){ resolve(null); }
+ });
+}
+document.getElementById("btnPptx").addEventListener("click",function(){
+ if(typeof PptxGenJS==="undefined"){ toast("Chưa tải được thư viện xuất file — kiểm tra mạng rồi thử lại."); return; }
+ var tplPre=tplById(state.tplId);
+ artToPngData(tplPre,4.08,3.55).then(function(artPng){
+ try{
+  var pptx=new PptxGenJS(); pptx.defineLayout({name:"W",width:13.33,height:7.5}); pptx.layout="W";
+  var tpl=tplById(state.tplId); var bgHex=tpl.bg.replace("#",""), deepHex=tpl.deep.replace("#","");
+  state.slides.forEach(function(sl){
+   var s=pptx.addSlide(); s.background={color:bgHex};
+   if(sl.type==="cover"){ s.addText(sl.title,{x:.6,y:2.1,w:6.6,h:1.9,fontSize:40,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText(sl.body,{x:.6,y:4.1,w:6.4,h:1.4,fontSize:18,color:"FFFFFF",fontFace:"Arial"}); s.addShape(pptx.shapes.RECTANGLE,{x:8,y:1.4,w:4.4,h:4.6,fill:{color:deepHex}}); s.addText("Mẫu: "+tpl.name,{x:8.3,y:3.4,w:3.8,h:.8,fontSize:20,bold:true,color:"FFFFFF",align:"center",fontFace:"Arial"}); }
+   else if(sl.type==="game"){ s.addText("🎮 "+sl.title,{x:.6,y:2.4,w:9,h:1.2,fontSize:36,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText("Trò chơi củng cố — chơi trực tiếp trong app Trợ Lý Slide Mr Quân.",{x:.6,y:3.8,w:9,h:1,fontSize:18,color:"FFFFFF",fontFace:"Arial"}); }
+   else { var sIdx=state.slides.indexOf(sl); var sTotal=state.slides.length;
+    s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.5,y:.5,w:12.33,h:6.5,fill:{color:"FFFFFF"},rectRadius:.15});
+    s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:12.15,y:.18,w:.95,h:.95,fill:{color:deepHex,transparency:70},rectRadius:.45});
+    s.addText(sl.title,{x:.9,y:.68,w:9.2,h:.85,fontSize:29,bold:true,color:"1E2A32",fontFace:"Arial",valign:"middle"});
+    s.addText(partLabel(sl,sIdx,sTotal)+" · Trang "+(sIdx+1)+"/"+sTotal,{x:10.35,y:.78,w:2.1,h:.6,fontSize:12,bold:true,color:deepHex,fontFace:"Arial",align:"right"});
+    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.58,w:11.53,h:.09,fill:{color:"EADFCB"}});
+    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.58,w:Math.max(.5,11.53*(sIdx+1)/Math.max(1,sTotal)),h:.09,fill:{color:bgHex}});
+    var bullets=parseBullets(sl); var glyphs=["★","◆","●","▲"];
+    if(bullets.length){ bullets.forEach(function(b,i){ s.addText(glyphs[i%glyphs.length]+"  "+b,{x:.9,y:1.9+i*.92,w:7.15,h:.88,fontSize:17.5,color:"1E2A32",fontFace:"Arial",valign:"top"}); });
+     if(bullets.length<3) s.addText("Gợi ý: trang còn ít ý — thầy cô thêm 1–2 ý chính nữa cho phần này.",{x:.9,y:1.9+bullets.length*.92,w:7.15,h:.7,fontSize:13,italic:true,color:"8A6D00",fontFace:"Arial"}); }
+    else { s.addText("Phần này chưa có ý chính.\n\nGợi ý hoàn thiện trang:\n• Thêm 2–3 ý chính của phần “"+coreTitle(sl.title)+"”\n• Thêm một ví dụ hoặc hình ảnh minh họa\n• Thêm một câu hỏi để học sinh suy nghĩ",{x:.9,y:1.95,w:7.15,h:3.4,fontSize:16,color:"5B6B74",fontFace:"Arial",valign:"top"}); }
+    if(artPng){ s.addImage({data:artPng,x:8.35,y:1.9,w:4.08,h:3.55}); }
+    else { s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:8.35,y:1.9,w:4.08,h:3.55,fill:{color:deepHex},rectRadius:.1}); s.addText("Tranh minh họa phẳng\nMẫu: "+tpl.name,{x:8.6,y:3.1,w:3.58,h:1.2,fontSize:17,bold:true,color:"FFFFFF",align:"center",fontFace:"Arial"}); }
+    s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.9,y:5.72,w:11.53,h:.82,fill:{color:deepHex},rectRadius:.08});
+    s.addText("★ Điểm cần nhớ: "+rememberFor(sl,bullets),{x:1.1,y:5.82,w:11.13,h:.62,fontSize:15.5,bold:true,color:"FFFFFF",fontFace:"Arial",valign:"middle"});
+   }
+   if(sl.note) s.addNotes(sl.note);
+  });
+  pptx.writeFile({fileName:(state.topic||"bai-giang").replace(/[\\/:*?"<>|]/g,"-")+".pptx"});
+  toast("Đang tạo file PowerPoint… ✓");
+ }catch(err){ toast("Xuất file gặp lỗi — thử lại sau giây lát."); }
+ });
+});
+
+/* ============ GAME ENGINE ============ */
+var gCur=null, gScore=0, timers=[];
+function stopTimers(){ timers.forEach(clearInterval); timers=[]; }
+function openGame(id){ stopTimers(); gCur=id; gScore=0; updScore("");
+ var g=null; GAMES.forEach(function(x){ if(x.id===id) g=x; });
+ document.getElementById("gTitle").textContent=g.icon+" "+g.name;
+ document.getElementById("ovGame").classList.add("open");
+ ({nhanh:playNhanh,leo:playLeo,dungsai:playDungSai,hopqua:playHopQua,latthe:playLatThe,ochu:playOChu,vongquay:playVongQuay})[id]();
+}
+document.getElementById("gRestart").addEventListener("click",function(){ if(gCur) openGame(gCur); });
+function updScore(msg){ document.getElementById("gScore").textContent=gScore; if(msg!=null) document.getElementById("gMsg").textContent=msg; }
+function gBody(html){ document.getElementById("gBody").innerHTML=html; }
+function shuffled(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function finishGame(extra){ sndWin(); confetti(); updScore("🎉 Hoàn thành! "+(extra||"")+" Tổng điểm: "+gScore); }
+function mcqHTML(q){ return '<h3 style="font-size:19px">'+esc(q.q)+'</h3>'+q.a.map(function(t,i){ return '<button class="opt" type="button" data-i="'+i+'">'+esc(t)+'</button>'; }).join(""); }
+function bindMCQ(q,onDone){ document.querySelectorAll("#gBody .opt").forEach(function(b){ b.addEventListener("click",function(){ var i=parseInt(b.getAttribute("data-i"),10);
+ document.querySelectorAll("#gBody .opt").forEach(function(x){ x.disabled=true; });
+ if(i===q.c){ b.classList.add("right"); gScore+=10; sndGood(); updScore("Đúng rồi! +10 điểm 🎉"); confetti(); }
+ else { b.classList.add("wrong"); document.querySelectorAll("#gBody .opt")[q.c].classList.add("right"); sndBad(); updScore("Chưa đúng — đáp án đúng đã được tô xanh."); }
+ setTimeout(onDone,1300); }); }); }
+
+function playNhanh(){ var qs=shuffled(QBANK).slice(0,4), idx=0;
+ function next(){ if(idx>=qs.length){ finishGame("Bạn trả lời đúng tốc độ thật ấn tượng!"); gBody('<h3>🏁 Hết lượt!</h3><p>Bạn được <b>'+gScore+' điểm</b>. Bấm Chơi lại để thử phá kỷ lục nhé.</p>'); return; }
+  var q=qs[idx], left=10; gBody('<p class="hint">Câu '+(idx+1)+'/'+qs.length+' · ⏱ Còn <b id="tLeft">10</b> giây — trả lời càng nhanh điểm càng cao!</p>'+mcqHTML(q));
+  var iv=setInterval(function(){ left--; var el=document.getElementById("tLeft"); if(el) el.textContent=left;
+   if(left<=0){ clearInterval(iv); document.querySelectorAll("#gBody .opt").forEach(function(x){x.disabled=true}); sndBad(); updScore("Hết giờ! Nhanh tay hơn ở câu sau nhé."); idx++; setTimeout(next,1100); } },1000);
+  timers.push(iv);
+  document.querySelectorAll("#gBody .opt").forEach(function(b){ b.addEventListener("click",function(){ clearInterval(iv); var i=parseInt(b.getAttribute("data-i"),10);
+   document.querySelectorAll("#gBody .opt").forEach(function(x){x.disabled=true});
+   if(i===q.c){ var bonus=Math.max(0,left); b.classList.add("right"); gScore+=10+bonus; sndGood(); updScore("Đúng và nhanh! +"+(10+bonus)+" điểm 🎉"); confetti(); }
+   else { b.classList.add("wrong"); document.querySelectorAll("#gBody .opt")[q.c].classList.add("right"); sndBad(); updScore("Chưa đúng rồi."); }
+   idx++; setTimeout(next,1200); }); });
+ }
+ next(); }
+
+function playLeo(){ var qs=shuffled(QBANK).slice(0,5), idx=0;
+ function draw(){ var rungs=qs.map(function(_,i){ return '<div class="rung'+(i<idx?" hit":"")+'">Bậc '+(i+1)+(i===qs.length-1?" 🏔":"")+'</div>'; }).join("");
+  if(idx>=qs.length){ gBody('<div class="ladder">'+rungs+'</div><h3>🏔 Đã lên đỉnh!</h3><p>Bạn chinh phục đủ '+qs.length+' bậc tri thức với <b>'+gScore+' điểm</b>.</p>'); finishGame(); return; }
+  gBody('<div class="ladder">'+rungs+'</div><p class="hint">Trả lời đúng để leo lên bậc tiếp theo.</p>'+mcqHTML(qs[idx]));
+  bindMCQ(qs[idx],function(){ idx++; draw(); }); }
+ draw(); }
+
+function playDungSai(){ var qs=shuffled(TF), idx=0;
+ function next(){ if(idx>=qs.length){ gBody('<h3>🏁 Hết câu!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); return; }
+  var it=qs[idx]; gBody('<p class="hint">Câu '+(idx+1)+'/'+qs.length+'</p><h3 style="font-size:20px">“'+esc(it.s)+'”</h3><button class="opt" type="button" data-v="1">✔ ĐÚNG</button><button class="opt" type="button" data-v="0">✘ SAI</button>');
+  document.querySelectorAll("#gBody .opt").forEach(function(b){ b.addEventListener("click",function(){ var v=b.getAttribute("data-v")==="1";
+   document.querySelectorAll("#gBody .opt").forEach(function(x){x.disabled=true});
+   if(v===it.t){ b.classList.add("right"); gScore+=10; sndGood(); updScore("Chính xác! +10 điểm 🎉"); confetti(); }
+   else { b.classList.add("wrong"); sndBad(); updScore("Chưa đúng — câu này là "+(it.t?"ĐÚNG":"SAI")+"."); }
+   idx++; setTimeout(next,1200); }); }); }
+ next(); }
+
+function playHopQua(){ var opened=0, total=6, qs=shuffled(QBANK);
+ var kinds=shuffled(["q","q","q","bonus","bonus","q"]);
+ gBody('<p class="hint">Có 6 hộp quà: một số hộp chứa câu hỏi (+10 điểm), một số chứa điểm thưởng bất ngờ. Mở hết các hộp nhé!</p><div class="boxes">'+kinds.map(function(k,i){ return '<button class="gift" type="button" data-i="'+i+'" style="background:'+["#E4572E","#0E7C6B","#1B7FB8","#D94F7A","#F2A007","#7A4FA3"][i]+'">🎁</button>'; }).join("")+'</div><div id="giftQ" style="margin-top:14px"></div>');
+ document.querySelectorAll(".gift").forEach(function(b){ b.addEventListener("click",function(){ if(b.disabled) return; b.disabled=true; var i=parseInt(b.getAttribute("data-i"),10);
+  if(kinds[i]==="bonus"){ var pts=5+Math.floor(Math.random()*11); b.textContent="⭐"; gScore+=pts; sndGood(); updScore("Hộp may mắn! +"+pts+" điểm 🎉"); confetti(); opened++; check(); }
+  else { b.textContent="❓"; var q=qs[opened%qs.length]; var w=document.getElementById("giftQ"); w.innerHTML=mcqHTML(q);
+   w.querySelectorAll(".opt").forEach(function(ob){ ob.addEventListener("click",function(){ var oi=parseInt(ob.getAttribute("data-i"),10);
+    w.querySelectorAll(".opt").forEach(function(x){x.disabled=true});
+    if(oi===q.c){ ob.classList.add("right"); gScore+=10; sndGood(); updScore("Đúng rồi! +10 điểm 🎉"); confetti(); } else { ob.classList.add("wrong"); w.querySelectorAll(".opt")[q.c].classList.add("right"); sndBad(); updScore("Chưa đúng rồi."); }
+    opened++; setTimeout(function(){ w.innerHTML=""; check(); },1100); }); }); }
+  }); });
+ function check(){ if(opened>=total){ setTimeout(function(){ gBody('<h3>🎉 Đã mở hết quà!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); },600); } }
+}
+
+function playLatThe(){ var cards=shuffled(PAIRS.flatMap(function(p,i){ return [{t:p[0],pair:i,term:true},{t:p[1],pair:i,term:false}]; }));
+ var open=[], done=0;
+ gBody('<p class="hint">Lật 2 thẻ: một thẻ khái niệm và một thẻ định nghĩa đúng của nó sẽ thành một cặp. Tìm đủ '+PAIRS.length+' cặp!</p><div class="cards-mem">'+cards.map(function(c,i){ return '<button class="mem" type="button" data-i="'+i+'" style="background:#7A4FA3"><span class="back">?</span><span class="face hidden">'+esc(c.t)+'</span></button>'; }).join("")+'</div>');
+ document.querySelectorAll(".mem").forEach(function(b){ b.addEventListener("click",function(){ if(b.classList.contains("open")||b.classList.contains("done")||open.length>=2) return;
+  b.classList.add("open"); b.querySelector(".back").classList.add("hidden"); b.querySelector(".face").classList.remove("hidden"); open.push(b);
+  if(open.length===2){ var A=cards[parseInt(open[0].getAttribute("data-i"),10)], B=cards[parseInt(open[1].getAttribute("data-i"),10)];
+   if(A.pair===B.pair && A.term!==B.term){ open.forEach(function(x){ x.classList.remove("open"); x.classList.add("done"); }); gScore+=10; sndGood(); updScore("Tìm được một cặp! +10 điểm 🎉"); confetti(); done++; open=[];
+    if(done>=PAIRS.length){ setTimeout(function(){ gBody('<h3>🏆 Thắng rồi!</h3><p>Bạn tìm đủ '+PAIRS.length+' cặp với <b>'+gScore+' điểm</b>.</p>'); finishGame(); },700); } }
+   else { var o=open.slice(); open=[]; sndBad(); updScore("Chưa phải một cặp — nhớ vị trí nhé!"); setTimeout(function(){ o.forEach(function(x){ x.classList.remove("open"); x.querySelector(".back").classList.remove("hidden"); x.querySelector(".face").classList.add("hidden"); }); },900); } }
+  }); });
+}
+
+function playOChu(){ var items=shuffled(CROSS), idx=0, tries=0;
+ function next(){ if(idx>=items.length){ gBody('<h3>🏆 Giải xong ô chữ!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); return; }
+  var it=items[idx]; tries=0;
+  gBody('<p class="hint">Từ '+(idx+1)+'/'+items.length+' · Gợi ý: <b>'+esc(it.hint)+'</b> ('+it.w.length+' chữ cái)</p><div class="letters">'+it.w.split("").map(function(_,i){ return '<div class="letter" id="L'+i+'"></div>'; }).join("")+'</div><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="text" id="cwIn" placeholder="Nhập đáp án…" style="flex:1;min-width:180px;text-transform:uppercase"><button class="btn coral" id="cwGo" type="button">Kiểm tra</button><button class="btn outline" id="cwHint" type="button">Gợi ý 1 chữ (−2 điểm)</button></div>');
+  document.getElementById("cwGo").addEventListener("click",check);
+  document.getElementById("cwIn").addEventListener("keydown",function(e){ if(e.key==="Enter") check(); });
+  document.getElementById("cwHint").addEventListener("click",function(){ for(var i=0;i<it.w.length;i++){ var el=document.getElementById("L"+i); if(el && !el.textContent){ el.textContent=it.w[i]; gScore=Math.max(0,gScore-2); updScore("Đã mở 1 chữ (−2 điểm)."); beep(520,.1); break; } } });
+  function check(){ var v=(document.getElementById("cwIn").value||"").trim().toUpperCase(); tries++;
+   if(v===it.w){ it.w.split("").forEach(function(ch,i){ document.getElementById("L"+i).textContent=ch; }); gScore+=15; sndGood(); updScore("Đúng rồi! +15 điểm 🎉"); confetti(); idx++; setTimeout(next,1200); }
+   else { sndBad(); updScore(tries>=2?"Chưa đúng. Đáp án là: "+it.w+" — sang từ tiếp theo nhé.":"Chưa đúng, thử lại nào!"); if(tries>=2){ it.w.split("").forEach(function(ch,i){ document.getElementById("L"+i).textContent=ch; }); idx++; setTimeout(next,1400); } } }
+ }
+ next(); }
+
+function playVongQuay(){ var rounds=0;
+ gBody('<div class="wheel-wrap"><div style="position:relative;width:230px;height:230px;flex:none"><div style="position:absolute;left:50%;top:-6px;transform:translateX(-50%);z-index:2;font-size:26px">▼</div><svg id="wheel" width="230" height="230" viewBox="0 0 200 200">'
+  +[0,1,2,3,4,5].map(function(i){ var cols=["#E4572E","#F2A007","#0E7C6B","#1B7FB8","#D94F7A","#3E9B4F"]; var a1=i*60*Math.PI/180, a2=(i+1)*60*Math.PI/180;
+    var x1=100+92*Math.cos(a1),y1=100+92*Math.sin(a1),x2=100+92*Math.cos(a2),y2=100+92*Math.sin(a2);
+    var tx=100+58*Math.cos(a1+Math.PI/6),ty=100+58*Math.sin(a1+Math.PI/6);
+    return '<path d="M100 100 L'+x1.toFixed(1)+' '+y1.toFixed(1)+' A92 92 0 0 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+' Z" fill="'+cols[i]+'"/><text x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'" fill="#fff" font-size="17" font-weight="bold" text-anchor="middle">'+( [5,10,15,20,25,30][i] )+'</text>'; }).join("")
+  +'<circle cx="100" cy="100" r="17" fill="#fff"/></svg></div><div style="flex:1;min-width:220px"><p class="hint">Quay để nhận mức điểm, sau đó trả lời 1 câu hỏi: đúng thì nhận trọn điểm, sai nhận một nửa. Chơi 3 vòng!</p><button class="btn coral" id="spinBtn" type="button">🎡 Quay ngay</button><div id="spinQ" style="margin-top:12px"></div></div></div>');
+ var rot=0, pts=[5,10,15,20,25,30];
+ document.getElementById("spinBtn").addEventListener("click",function(){ if(rounds>=3) return; this.disabled=true;
+  var seg=Math.floor(Math.random()*6); rot+=1440+seg*60+Math.floor(Math.random()*30);
+  var w=document.getElementById("wheel"); w.style.transform="rotate("+rot+"deg)"; beep(440,.15);
+  var prize=pts[(6-(seg%6))%6];
+  setTimeout(function(){ updScore("Vòng quay dừng ở mức "+prize+" điểm! Trả lời câu hỏi nhé."); sndGood();
+   var q=shuffled(QBANK)[0]; var wq=document.getElementById("spinQ"); wq.innerHTML=mcqHTML(q);
+   wq.querySelectorAll(".opt").forEach(function(b){ b.addEventListener("click",function(){ var i=parseInt(b.getAttribute("data-i"),10);
+    wq.querySelectorAll(".opt").forEach(function(x){x.disabled=true});
+    if(i===q.c){ b.classList.add("right"); gScore+=prize; sndGood(); updScore("Đúng! Nhận trọn "+prize+" điểm 🎉"); confetti(); }
+    else { b.classList.add("wrong"); wq.querySelectorAll(".opt")[q.c].classList.add("right"); var half=Math.floor(prize/2); gScore+=half; sndBad(); updScore("Chưa đúng — nhận "+half+" điểm an ủi."); }
+    rounds++; setTimeout(function(){ wq.innerHTML=""; var sb=document.getElementById("spinBtn"); if(rounds>=3){ gBody('<h3>🏁 Hết 3 vòng quay!</h3><p>Tổng điểm: <b>'+gScore+'</b>.</p>'); finishGame(); } else if(sb){ sb.disabled=false; sb.textContent="🎡 Quay vòng "+(rounds+1); } },1300); }); });
+  },3400); });
+}
+
+/* ============ INIT ============ */
+fillForm(); renderTpls(); renderGames(); renderLessonList();
+</script>
+<script>
+"use strict";
+/* ============ STEP 1 · TEXTBOOK PATH (OCR) ============ */
+var bookPages=[]; /* {url, blob, name, text, idea, manualIdea, pdfText, source, cloudError} */
+var bookOutlineData=[]; /* {title, body, note} */
+var MAXP=30;
+function $(id){ return document.getElementById(id); }
+function escA(s){ return esc(s).replace(/"/g,"&quot;"); }
+function showPath(which){
+  var isBook = which==="book";
+  $("panelBook").classList.toggle("hidden", !isBook);
+  $("panelLesson").classList.toggle("hidden", isBook);
+  $("tabBook").classList.toggle("on-book", isBook);
+  $("tabLesson").classList.toggle("on-lesson", !isBook);
+}
+$("tabBook").addEventListener("click",function(){ showPath("book"); });
+$("tabLesson").addEventListener("click",function(){ showPath("lesson"); });
+
+function pageSourceLabel(p){
+  if(p.source==="pdf") return "✓ chữ sẵn trong PDF";
+  if(p.source==="cloud") return "✓ đã đọc · đám mây";
+  if(p.source==="browser") return "✓ đã đọc · trong máy";
+  if(p.source==="failed") return "⚠ chưa đọc được";
+  if(p.pdfText) return "✓ chữ sẵn trong PDF";
+  return p.text!=null?"✓ đã đọc":"";
+}
+function renderManualIdeas(){
+  var wrap=$("manualWrap"); if(!wrap) return;
+  if(!bookPages.length){ wrap.classList.add("hidden"); $("manualIdeas").innerHTML=""; return; }
+  wrap.classList.remove("hidden");
+  var w=$("manualIdeas"); w.innerHTML="";
+  bookPages.forEach(function(p,i){
+    var d=document.createElement("div"); d.className="manual-item";
+    d.innerHTML='<label for="mi'+i+'">Ý chính trang '+(i+1)+(p.name?' · '+esc(p.name):"")+'</label><input type="text" id="mi'+i+'" data-mi="'+i+'" placeholder="Gõ 1 dòng ý chính của trang '+(i+1)+'…" value="'+escA(p.manualIdea||"")+'">';
+    w.appendChild(d);
+  });
+  w.querySelectorAll("input[data-mi]").forEach(function(inp){ inp.addEventListener("input",function(){ var i=parseInt(inp.getAttribute("data-mi"),10); bookPages[i].manualIdea=inp.value; bookPages[i].idea=inp.value; }); });
+}
+function renderBookThumbs(){
+  $("bookCount").textContent=bookPages.length;
+  if(!ocrRunning) $("btnOcr").disabled = bookPages.length===0;
+  var w=$("bookThumbs"); w.innerHTML="";
+  bookPages.forEach(function(p,i){
+    var d=document.createElement("div"); d.className="book-thumb";
+    d.innerHTML='<img src="'+p.url+'" alt="Trang sách '+(i+1)+'"><div class="cap"><span>Trang '+(i+1)+'</span><span>'+esc(pageSourceLabel(p))+'</span></div><div class="row"><button type="button" data-a="left" aria-label="Chuyển trái">←</button><button type="button" data-a="right" aria-label="Chuyển phải">→</button><button type="button" data-a="del" class="del" aria-label="Xoá trang">✕</button></div>';
+    d.querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){
+      var a=b.getAttribute("data-a");
+      if(a==="del"){ URL.revokeObjectURL(bookPages[i].url); bookPages.splice(i,1); }
+      else if(a==="left" && i>0){ var t=bookPages[i-1]; bookPages[i-1]=bookPages[i]; bookPages[i]=t; }
+      else if(a==="right" && i<bookPages.length-1){ var t2=bookPages[i+1]; bookPages[i+1]=bookPages[i]; bookPages[i]=t2; }
+      renderBookThumbs();
+    }); });
+    w.appendChild(d);
+  });
+  renderManualIdeas();
+}
+function addBookBlob(blob,name,opts){
+  if(bookPages.length>=MAXP){ toast("Tối đa 30 trang cho một bài — đã đủ 30 trang rồi ạ."); return false; }
+  opts=opts||{};
+  var pdfText=opts.pdfText||null;
+  bookPages.push({url:URL.createObjectURL(blob), blob:blob, name:name||("Trang "+(bookPages.length+1)), text:pdfText?pdfText:null, idea:"", manualIdea:"", pdfText:pdfText, source:pdfText?"pdf":null, cloudError:""});
+  return true;
+}
+async function addPdf(file){
+  if(typeof pdfjsLib==="undefined"){ toast("Chưa tải được thư viện đọc PDF — thầy cô chụp ảnh từng trang sách giúp em nhé."); return; }
+  try{
+    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+    var buf=await file.arrayBuffer();
+    var pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    var n=Math.min(pdf.numPages, MAXP-bookPages.length);
+    var withText=0;
+    for(var i=1;i<=n;i++){
+      var page=await pdf.getPage(i);
+      var pdfText=null;
+      try{
+        var tc=await page.getTextContent();
+        var raw=(tc.items||[]).map(function(it){ return it.str||""; }).join(" ").replace(/\s+/g," ").trim();
+        if(raw.replace(/\s/g,"").length>=40){ pdfText=raw; withText++; }
+      }catch(te){ pdfText=null; }
+      var vp=page.getViewport({scale:2});
+      var cv=document.createElement("canvas"); cv.width=vp.width; cv.height=vp.height;
+      await page.render({canvasContext:cv.getContext("2d"), viewport:vp}).promise;
+      var blob=await new Promise(function(res){ cv.toBlob(res,"image/png"); });
+      if(blob) addBookBlob(blob, file.name+" · trang "+i, {pdfText:pdfText});
+    }
+    toast(withText?("Đã tách PDF thành "+n+" trang — "+withText+" trang có chữ sẵn, app sẽ lấy thẳng chữ, không qua OCR ✓"):("Đã tách PDF thành "+n+" trang ảnh ✓"));
+  }catch(e){ toast("Đọc file PDF chưa được — thầy cô thử chụp ảnh từng trang sách nhé."); }
+}
+async function handleBookFiles(files){
+  var list=Array.prototype.slice.call(files||[]);
+  for(var k=0;k<list.length;k++){
+    var f=list[k];
+    if(f.type==="application/pdf" || /\.pdf$/i.test(f.name)) await addPdf(f);
+    else if(f.type==="image/jpeg"||f.type==="image/png"||f.type==="image/jpg"||/^image\//.test(f.type)) addBookBlob(f,f.name);
+    else toast("File “"+f.name+"” không phải ảnh JPG/PNG hay PDF nên em bỏ qua ạ.");
+  }
+  renderBookThumbs();
+  if(bookPages.length) toast("Đã thêm trang sách — tổng "+bookPages.length+"/30 trang ✓");
+}
+$("bookFiles").addEventListener("change",function(e){ handleBookFiles(e.target.files); e.target.value=""; });
+$("bookCamera").addEventListener("change",function(e){ handleBookFiles(e.target.files); e.target.value=""; });
+var drop=$("bookDrop");
+["dragenter","dragover"].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add("drag"); }); });
+["dragleave","drop"].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove("drag"); }); });
+drop.addEventListener("drop",function(e){ if(e.dataTransfer && e.dataTransfer.files.length) handleBookFiles(e.dataTransfer.files); });
+document.addEventListener("paste",function(e){
+  if(state.step!==1 || $("panelBook").classList.contains("hidden")) return;
+  var items=(e.clipboardData||{}).items||[]; var blobs=[];
+  for(var i=0;i<items.length;i++){ if(items[i].type && items[i].type.indexOf("image/")===0){ var b=items[i].getAsFile(); if(b) blobs.push(b); } }
+  if(blobs.length){ e.preventDefault(); blobs.forEach(function(b){ addBookBlob(b,"Ảnh dán từ clipboard"); }); renderBookThumbs(); toast("Đã dán "+blobs.length+" ảnh trang sách ✓"); }
+});
+$("btnClearBook").addEventListener("click",function(){ ocrStop=true; if(ocrAbort){ try{ ocrAbort.abort(); }catch(e){} } bookPages.forEach(function(p){ URL.revokeObjectURL(p.url); }); bookPages=[]; bookOutlineData=[]; $("bookResults").classList.add("hidden"); $("ocrProgress").classList.add("hidden"); $("ocrLive").innerHTML=""; renderBookThumbs(); toast("Đã xoá hết ảnh trang sách."); });
+
+/* ---- Sample pages: drawn on canvas so OCR has real printed text to read ---- */
+function makeSamplePage(lines,title){
+  return new Promise(function(res){
+    var cv=document.createElement("canvas"); cv.width=900; cv.height=1200;
+    var x=cv.getContext("2d"); x.fillStyle="#FFFFFF"; x.fillRect(0,0,900,1200);
+    x.strokeStyle="#1B7FB8"; x.lineWidth=10; x.strokeRect(24,24,852,1152);
+    x.fillStyle="#0A5F52"; x.font="bold 46px Arial"; x.fillText(title,60,110);
+    x.fillStyle="#1E2A32"; x.font="38px Arial";
+    var y=210;
+    lines.forEach(function(ln){ /* wrap */
+      var words=ln.split(" "), cur="";
+      words.forEach(function(wd){ var test=cur?cur+" "+wd:wd; if(x.measureText(test).width>770 && cur){ x.fillText(cur,60,y); y+=56; cur=wd; } else cur=test; });
+      if(cur){ x.fillText(cur,60,y); y+=56; } y+=30;
+    });
+    x.fillStyle="#5B6B74"; x.font="30px Arial"; x.fillText("Sách giáo khoa — trang mẫu để thử tính năng đọc chữ",60,1120);
+    cv.toBlob(function(b){ res(b); },"image/png");
+  });
+}
+$("btnSampleBook").addEventListener("click",async function(){
+  var b1=await makeSamplePage(["Hạt gạo được làm ra từ cây lúa. Bác nông dân gieo hạt thóc xuống ruộng ngập nước.","Nhờ nắng ấm và nước, hạt thóc nứt vỏ rồi nhú mầm xanh bé xíu.","Cây lúa lớn dần trên cánh đồng, cần bàn tay chăm sóc mỗi ngày."],"Bài: Hành trình hạt gạo");
+  var b2=await makeSamplePage(["Khi lúa chín, cả cánh đồng nhuộm màu vàng óng. Bông lúa trĩu hạt cúi đầu.","Bác nông dân gặt lúa, phơi thóc cho khô rồi xay bỏ vỏ trấu thành hạt gạo trắng.","Mỗi hạt cơm chứa mồ hôi của người trồng lúa, nên ta phải quý trọng hạt gạo."],"Hành trình hạt gạo (tiếp)");
+  if(b1) addBookBlob(b1,"Trang sách mẫu 1");
+  if(b2) addBookBlob(b2,"Trang sách mẫu 2");
+  renderBookThumbs();
+  toast("Đã nạp 2 trang sách mẫu — bấm “Đọc và phân tích” để xem app đọc nhé!");
+  $("btnOcr").focus();
+});
+
+/* ---- Analysis: strictly extractive from OCR text ---- */
+var STOP={}; "là và của các một những được có trong cho với khi này đó thì từ ở trên người ta em anh chị bài học sinh trang sách".split(" ").forEach(function(w){ STOP[w]=1; });
+function sentences(t){ return String(t||"").replace(/\s+/g," ").split(/(?<=[.!?…])\s+/).map(function(s){return s.trim();}).filter(function(s){return s.length>8;}); }
+function firstLine(t){ var ls=String(t||"").split("\n").map(function(s){return s.trim();}).filter(Boolean); return ls.length?ls[0]:""; }
+function pageTitle(t,i){ var fl=firstLine(t); if(fl && fl.length>=6 && fl.length<=70) return fl.replace(/[:：]\s*$/,""); var ss=sentences(t); if(ss.length) return ss[0].slice(0,60)+(ss[0].length>60?"…":""); return "Trang "+(i+1); }
+function mainIdea(t){ var ss=sentences(t); if(!ss.length) return ""; return ss.slice(0,2).join(" ").slice(0,220); }
+function keywords(allText,n){
+  var freq={}, words=String(allText||"").toLowerCase().replace(/[^a-zàáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ0-9\s]/gi," ").split(/\s+/);
+  words.forEach(function(w){ if(w.length>=4 && !STOP[w]) freq[w]=(freq[w]||0)+1; });
+  return Object.keys(freq).sort(function(a,b){ return freq[b]-freq[a]; }).slice(0,n||10);
+}
+function analyzeBook(){
+  var all=bookPages.map(function(p){return p.text||"";}).join("\n");
+  var firstWithText=bookPages.filter(function(p){return (p.text||"").trim();})[0];
+  var topic=firstWithText?pageTitle(firstWithText.text||"",0):((bookPages[0]&&(bookPages[0].manualIdea||bookPages[0].idea))||"Bài học từ sách giáo khoa");
+  $("bookTopic").value=topic;
+  var kws=keywords(all,10);
+  $("bookKeywords").innerHTML= kws.length? kws.map(function(k){return '<span class="kw">'+esc(k)+'</span>';}).join("") : '<span class="hint">Chưa tìm thấy từ khoá rõ ràng trong chữ đã đọc.</span>';
+  var pw=$("bookPages"); pw.innerHTML="";
+  bookPages.forEach(function(p,i){
+    if(p.text==null) p.text="";
+    var effIdea=(p.manualIdea||p.idea||mainIdea(p.text||""));
+    p.idea=effIdea;
+    var low=(p.text||"").replace(/\s/g,"").length<40;
+    var srcTxt = p.source==="pdf" ? "📄 Chữ sẵn trong file PDF — app lấy thẳng chữ, không qua OCR."
+      : p.source==="cloud" ? "☁️ Đọc bằng OCR đám mây (OCR.space)."
+      : p.source==="browser" ? "🖥 Đọc bằng OCR trong trình duyệt (đường dự phòng)."
+      : p.source==="failed" ? "⚠️ Cả OCR đám mây và OCR trong trình duyệt đều chưa đọc được trang này."
+      : "Chưa rõ cách đọc trang này.";
+    var d=document.createElement("div"); d.className="page-card";
+    d.innerHTML='<h3>Trang '+(i+1)+(p.name?' · '+esc(p.name):"")+'</h3>'
+      +'<p class="srcnote">'+esc(srcTxt)+'</p>'
+      +(p.cloudError?'<div class="warn">☁️ OCR đám mây ở trang này chưa được — lý do: '+esc(p.cloudError)+(p.source==="browser"?' App đã tự chuyển sang OCR trong trình duyệt cho trang này.':"")+'</div>':"")
+      +(low?'<div class="warn">⚠️ Trang này app đọc được rất ít chữ hoặc chữ chưa rõ. Thầy cô kiểm tra lại ảnh (chụp thẳng, đủ sáng) hoặc gõ thêm ý chính của trang vào ô bên dưới để dàn ý không bị thiếu.</div>':'<div class="oknote">✓ Đã đọc được '+(p.text||"").replace(/\s/g,"").length+' ký tự ở trang này.</div>')
+      +'<label class="fl">Chữ app đọc được ở trang '+(i+1)+' (sửa được)</label><textarea data-pt="'+i+'" placeholder="Chữ đọc được sẽ hiện ở đây…">'+esc(p.text||"")+'</textarea>'
+      +'<label class="fl">Ý chính của trang '+(i+1)+'</label><input type="text" data-pi="'+i+'" value="'+escA(effIdea)+'" placeholder="Ý chính app rút ra — thầy cô sửa / gõ thêm tại đây">'
+      +'<p class="hint">Từ khoá của trang: '+((keywords(p.text||"",5).map(function(k){return esc(k);}).join(", "))||"—")+'</p>';
+    pw.appendChild(d);
+  });
+  pw.querySelectorAll("textarea[data-pt]").forEach(function(ta){ ta.addEventListener("input",function(){ var i=parseInt(ta.getAttribute("data-pt"),10); bookPages[i].text=ta.value; }); });
+  pw.querySelectorAll("input[data-pi]").forEach(function(inp){ inp.addEventListener("input",function(){ var i=parseInt(inp.getAttribute("data-pi"),10); bookPages[i].idea=inp.value; bookPages[i].manualIdea=inp.value; }); });
+  /* outline: cover + 1 slide per page + summary — bullets are sentences taken from the book text only */
+  bookOutlineData=[{title:topic, body:"Bài học được dựng từ sách giáo khoa — nội dung bám đúng các trang sách thầy cô vừa đưa vào.", note:"Giới thiệu bài: "+topic}];
+  bookPages.forEach(function(p,i){
+    var eff=(p.manualIdea||p.idea||"");
+    var ss=sentences(p.text||"");
+    var bullets=ss.slice(0,4).map(function(s){return "• "+s;}).join("\n");
+    if(!bullets) bullets="• "+(eff||"Thầy cô gõ thêm ý chính của trang này ở phần trên.");
+    var ttl=(p.text||"").trim()?pageTitle(p.text||"",i):(eff?eff.slice(0,60):("Trang "+(i+1)));
+    bookOutlineData.push({title:ttl, body:bullets, note:"Giảng theo nội dung trang "+(i+1)+" trong sách: "+(eff||mainIdea(p.text||""))});
+  });
+  bookOutlineData.push({title:"Tổng kết bài học", body:kws.length?("• Các từ khoá cần nhớ: "+kws.join(", ")+".\n• Nhắc lại ý chính của từng trang sách vừa học."):"• Nhắc lại ý chính của từng trang sách vừa học.", note:"Tổng kết: cho học sinh nhắc lại ý chính từng trang và các từ khoá của bài."});
+  renderBookOutline();
+}
+function renderBookOutline(){
+  var w=$("bookOutline"); w.innerHTML="";
+  bookOutlineData.forEach(function(o,i){
+    var d=document.createElement("div"); d.className="outline-item";
+    d.innerHTML='<h3>Slide '+(i+1)+'</h3><label class="fl">Tiêu đề slide</label><input type="text" data-ot="'+i+'" value="'+escA(o.title)+'"><label class="fl">Gạch đầu dòng</label><textarea data-ob="'+i+'">'+esc(o.body)+'</textarea><label class="fl">Lời giảng</label><textarea data-on="'+i+'" style="min-height:56px">'+esc(o.note)+'</textarea><div style="margin-top:8px"><button class="btn outline sm" type="button" data-od="'+i+'">🗑 Xoá mục này</button></div>';
+    w.appendChild(d);
+  });
+  w.querySelectorAll("input[data-ot]").forEach(function(el){ el.addEventListener("input",function(){ bookOutlineData[parseInt(el.getAttribute("data-ot"),10)].title=el.value; }); });
+  w.querySelectorAll("textarea[data-ob]").forEach(function(el){ el.addEventListener("input",function(){ bookOutlineData[parseInt(el.getAttribute("data-ob"),10)].body=el.value; }); });
+  w.querySelectorAll("textarea[data-on]").forEach(function(el){ el.addEventListener("input",function(){ bookOutlineData[parseInt(el.getAttribute("data-on"),10)].note=el.value; }); });
+  w.querySelectorAll("button[data-od]").forEach(function(el){ el.addEventListener("click",function(){ bookOutlineData.splice(parseInt(el.getAttribute("data-od"),10),1); renderBookOutline(); }); });
+}
+$("btnAddOutline").addEventListener("click",function(){ bookOutlineData.push({title:"Mục mới",body:"• ",note:""}); renderBookOutline(); });
+
+/* ---- Cloud OCR (OCR.space) — primary; browser OCR (Tesseract) — fallback per page ---- */
+var ocrRunning=false, ocrStop=false, ocrAbort=null;
+function getOcrKey(){ var el=$("ocrApiKey"); var v=el?(el.value||"").trim():""; return v||"helloworld"; }
+function loadImgFromBlob(blob){
+  return new Promise(function(res,rej){ var u=URL.createObjectURL(blob); var img=new Image();
+    img.onload=function(){ res({img:img,url:u}); };
+    img.onerror=function(){ URL.revokeObjectURL(u); rej(new Error("Không mở được ảnh trang sách.")); };
+    img.src=u; });
+}
+function canvasJpeg(cv,q){ return new Promise(function(res){ cv.toBlob(function(b){ res(b); },"image/jpeg",q); }); }
+async function compressForCloud(blob){
+  /* Nén xuống cạnh dài ~1200px, JPEG dưới 1MB */
+  var loaded=await loadImgFromBlob(blob); var img=loaded.img;
+  try{
+    var maxSide=1200, scale=1, w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+    if(Math.max(w,h)>maxSide) scale=maxSide/Math.max(w,h);
+    var qualities=[0.85,0.75,0.65,0.55,0.45,0.35];
+    for(var attempt=0;attempt<3;attempt++){
+      var cw=Math.max(1,Math.round(w*scale)), ch=Math.max(1,Math.round(h*scale));
+      var cv=document.createElement("canvas"); cv.width=cw; cv.height=ch;
+      var cx=cv.getContext("2d"); cx.fillStyle="#FFFFFF"; cx.fillRect(0,0,cw,ch); cx.drawImage(img,0,0,cw,ch);
+      var last=null;
+      for(var qi=0;qi<qualities.length;qi++){
+        var out=await canvasJpeg(cv,qualities[qi]); if(!out) continue; last=out;
+        if(out.size<=1024*1024) return out;
+      }
+      if(last && attempt===2) return last;
+      scale=scale*0.8;
+    }
+    return blob;
+  } finally { URL.revokeObjectURL(loaded.url); }
+}
+function cloudReason(status,msg,err){
+  var m=String(msg||"");
+  if(ocrStop) return "Thầy cô đã bấm Dừng khi đang đọc trang này.";
+  if(err && err.name==="AbortError") return "Quá thời gian chờ máy chủ OCR.space trả kết quả (hoặc đã bấm Dừng).";
+  if(status===429 || /quota|limit|credit|exceed|too many/i.test(m)) return "Hết lượt miễn phí của khóa OCR.space đang dùng — thầy cô có thể dán khóa OCR.space miễn phí của riêng mình vào ô tuỳ chọn ở trên, hoặc dùng kết quả OCR trong trình duyệt / ý chính đã gõ.";
+  if(err && (err instanceof TypeError)) return "Lỗi mạng — trình duyệt không nối được tới máy chủ OCR.space (api.ocr.space). Kiểm tra Wi-Fi/4G rồi thử lại.";
+  if(status && status>=400) return "Máy chủ OCR.space trả lỗi HTTP "+status+(m?(": "+m):"")+".";
+  if(m) return "OCR.space báo: "+m;
+  if(err) return "Lỗi khi gọi OCR đám mây: "+(err.message||String(err));
+  return "OCR đám mây không đọc được trang này.";
+}
+async function cloudOcrPage(page,idx,total){
+  var jpeg=await compressForCloud(page.blob);
+  var fd=new FormData();
+  fd.append("apikey", getOcrKey());
+  fd.append("language","vie");
+  fd.append("isOverlayRequired","false");
+  fd.append("scale","true");
+  fd.append("detectOrientation","true");
+  fd.append("file", jpeg, "trang-sach-"+(idx+1)+".jpg");
+  var ctrl=("AbortController" in window)?new AbortController():null;
+  ocrAbort=ctrl;
+  var timer=null;
+  if(ctrl) timer=setTimeout(function(){ try{ ctrl.abort(); }catch(e){} },30000);
+  var resp;
+  try{
+    resp=await fetch("/api/read-pages",{method:"POST", body:fd, signal:ctrl?ctrl.signal:undefined});
+  }catch(err){
+    if(timer) clearTimeout(timer); ocrAbort=null;
+    var e1=new Error(cloudReason(0,"",err)); e1.kind="network"; throw e1;
+  }
+  if(timer) clearTimeout(timer); ocrAbort=null;
+  var data=null;
+  try{ data=await resp.json(); }catch(je){ data=null; }
+  if(!resp.ok){
+    var msg1=data&&((data.ErrorMessage&&[].concat(data.ErrorMessage).join(" "))||data.error||"");
+    var e2=new Error(cloudReason(resp.status,msg1,null)); e2.kind=(resp.status===429?"quota":"http"); throw e2;
+  }
+  if(!data){ var e3=new Error("Máy chủ OCR.space trả về dữ liệu không đọc được."); e3.kind="badjson"; throw e3; }
+  if(data.IsErroredOnProcessing){
+    var msg2=(data.ErrorMessage&&[].concat(data.ErrorMessage).join(" "))||data.ErrorDetails||"";
+    var e4=new Error(cloudReason(200,msg2,null)); e4.kind=/quota|limit|credit|exceed/i.test(msg2)?"quota":"api"; throw e4;
+  }
+  var txt="";
+  if(data.ParsedResults && data.ParsedResults.length) txt=(data.ParsedResults[0].ParsedText||"");
+  txt=String(txt||"").replace(/\r\n/g,"\n").trim();
+  if(!txt){ var e5=new Error("OCR đám mây trả về rỗng — không nhận ra chữ ở trang này (ảnh có thể mờ, nghiêng hoặc chữ quá nhỏ)."); e5.kind="empty"; throw e5; }
+  return txt;
+}
+async function browserOcrPage(page,idx,total){
+  if(typeof Tesseract==="undefined") throw new Error("Chưa tải được bộ OCR trong trình duyệt.");
+  var res=await Tesseract.recognize(page.blob,"vie",{ logger:function(m){ if(m.status==="recognizing text" && !ocrStop){ $("ocrDetail").textContent="Trang "+(idx+1)+"/"+total+": OCR trong trình duyệt đã đọc "+Math.round((m.progress||0)*100)+"%"; $("ocrBar").style.width=Math.round((idx+(m.progress||0))/total*100)+"%"; } } });
+  return (res.data.text||"").trim();
+}
+function appendLive(idx,html){
+  var d=document.createElement("div"); d.className="live-item"; d.innerHTML=html; $("ocrLive").appendChild(d);
+}
+function syncManualFromDom(){
+  document.querySelectorAll("input[data-mi]").forEach(function(inp){ var i=parseInt(inp.getAttribute("data-mi"),10); if(bookPages[i]){ bookPages[i].manualIdea=inp.value; bookPages[i].idea=inp.value; } });
+  document.querySelectorAll("input[data-pi]").forEach(function(inp){ var i=parseInt(inp.getAttribute("data-pi"),10); if(bookPages[i]){ bookPages[i].idea=inp.value; bookPages[i].manualIdea=inp.value; } });
+}
+$("btnStopOcr").addEventListener("click",function(){
+  ocrStop=true;
+  if(ocrAbort){ try{ ocrAbort.abort(); }catch(e){} }
+  $("ocrDetail").textContent="Đang dừng — app sẽ dùng kết quả các trang đã đọc được…";
+  toast("Đã bấm Dừng — app dùng kết quả đã có.");
+});
+$("btnUseManualIdeas").addEventListener("click",function(){
+  if(!bookPages.length){ toast("Chưa có trang sách nào."); return; }
+  syncManualFromDom();
+  var hasIdea=bookPages.some(function(p){ return (p.manualIdea||p.idea||"").trim(); });
+  var hasText=bookPages.some(function(p){ return (p.text||"").trim(); });
+  if(!hasIdea && !hasText){ toast("Thầy cô gõ ít nhất 1 dòng ý chính cho một trang, hoặc bấm Đọc bằng OCR đám mây trước nhé!"); return; }
+  bookPages.forEach(function(p){ if(p.text==null) p.text=""; if(!p.source && !p.text) p.source=p.source||null; });
+  analyzeBook();
+  $("bookResults").classList.remove("hidden");
+  $("bookResults").scrollIntoView({behavior:"smooth"});
+  toast("Đã tạo dàn ý từ ý chính đã gõ ✓ Thầy cô duyệt dàn ý rồi sang Bước 2 nhé!");
+});
+$("btnOcr").addEventListener("click",async function(){
+  if(!bookPages.length || ocrRunning) return;
+  syncManualFromDom();
+  ocrRunning=true; ocrStop=false;
+  var total=bookPages.length;
+  $("btnOcr").disabled=true; $("btnStopOcr").classList.remove("hidden");
+  $("ocrProgress").classList.remove("hidden"); $("bookResults").classList.add("hidden");
+  $("ocrLive").innerHTML=""; $("ocrBar").style.width="0%";
+  var done=0;
+  for(var i=0;i<total;i++){
+    if(ocrStop) break;
+    var p=bookPages[i];
+    $("ocrStatus").textContent="Đang đọc trang "+(i+1)+"/"+total+" · tối đa 30 trang cho một bài…";
+    $("ocrBar").style.width=Math.round(i/total*100)+"%";
+    /* PDF có chữ sẵn: lấy thẳng, không qua OCR */
+    if(p.pdfText){
+      p.text=p.pdfText; p.source="pdf"; p.cloudError="";
+      p.idea=p.manualIdea||mainIdea(p.text);
+      done++;
+      $("ocrDetail").textContent="Trang "+(i+1)+": PDF có chữ sẵn — đã lấy thẳng "+p.text.replace(/\s/g,"").length+" ký tự, không qua OCR.";
+      appendLive(i,"✓ Trang "+(i+1)+" — 📄 lấy thẳng chữ sẵn trong PDF ("+p.text.replace(/\s/g,"").length+" ký tự).");
+      $("ocrBar").style.width=Math.round((i+1)/total*100)+"%";
+      renderBookThumbs();
+      continue;
+    }
+    /* Đường chính: OCR đám mây */
+    $("ocrDetail").textContent="Trang "+(i+1)+": đang nén ảnh (cạnh dài ~1200px, JPEG dưới 1MB) và gửi lên OCR.space…";
+    var cloudErr="";
+    try{
+      var txt=await cloudOcrPage(p,i,total);
+      if(ocrStop) break;
+      p.text=txt; p.source="cloud"; p.cloudError="";
+      p.idea=p.manualIdea||mainIdea(p.text);
+      done++;
+      appendLive(i,"✓ Trang "+(i+1)+" — ☁️ OCR đám mây đọc được "+p.text.replace(/\s/g,"").length+" ký tự.");
+    }catch(err){
+      cloudErr=(err&&err.message)?err.message:"OCR đám mây không đọc được trang này.";
+      p.cloudError=cloudErr;
+      if(ocrStop) break;
+      /* Dự phòng: OCR trong trình duyệt cho đúng trang này */
+      $("ocrDetail").textContent="Trang "+(i+1)+": OCR đám mây chưa được ("+cloudErr+") — đang tự chuyển sang OCR trong trình duyệt…";
+      try{
+        var btxt=await browserOcrPage(p,i,total);
+        if(btxt){
+          p.text=btxt; p.source="browser";
+          p.idea=p.manualIdea||mainIdea(p.text);
+          done++;
+          appendLive(i,"✓ Trang "+(i+1)+" — 🖥 OCR đám mây lỗi ("+esc(cloudErr)+") nên app đã đọc bằng OCR trong trình duyệt: "+p.text.replace(/\s/g,"").length+" ký tự.");
+        }else{
+          p.text=""; p.source="failed";
+          appendLive(i,"⚠️ Trang "+(i+1)+" — OCR đám mây lỗi: "+esc(cloudErr)+" OCR trong trình duyệt cũng không đọc được chữ. Thầy cô gõ ý chính của trang ở ô dự phòng bên dưới.");
+        }
+      }catch(berr){
+        p.text=""; p.source="failed";
+        appendLive(i,"⚠️ Trang "+(i+1)+" — OCR đám mây lỗi: "+esc(cloudErr)+" OCR trong trình duyệt cũng lỗi: "+esc((berr&&berr.message)||"không rõ lý do")+". Thầy cô gõ ý chính của trang ở ô dự phòng bên dưới.");
+      }
+    }
+    $("ocrBar").style.width=Math.round((i+1)/total*100)+"%";
+    renderBookThumbs();
+  }
+  ocrRunning=false;
+  $("btnStopOcr").classList.add("hidden"); $("btnOcr").disabled = bookPages.length===0;
+  $("ocrBar").style.width= total?Math.round(done/total*100)+"%":"0%";
+  if(ocrStop){
+    $("ocrStatus").textContent="Đã dừng — dùng kết quả đã có ("+done+"/"+total+" trang đọc được).";
+    $("ocrDetail").textContent="Các trang chưa đọc vẫn giữ ô gõ ý chính dự phòng bên dưới. Thầy cô có thể gõ ý chính rồi bấm “Dùng ý chính đã gõ để tạo dàn ý ngay”, hoặc bấm Đọc lại khi sẵn sàng.";
+  }else{
+    $("ocrStatus").textContent="Đọc xong — "+done+"/"+total+" trang có chữ ✓ Đang phân tích…";
+    $("ocrDetail").textContent="Đã đọc xong. Kết quả từng trang hiện ngay bên dưới để thầy cô sửa chữ, sửa ý chính rồi duyệt dàn ý trước khi sang Bước 2.";
+  }
+  var anyContent=bookPages.some(function(p){ return (p.text||"").trim() || (p.manualIdea||p.idea||"").trim(); });
+  if(anyContent){
+    analyzeBook();
+    $("bookResults").classList.remove("hidden");
+    toast(ocrStop?"Đã dừng — dàn ý dựng từ kết quả đã có ✓":"Đã đọc và phân tích xong các trang sách ✓");
+    $("bookResults").scrollIntoView({behavior:"smooth"});
+  }else{
+    toast("Chưa đọc được trang nào — thầy cô kiểm tra mạng / ảnh, hoặc gõ ý chính từng trang rồi bấm nút dự phòng.");
+  }
+});
+
+$("btnBookTo2").addEventListener("click",function(){
+  /* sync per-page edits first */
+  document.querySelectorAll("#bookPages textarea[data-pt]").forEach(function(ta){ bookPages[parseInt(ta.getAttribute("data-pt"),10)].text=ta.value; });
+  if(!bookOutlineData.length){ toast("Chưa có dàn ý — bấm Đọc và phân tích trước nhé!"); return; }
+  var topic=($("bookTopic").value||"").trim()||bookOutlineData[0].title||"Bài học từ sách giáo khoa";
+  state.topic=topic;
+  state.outline=bookOutlineData.map(function(o){return o.title;}).join("\n");
+  state.pages=Math.max(3,bookOutlineData.length+2);
+  var slides=bookOutlineData.map(function(o,i){ return {type:i===0?"cover":"content", title:o.title, body:o.body, note:o.note||""}; });
+  var chosen=GAMES.filter(function(g){return state.games[g.id]});
+  chosen.forEach(function(g){ slides.push({type:"game",title:g.name,body:"",note:"Chuyển sang trò chơi "+g.name+" để củng cố bài.",gameId:g.id}); });
+  slides.push({type:"content",title:"Tổng kết và dặn dò",body:"• Nhắc lại những ý chính của bài "+topic+".\n• Dặn dò: ôn lại bài trong sách giáo khoa ở nhà.",note:"Tổng kết bài và dặn dò học sinh."});
+  state.slides=slides; state.cur=0;
+  $("fTopic").value=topic; $("fOutline").value=state.outline;
+  toast("Đã tạo "+slides.length+" trang slide từ sách ✓ Sang Bước 2 chọn mẫu nhé!");
+  goStep(2);
+});
+renderBookThumbs();
+</script>
+</body>
+</html>

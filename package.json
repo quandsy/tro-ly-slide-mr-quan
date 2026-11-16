@@ -1,0 +1,1 @@
+{"description":"Trợ Lý Slide Mr Quân — app tạo slide cho giáo viên, chạy trên Render, đọc trang sách qua máy chủ (proxy OCR.space).","engines":{"node":">=18"},"name":"tro-ly-slide-mr-quan","private":true,"scripts":{"start":"node server.js"},"version":"1.0.0"}
