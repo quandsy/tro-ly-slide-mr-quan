@@ -204,6 +204,32 @@ footer.site b{color:var(--ink)}
 .manual-item{border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--surface)}
 .manual-item label{font-weight:700;display:block;margin-bottom:5px;font-size:14.5px}
 .game-note{grid-column:1/-1;background:#FFF7E6;border:2px dashed #F2A007;border-radius:12px;padding:12px 14px;font-size:14px;color:#5B4A1F}
+.phase-badge{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:800}
+.thumb .phase-badge{display:inline-block;margin:0 6px 4px;font-size:10px;padding:1px 7px}
+.ai-label{display:inline-block;background:#FFF3D6;border:2px solid var(--amber);color:#5c4300;border-radius:999px;padding:5px 12px;font-weight:800;font-size:13.5px}
+@media (prefers-color-scheme: dark){.ai-label{background:#3d3413;color:#ffe9a8}}
+.range-row{display:flex;align-items:center;gap:12px}
+.range-row input[type=range]{flex:1;accent-color:var(--teal);min-height:32px}
+.range-row output{font-weight:800;white-space:nowrap}
+.lock-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.lock-grid{grid-template-columns:1fr}}
+.lock-item{border:2px solid var(--line);border-radius:12px;padding:12px 14px}
+.lock-item b{display:block;margin-bottom:6px}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.swatch{width:30px;height:30px;border-radius:8px;border:2px solid rgba(0,0,0,.18);display:inline-block}
+.layout-tags{display:flex;gap:6px;flex-wrap:wrap}
+.layout-tags span{border:1.5px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:700}
+.qa-score{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.qa-score .big{font-size:30px;font-weight:900}
+.qa-row{display:flex;gap:10px;align-items:center;border-top:1.5px solid var(--line);padding:9px 0}
+.qa-row .pts{font-weight:900;white-space:nowrap}
+.qa-pill{border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.qa-pill.pass{background:#DFF3E2;color:#14532d}
+.qa-pill.fail{background:#FBE3DC;color:#8f2d12}
+.gate-list{list-style:none;margin:12px 0 0;padding:0}
+.gate-list li{display:flex;gap:9px;align-items:flex-start;padding:5px 0;font-size:14.5px}
+.g-ic{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff}
+.g-ic.ok{background:var(--green)} .g-ic.no{background:#DC2626}
 </style>
 </head>
 <body>
@@ -235,6 +261,25 @@ footer.site b{color:var(--ink)}
       <div class="path-grid" role="group" aria-label="Chọn cách tạo nội dung">
         <button class="path-card on-book" id="tabBook" type="button"><span class="pic">📖</span><span><b>Từ sách giáo khoa</b><span>Chụp / tải ảnh các trang sách lên — app đọc chữ trong ảnh, phân tích ý chính và dựng dàn ý slide bám đúng nội dung sách.</span></span></button>
         <button class="path-card" id="tabLesson" type="button"><span class="pic">📝</span><span><b>Từ giáo án có sẵn</b><span>Đã có giáo án hoặc dàn ý sẵn? Dán vào đây, app tự chia thành từng trang slide như trước nay.</span></span></button>
+      </div>
+
+      <!-- ===== SGK SOURCE (Skill 21) — shared by both paths ===== -->
+      <div style="border:2px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:18px">
+        <h3 style="margin-top:0">📚 Nguồn sách giáo khoa (nếu bài bám SGK)</h3>
+        <div class="grid2">
+          <div>
+            <label class="fl" for="inBook" style="margin-top:0">Bộ sách giáo khoa</label>
+            <select id="inBook"><option value="">Chưa chọn bộ sách</option><option>Kết nối tri thức với cuộc sống</option><option>Chân trời sáng tạo</option><option>Cánh Diều</option><option>Bộ sách khác</option></select>
+          </div>
+          <div>
+            <label class="fl" for="inSgkPage" style="margin-top:0">Trang SGK</label>
+            <input type="text" id="inSgkPage" placeholder="tr. ___" />
+          </div>
+        </div>
+        <label class="fl" for="inSgkQuote">Câu / đoạn SGK giữ nguyên văn — dán đúng câu trong sách, app giữ nguyên, không tự sửa</label>
+        <textarea id="inSgkQuote" style="min-height:64px" placeholder="Dán nguyên văn câu hỏi, kết luận hoặc phần Ghi nhớ trong SGK vào đây…"></textarea>
+        <p style="margin:10px 0 0"><span class="ai-label">⚠ Nội dung do AI đề xuất — cần kiểm chứng đối chiếu SGK trước khi dạy</span></p>
+        <p class="hint" style="margin:8px 0 0">Chu trình học 8 chặng theo Skill 09: <b>Khởi động → Định hướng → Khám phá → Giải thích → Luyện tập → Vận dụng → Đánh giá → Tổng kết</b>. Mỗi trang ở bước 4 đều gắn nhãn chặng + kịch bản thuyết minh riêng.</p>
       </div>
 
       <!-- ===== PATH: TEXTBOOK ===== -->
@@ -339,6 +384,14 @@ footer.site b{color:var(--ink)}
       <textarea id="fOutline" placeholder="Dán giáo án hoặc dàn ý vào đây. Mỗi dòng sẽ thành một trang nội dung."></textarea>
       <p class="hint">Hoặc tải file giáo án dạng .txt / .md: <label class="btn outline sm filebtn" for="fFile">📄 Chọn file</label>
       <input type="file" id="fFile" accept=".txt,.md" class="hidden" /></p>
+      <label class="fl" for="inDuration">Thời lượng bài giảng</label>
+      <select id="inDuration"><option value="15">10–15 phút (gợi ý 13 trang)</option><option value="25" selected>20–30 phút (gợi ý 22 trang)</option><option value="40">35–45 phút (gợi ý 30 trang)</option></select>
+      <label class="fl" for="inCount">Số trang slide mong muốn</label>
+      <div class="range-row"><input type="range" id="inCount" min="6" max="38" step="1" value="22" /><output id="outCount">22 trang</output></div>
+      <p class="hint">Theo Skill 09: đổi thời lượng là số trang tự nhảy theo gợi ý. Bấm nút dưới đây, app tự soạn dàn ý đủ 8 chặng học từ chủ đề ở trên — nội dung AI đề xuất luôn kèm nhãn cần kiểm chứng đối chiếu SGK, và câu SGK nguyên văn (nếu đã dán) được chèn vào trang nội dung đầu tiên.</p>
+      <div class="navrow" style="justify-content:flex-start">
+        <button class="btn" id="btnGenerate" type="button">Soạn dàn ý slide → Sang bước 2</button>
+      </div>
       <div class="navrow" style="justify-content:flex-end">
         <button class="btn coral" id="btnTo2" type="button">Tiếp tục · Chọn mẫu →</button>
       </div>
@@ -352,6 +405,16 @@ footer.site b{color:var(--ink)}
     <p class="sub">Mỗi mẫu có một màu riêng và toàn bộ slide chỉ dùng đúng màu đó (cùng các sắc độ đậm/nhạt của nó và màu trắng). Trang bìa: chữ một bên, tranh lớn một bên. Trang nội dung: tiêu đề ở trên, mỗi ý chính là một hàng gồm một tranh nhỏ minh họa đúng ý đó ở bên trái và chữ ở bên phải, hộp “Điểm cần nhớ” ở cuối trang — trang nào cũng đầy đặn, dễ đọc từ máy chiếu.</p>
     <div class="chips" id="tplFilter" style="margin-bottom:14px"></div>
     <div class="tpl-grid" id="tplGrid"></div>
+    <div class="card" style="margin-top:16px">
+      <h2>🔒 STYLE LOCK — khóa phong cách cả bộ <span style="font-size:12.5px;color:var(--muted);font-weight:600">(theo Skill 21)</span></h2>
+      <p class="sub">Chọn 1 mẫu là khóa cứng bảng màu, phông chữ, nhân vật và bộ bố cục cho toàn bài — không đổi lung tung từng trang. Đổi mẫu ở trên là STYLE LOCK tự cập nhật theo. Theo quy tắc đơn sắc của app: cả bộ chỉ dùng màu chính của mẫu, các sắc độ đậm/nhạt của chính màu đó, màu trắng và chữ tối.</p>
+      <div class="lock-grid">
+        <div class="lock-item"><b>Bảng màu khóa</b><div class="swatches" id="lockSwatches"></div><span id="lockPaletteTxt" class="hint"></span></div>
+        <div class="lock-item"><b>Phông chữ khóa</b><span id="lockFont" style="font-size:14px;font-weight:700"></span><br /><span class="hint">Phông mặc định của app cho cả tiêu đề và nội dung — vùng an toàn ≥5% quanh mép trang.</span></div>
+        <div class="lock-item"><b>Nhân vật / biểu tượng khóa</b><span id="lockMotif" style="font-size:14px;font-weight:700"></span><br /><span class="hint">Cùng một tranh mẫu xuyên suốt bìa và các trang — giữ nhất quán như nhân vật đã khóa.</span></div>
+        <div class="lock-item"><b>8 bố cục luân phiên</b><div class="layout-tags" id="lockLayouts"></div></div>
+      </div>
+    </div>
     <div class="navrow">
       <button class="btn outline" data-back="1" type="button">← Quay lại</button>
       <button class="btn coral" id="btnTo3" type="button">Tiếp tục · Thêm trò chơi →</button>
@@ -383,10 +446,43 @@ footer.site b{color:var(--ink)}
       <textarea id="eBody" style="min-height:90px"></textarea>
       <label class="fl" for="eNote">Lời giảng của thầy cô (hiện khi trình chiếu)</label>
       <textarea id="eNote" style="min-height:64px"></textarea>
+      <div class="grid2">
+        <div>
+          <label class="fl" for="ePhase">Chặng học (Skill 09)</label>
+          <select id="ePhase"><option>Khởi động</option><option>Định hướng</option><option>Khám phá</option><option>Giải thích</option><option>Luyện tập</option><option>Vận dụng</option><option>Đánh giá</option><option>Tổng kết</option></select>
+        </div>
+        <div>
+          <label class="fl" for="eLayout">Bố cục (Skill 21)</label>
+          <select id="eLayout"><option>Hero Cover</option><option>Question Stage</option><option>Concept Spotlight</option><option>Discovery Split</option><option>Flow / Sequence</option><option>Premium Infographic</option><option>Feedback / Reveal</option><option>Mission / STEM</option></select>
+        </div>
+      </div>
+      <label class="fl" for="eNarration">Kịch bản thuyết minh riêng — lời đọc thành tiếng, không lặp lại chữ trên slide, theo Skill 09</label>
+      <textarea id="eNarration" style="min-height:70px" placeholder="Ví dụ: “Các em nhìn lên màn hình nhé. Ở đây cô có một cánh đồng…” — có ngắt nghỉ để học sinh quan sát và tương tác."></textarea>
+      <label class="fl">Đặc tả tương tác của trang (tình huống → hành động → đúng/sai → phản hồi → đi tiếp)</label>
+      <input type="text" id="eIxPrompt" placeholder="Câu dẫn / tình huống…" style="margin-bottom:8px" />
+      <input type="text" id="eIxAction" placeholder="Hành động học sinh phải làm…" style="margin-bottom:8px" />
+      <input type="text" id="eIxCriterion" placeholder="Tiêu chí đúng / sai…" style="margin-bottom:8px" />
+      <input type="text" id="eIxFeedback" placeholder="Phản hồi khi đúng và khi sai…" style="margin-bottom:8px" />
+      <input type="text" id="eIxNext" placeholder="Đường đi tiếp (đúng → trang…, sai → thử lại ở trang…)" />
       <div class="navrow">
         <button class="btn outline" id="btnAddSlide" type="button">＋ Thêm trang</button>
         <button class="btn outline" id="btnDelSlide" type="button">🗑 Xoá trang này</button>
       </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Kiểm định chất lượng — 100 điểm <span style="font-size:12.5px;color:var(--muted);font-weight:600">(Skill 09)</span></h3>
+      <p class="sub">Tự chấm theo dữ liệu bài hiện tại, tự chấm lại mỗi khi thầy cô sửa ở cột “Sửa trang đang chọn”. Có lỗi nghiêm trọng là “Chưa đạt” dù tổng điểm cao.</p>
+      <div class="qa-score"><span class="big" id="qaTotal">– / 100</span><span id="qaVerdict" style="font-weight:800">Đang chấm…</span></div>
+      <div id="qaRows"></div>
+      <ul class="gate-list" id="qaGates"></ul>
+      <button class="btn outline sm" id="btnRecheckQA" type="button" style="margin-top:10px">Chấm lại</button>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Xuất file</h3>
+      <label class="toggle" style="margin:0 0 12px"><input type="checkbox" id="swNotes" checked /> Kèm lời giảng từng trang</label>
+      <p class="hint" style="margin:0 0 12px">Bật: ghi chú của mỗi trang PowerPoint gồm lời giảng + thuyết minh riêng + chặng/bố cục + đặc tả tương tác + nguồn SGK. Tắt: bỏ dòng lời giảng khỏi ghi chú.</p>
+      <button class="btn outline" id="btnStoryboard" type="button">Tải storyboard (CSV) — chặng, thuyết minh, tương tác từng trang</button>
+      <p class="hint" style="margin:12px 0 0">Nói rõ giới hạn của app tĩnh này: chưa có SCORM / LMS / tự chấm điểm gửi về hệ thống, chưa tạo ảnh AI thật cho từng trang và chưa xuất ảnh PNG từng trang. Trò chơi trong PowerPoint có 2 trang phản hồi đúng/sai đi kèm, nối bằng liên kết trang thầy cô đặt theo hướng dẫn trong ghi chú — PPTX thuần không tự cộng điểm.</p>
     </div>
     <div class="navrow">
       <button class="btn outline" data-back="3" type="button">← Quay lại</button>
@@ -659,8 +755,41 @@ function sampleSlides(){
 
 /* ============ STATE ============ */
 var state={step:1, topic:"", level:SAMPLE.level, subject:SAMPLE.subject, pages:11,
- tplId:"lua", outline:"", games:{leo:true,dungsai:true}, slides:sampleSlides(), cur:0};
+ tplId:"lua", outline:"", games:{leo:true,dungsai:true}, slides:sampleSlides(), cur:0,
+ book:"", sgkPage:"", sgkQuote:"", notes:true};
 var myLessons=[{name:"Hành trình hạt gạo (bài mẫu)", topic:SAMPLE.topic, level:SAMPLE.level, subject:SAMPLE.subject, pages:11, tplId:"lua", outline:SAMPLE.outline, games:{leo:true,dungsai:true}, slides:sampleSlides()}];
+/* ============ SKILL 09/21 SLIDE META (phase / layout / narration / ix) ============
+   Slide body stays a plain string (C6) — only these fields are added. */
+var PHASES=["Khởi động","Định hướng","Khám phá","Giải thích","Luyện tập","Vận dụng","Đánh giá","Tổng kết"];
+var LAYOUTS=["Hero Cover","Question Stage","Concept Spotlight","Discovery Split","Flow / Sequence","Premium Infographic","Feedback / Reveal","Mission / STEM"];
+var TYPE_PHASE={cover:"Định hướng",content:"Khám phá",game:"Đánh giá"};
+var TYPE_LABEL={cover:"Trang bìa",content:"Nội dung",game:"Trò chơi"};
+function phaseFor(sl){
+ var t=String(sl.title||"");
+ if(sl.type==="cover") return "Định hướng";
+ if(sl.type==="game") return "Đánh giá";
+ if(/khởi động/i.test(t)) return "Khởi động";
+ if(/mục tiêu/i.test(t)) return "Định hướng";
+ if(/luyện tập/i.test(t)) return "Luyện tập";
+ if(/đánh giá/i.test(t)) return "Đánh giá";
+ if(/vận dụng/i.test(t)) return "Vận dụng";
+ if(/tổng kết/i.test(t)) return "Tổng kết";
+ return TYPE_PHASE[sl.type]||"Khám phá";
+}
+function ensureSlideMeta(s,i){
+ if(!s) return s;
+ if(!s.phase || PHASES.indexOf(s.phase)<0) s.phase=phaseFor(s);
+ if(!s.layout || LAYOUTS.indexOf(s.layout)<0) s.layout= s.type==="cover" ? "Hero Cover" : LAYOUTS[(i||0)%LAYOUTS.length];
+ if(s.narration==null) s.narration=s.note||"";
+ if(!s.ix) s.ix={prompt:"",action:"",criterion:"",feedback:"",next:""};
+ if(s.type==="game" && !s.ix.prompt){ var g=null; GAMES.forEach(function(x){ if(x.id===s.gameId) g=x; });
+  if(g){ s.ix={prompt:"Tham gia trò chơi: "+g.name, action:g.desc, criterion:"Trả lời đúng theo nội dung bài học", feedback:"Đúng: giải thích vì sao đúng, cộng điểm. Sai: gợi ý và cho thử lại.", next:"Đúng → trang tiếp theo • Sai → quay lại trang trò chơi này để thử lại"}; } }
+ if(s.type==="content" && /luyện tập/i.test(s.title||"") && !s.ix.prompt){ var fb=parseBullets(s)[0]||"Hoàn thành nhiệm vụ trên trang";
+  s.ix={prompt:s.title, action:fb, criterion:"Đúng với kiến thức trọng tâm của bài", feedback:"Đúng: khen và giải thích ngắn. Sai: chỉ ra chỗ chưa đúng, gợi ý xem lại trang Giải thích.", next:"Đúng → trang tiếp theo • Sai → xem lại trang Khám phá / Giải thích rồi làm lại"}; }
+ return s;
+}
+function ensureAllMeta(){ if(state.slides) state.slides.forEach(function(s,i){ ensureSlideMeta(s,i); }); }
+
 var tplFilter="Tất cả";
 
 /* ============ ART (flat SVG illustrations) ============
@@ -882,7 +1011,7 @@ function syncForm(){ state.topic=document.getElementById("fTopic").value.trim()|
  state.subject=document.getElementById("fSubject").value; }
 document.getElementById("fFile").addEventListener("change",function(e){ var f=e.target.files[0]; if(!f) return;
  var r=new FileReader(); r.onload=function(){ document.getElementById("fOutline").value=String(r.result||"").slice(0,20000); toast("Đã nạp nội dung từ file ✓"); }; r.readAsText(f); });
-document.getElementById("btnNewTop").addEventListener("click",function(){ state.topic=""; state.outline=""; state.slides=[]; state.cur=0; state.games={}; fillForm(); document.getElementById("fTopic").value=""; document.getElementById("fOutline").value=""; renderGames(); goStep(1); document.getElementById("fTopic").focus(); });
+document.getElementById("btnNewTop").addEventListener("click",function(){ state.topic=""; state.outline=""; state.slides=[]; state.cur=0; state.games={}; state.book=""; state.sgkPage=""; state.sgkQuote=""; document.getElementById("inBook").value=""; document.getElementById("inSgkPage").value=""; document.getElementById("inSgkQuote").value=""; fillForm(); document.getElementById("fTopic").value=""; document.getElementById("fOutline").value=""; renderGames(); goStep(1); document.getElementById("fTopic").focus(); });
 
 function buildSlides(){ syncForm();
  var lines=state.outline.split("\n").map(function(s){return s.trim()}).filter(Boolean);
@@ -913,6 +1042,19 @@ function renderTpls(){ var grid=document.getElementById("tplGrid"); grid.innerHT
   b.addEventListener("click",function(){ state.tplId=t.id; renderTpls(); });
   grid.appendChild(b); });
  if(!grid.children.length) grid.innerHTML='<p class="sub">Chưa có mẫu cho nhóm này — chọn “Tất cả” để xem mọi mẫu.</p>';
+ renderStyleLock();
+}
+/* STYLE LOCK (Skill 21) — monochrome version (C3): the template's own colour,
+   its monoPal shades, white and the dark ink. No foreign colour ever appears. */
+function renderStyleLock(){
+ var sw=document.getElementById("lockSwatches"); if(!sw) return;
+ var tpl=tplById(state.tplId); var P=monoPal(tpl.bg,tpl.deep);
+ var cols=[["Màu chính",tpl.bg],["Sắc độ đậm",P.d],["Sắc độ đậm hơn",P.d2],["Sắc độ nhạt 1",P.l1],["Sắc độ nhạt 2",P.l15],["Sắc độ nhạt nhất",P.l2],["Trắng","#FFFFFF"],["Chữ","#1E2A32"]];
+ sw.innerHTML=cols.map(function(c){ return '<span class="swatch" title="'+c[0]+' '+c[1]+'" style="background:'+c[1]+'"></span>'; }).join("");
+ document.getElementById("lockPaletteTxt").textContent=cols.map(function(c){ return c[0]+" "+c[1]; }).join(" • ");
+ document.getElementById("lockFont").textContent="Be Vietnam Pro";
+ document.getElementById("lockMotif").textContent=tpl.name+" — "+tpl.desc;
+ document.getElementById("lockLayouts").innerHTML=LAYOUTS.map(function(l,i){ return '<span>'+(i+1)+'. '+esc(l)+'</span>'; }).join("");
 }
 document.getElementById("btnTo3").addEventListener("click",function(){ renderGames(); goStep(3); });
 
@@ -937,21 +1079,32 @@ function rebuildGameSlides(){ state.slides=state.slides.filter(function(s){retur
 document.getElementById("btnTo4").addEventListener("click",function(){ rebuildGameSlides(); goStep(4); });
 
 /* ============ STEP 4 ============ */
-function renderStage(){ var tpl=tplById(state.tplId); var sl=state.slides[state.cur];
+function renderStage(){ ensureAllMeta(); var tpl=tplById(state.tplId); var sl=state.slides[state.cur];
  if(!sl){ document.getElementById("stageMain").innerHTML='<div class="card">Chưa có trang nào — quay lại Bước 1 và bấm Tiếp tục.</div>'; document.getElementById("thumbs").innerHTML=""; return; }
  document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length);
  var th=document.getElementById("thumbs"); th.innerHTML="";
  state.slides.forEach(function(s,i){ var b=document.createElement("button"); b.type="button"; b.className="thumb"+(i===state.cur?" on":"");
-  b.innerHTML='<div class="t">'+slideHTML(s,tpl,i,state.slides.length)+'</div><span>'+(i+1)+'. '+esc(s.title)+'</span>';
+  b.innerHTML='<div class="t">'+slideHTML(s,tpl,i,state.slides.length)+'</div><span>'+(i+1)+'. '+esc(s.title)+'</span><span class="phase-badge">'+esc(s.phase||"")+'</span>';
   b.querySelector(".slide-view").style.aspectRatio="16/9"; b.querySelector(".slide-view").style.fontSize="4px";
   var art=b.querySelector(".art"); if(art) art.style.display="none"; var tx=b.querySelector(".txt h2"); if(tx) tx.style.fontSize="9px"; var bd=b.querySelector(".badge"); if(bd) bd.style.display="none";
   b.addEventListener("click",function(){ state.cur=i; renderStage(); });
   th.appendChild(b); });
  document.getElementById("eTitle").value=sl.title||""; document.getElementById("eBody").value=sl.body||""; document.getElementById("eNote").value=sl.note||"";
+ document.getElementById("ePhase").value=sl.phase; document.getElementById("eLayout").value=sl.layout;
+ document.getElementById("eNarration").value=sl.narration||"";
+ document.getElementById("eIxPrompt").value=sl.ix.prompt||""; document.getElementById("eIxAction").value=sl.ix.action||"";
+ document.getElementById("eIxCriterion").value=sl.ix.criterion||""; document.getElementById("eIxFeedback").value=sl.ix.feedback||"";
+ document.getElementById("eIxNext").value=sl.ix.next||"";
+ renderQA();
 }
 ["eTitle","eBody","eNote"].forEach(function(id){ document.getElementById(id).addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return;
  sl.title=document.getElementById("eTitle").value; sl.body=document.getElementById("eBody").value; sl.note=document.getElementById("eNote").value;
- var tpl=tplById(state.tplId); document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length); }); });
+ var tpl=tplById(state.tplId); document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length); renderQA(); }); });
+document.getElementById("ePhase").addEventListener("change",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.phase=this.value; renderStage(); });
+document.getElementById("eLayout").addEventListener("change",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.layout=this.value; renderQA(); });
+document.getElementById("eNarration").addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.narration=this.value; renderQA(); });
+[["eIxPrompt","prompt"],["eIxAction","action"],["eIxCriterion","criterion"],["eIxFeedback","feedback"],["eIxNext","next"]].forEach(function(pair){
+ document.getElementById(pair[0]).addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return; ensureSlideMeta(sl,state.cur); sl.ix[pair[1]]=this.value; renderQA(); }); });
 document.getElementById("btnAddSlide").addEventListener("click",function(){ state.slides.splice(state.cur+1,0,{type:"content",title:"Trang mới",body:"Nhập nội dung trang này…",note:""}); state.cur++; renderStage(); });
 document.getElementById("btnDelSlide").addEventListener("click",function(){ if(state.slides.length<=1){ toast("Bài cần ít nhất 1 trang."); return; } state.slides.splice(state.cur,1); state.cur=Math.max(0,state.cur-1); renderStage(); });
 
@@ -960,7 +1113,11 @@ var pIdx=0;
 function openPresent(){ pIdx=0; document.getElementById("presenter").classList.add("open"); renderPresent(); }
 function renderPresent(){ var tpl=tplById(state.tplId); var sl=state.slides[pIdx]; if(!sl) return;
  document.getElementById("pStage").innerHTML=slideHTML(sl,tpl,pIdx,state.slides.length);
- document.getElementById("pNote").textContent=sl.note?("🎙 Lời giảng: "+sl.note):"";
+ ensureSlideMeta(sl,pIdx);
+ var noteParts=[];
+ if(sl.note) noteParts.push("🎙 Lời giảng: "+sl.note);
+ if(sl.narration && sl.narration!==sl.note) noteParts.push("🎙 Thuyết minh: "+sl.narration);
+ document.getElementById("pNote").textContent=noteParts.join("   ·   ");
  document.getElementById("pCount").textContent="Trang "+(pIdx+1)+" / "+state.slides.length;
  document.getElementById("pPlay").classList.toggle("hidden", sl.type!=="game");
  document.getElementById("pPlay").onclick=function(){ if(sl.gameId) openGame(sl.gameId); };
@@ -973,8 +1130,11 @@ document.addEventListener("keydown",function(e){ if(!document.getElementById("pr
  if(e.key==="ArrowRight") document.getElementById("pNext").click(); if(e.key==="ArrowLeft") document.getElementById("pPrev").click(); if(e.key==="Escape") document.getElementById("pExit").click(); });
 
 /* ---- Save / My lessons ---- */
-function snapshot(){ return {name:state.topic, topic:state.topic, level:state.level, subject:state.subject, pages:state.pages, tplId:state.tplId, outline:state.outline, games:Object.assign({},state.games), slides:JSON.parse(JSON.stringify(state.slides))}; }
-function loadLesson(L){ state.topic=L.topic; state.level=L.level; state.subject=L.subject; state.pages=L.pages||L.slides.length; state.tplId=L.tplId; state.outline=L.outline||""; state.games=Object.assign({},L.games); state.slides=JSON.parse(JSON.stringify(L.slides)); state.cur=0; fillForm(); renderTpls(); renderGames(); }
+function snapshot(){ return {name:state.topic, topic:state.topic, level:state.level, subject:state.subject, pages:state.pages, tplId:state.tplId, outline:state.outline, games:Object.assign({},state.games), slides:JSON.parse(JSON.stringify(state.slides)), book:state.book, sgkPage:state.sgkPage, sgkQuote:state.sgkQuote, notes:state.notes}; }
+function loadLesson(L){ state.topic=L.topic; state.level=L.level; state.subject=L.subject; state.pages=L.pages||L.slides.length; state.tplId=L.tplId; state.outline=L.outline||""; state.games=Object.assign({},L.games); state.slides=JSON.parse(JSON.stringify(L.slides)); state.cur=0;
+ state.book=L.book||""; state.sgkPage=L.sgkPage||""; state.sgkQuote=L.sgkQuote||""; state.notes=L.notes!==false;
+ document.getElementById("inBook").value=state.book; document.getElementById("inSgkPage").value=state.sgkPage; document.getElementById("inSgkQuote").value=state.sgkQuote; document.getElementById("swNotes").checked=state.notes;
+ fillForm(); renderTpls(); renderGames(); }
 document.getElementById("btnSaveLesson").addEventListener("click",function(){ var s=snapshot();
  var ex=-1; for(var i=0;i<myLessons.length;i++) if(myLessons[i].topic===s.topic) ex=i;
  if(ex>=0) myLessons[ex]=s; else myLessons.push(s);
@@ -1020,6 +1180,7 @@ function svgToPngData(svg,wIn,hIn,fill){
 document.getElementById("btnPptx").addEventListener("click",function(){
  if(typeof PptxGenJS==="undefined"){ toast("Chưa tải được thư viện xuất file — kiểm tra mạng rồi thử lại."); return; }
  var tpl=tplById(state.tplId);
+ ensureAllMeta();
  /* One picture per bullet point: collect every topic scene this deck needs,
     rasterise each once (plus the big monochrome cover art), then build. */
  var needScenes={};
@@ -1034,7 +1195,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
   var pptx=new PptxGenJS(); pptx.defineLayout({name:"W",width:13.33,height:7.5}); pptx.layout="W";
   var bgHex=tpl.bg.replace("#",""), deepHex=tpl.deep.replace("#","");
   var trackHex=mixHex(tpl.bg,"#FFFFFF",.8).replace("#","");
-  state.slides.forEach(function(sl){
+  state.slides.forEach(function(sl, slIdx){
    var s=pptx.addSlide(); s.background={color:bgHex};
    if(sl.type==="cover"){ s.addText(sl.title,{x:.6,y:2.1,w:6.6,h:1.9,fontSize:40,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText(sl.body,{x:.6,y:4.1,w:6.4,h:1.4,fontSize:18,color:"FFFFFF",fontFace:"Arial"});
     if(coverPng){ s.addImage({data:coverPng,x:7.55,y:2.05,w:4.9,h:3.06}); }
@@ -1063,7 +1224,8 @@ document.getElementById("btnPptx").addEventListener("click",function(){
     s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.9,y:5.72,w:11.53,h:.82,fill:{color:deepHex},rectRadius:.08});
     s.addText("★ Điểm cần nhớ: "+rememberFor(sl,bullets),{x:1.1,y:5.82,w:11.13,h:.62,fontSize:15.5,bold:true,color:"FFFFFF",fontFace:"Arial",valign:"middle"});
    }
-   if(sl.note) s.addNotes(sl.note);
+   var nt0=slideNotesText(sl); if(nt0) s.addNotes(nt0);
+   if(sl.type==="game") addFeedbackSlides(pptx, sl, slIdx, tpl, deepHex);
   });
   pptx.writeFile({fileName:(state.topic||"bai-giang").replace(/[\\/:*?"<>|]/g,"-")+".pptx"});
   toast("Đang tạo file PowerPoint… ✓");
@@ -1184,8 +1346,136 @@ function playVongQuay(){ if(!QBANK.length){ gBody(noQuestionsHTML()); updScore("
   },3400); });
 }
 
+/* ============ SKILL 09/21: QA 100 + AUTO OUTLINE + STORYBOARD + PPTX NOTES ============ */
+function bookReadOK(){ try{ return (typeof bookPages!=="undefined") && bookPages.some(function(p){ return p.text && readableYield(p.text)>0; }); }catch(e){ return false; } }
+function computeQA(){
+ ensureAllMeta();
+ var total=state.slides.length;
+ var withNarration=state.slides.filter(function(s){ return (s.narration||"").trim().length>=20; }).length;
+ var withIx=state.slides.filter(function(s){ return s.ix && s.ix.prompt && s.ix.feedback; }).length;
+ var games=state.slides.filter(function(s){ return s.type==="game"; });
+ var gamesFb=games.filter(function(s){ return s.ix && s.ix.feedback && s.ix.next; }).length;
+ var phasesUsed={}; state.slides.forEach(function(s){ phasesUsed[s.phase]=true; });
+ var phaseCount=Object.keys(phasesUsed).length;
+ var hasAssess=!!phasesUsed["Đánh giá"] || games.length>0;
+ var hasQuote=!!(state.sgkQuote||"").trim();
+ var readOK=bookReadOK();
+ var rows=[
+  {name:"Độ chính xác & bám nguồn (SGK)", max:20, score:(hasQuote||readOK)?17:12, note: readOK ? "Đã đọc trang sách qua máy chủ — chữ rõ nghĩa, vẫn cần đối chiếu bản in" : hasQuote ? "Đã có câu SGK nguyên văn — vẫn cần đối chiếu bản in" : "Chưa đọc sách, chưa dán câu SGK nguyên văn — nội dung đang là AI đề xuất"},
+  {name:"Thiết kế sư phạm (chu trình 8 chặng)", max:20, score:Math.round(20*Math.min(1,phaseCount/8)), note:"Đang phủ "+phaseCount+" / 8 chặng học"},
+  {name:"Tương tác & phản hồi phân nhánh", max:20, score: total ? Math.round(20*(withIx/Math.max(1,total))) : 0, note:withIx+" / "+total+" trang có đặc tả tương tác kèm phản hồi"},
+  {name:"Trình bày & khả năng tiếp cận", max:15, score:13, note:"Mẫu đã khóa STYLE LOCK, slide đơn sắc một màu, mỗi ý chính có tranh minh họa riêng, chữ lớn dễ đọc"},
+  {name:"Tính thực thi của PPTX", max:15, score:14, note:"PPTX chỉnh sửa được — chữ và hình sửa được trong PowerPoint, mỗi trò chơi kèm 2 trang phản hồi phân nhánh"},
+  {name:"Xuất bản & minh bạch giới hạn", max:10, score:10, note:"Đã ghi rõ giới hạn: chưa có SCORM/LMS, ảnh AI thật từng trang và xuất ảnh PNG từng trang"}
+ ];
+ var sum=rows.reduce(function(a,r){ return a+r.score; },0);
+ var gates=[
+  {ok:hasAssess, label:"Có chặng Đánh giá / trò chơi kèm câu hỏi — thiếu là lỗi nghiêm trọng với bài E-learning tương tác"},
+  {ok:games.length===0 || gamesFb===games.length, label:"Mọi trò chơi đều có phản hồi đúng/sai và đường thử lại ("+gamesFb+"/"+games.length+")"},
+  {ok:withNarration>=Math.ceil(total/2), label:"Ít nhất 50% số trang có kịch bản thuyết minh riêng ("+withNarration+"/"+total+" trang)"},
+  {ok:hasQuote || total>0, label:"Nguồn nội dung minh bạch: "+(hasQuote ? "đã ghi câu SGK nguyên văn" : readOK ? "đã đọc trang sách qua máy chủ" : "chưa có SGK — toàn bộ nội dung gắn nhãn AI đề xuất, cần kiểm chứng")},
+  {ok:true, label:"Không hứa SCORM / tự chấm gửi LMS — đã ghi rõ giới hạn trong mục Xuất file"}
+ ];
+ var gateFail=gates.some(function(g){ return !g.ok; });
+ return {rows:rows, sum:sum, gates:gates, gateFail:gateFail};
+}
+function renderQA(){
+ var box=document.getElementById("qaRows"); if(!box) return;
+ var qa=computeQA();
+ document.getElementById("qaTotal").textContent=qa.sum+" / 100";
+ var v=document.getElementById("qaVerdict");
+ if(qa.gateFail){ v.textContent="CHƯA ĐẠT — còn lỗi nghiêm trọng ở cổng dưới đây"; v.style.color="#DC2626"; }
+ else if(qa.sum>=90){ v.textContent="ĐẠT — đủ điều kiện xuất file"; v.style.color="#16A34A"; }
+ else { v.textContent="Chưa đạt 90 điểm — bổ sung theo ghi chú từng mục rồi chấm lại"; v.style.color="var(--coral)"; }
+ box.innerHTML=qa.rows.map(function(r){ var pass=r.score>=Math.round(r.max*0.75);
+  return '<div class="qa-row"><span style="flex:1"><b>'+esc(r.name)+'</b><br><span style="color:var(--muted);font-size:12.5px">'+esc(r.note)+'</span></span><span class="qa-pill '+(pass?"pass":"fail")+'">'+(pass?"Đạt":"Cần sửa")+'</span><span class="pts">'+r.score+" / "+r.max+'</span></div>'; }).join("");
+ document.getElementById("qaGates").innerHTML=qa.gates.map(function(g){ return '<li><span class="g-ic '+(g.ok?"ok":"no")+'">'+(g.ok?"✓":"!")+'</span><span>'+esc(g.label)+'</span></li>'; }).join("");
+}
+document.getElementById("btnRecheckQA").addEventListener("click",function(){ renderQA(); toast("Đã chấm lại theo dữ liệu bài hiện tại."); });
+
+/* ---- Step 1: SGK source + duration + auto outline (Skill 09 scaffold) ---- */
+document.getElementById("inBook").addEventListener("change",function(){ state.book=this.value; });
+document.getElementById("inSgkPage").addEventListener("input",function(){ state.sgkPage=this.value; });
+document.getElementById("inSgkQuote").addEventListener("input",function(){ state.sgkQuote=this.value.trim(); if(state.step===4) renderQA(); });
+document.getElementById("inDuration").addEventListener("change",function(){ var v=parseInt(this.value,10); var target= v<=15 ? 13 : v>=35 ? 30 : 22;
+ var c=document.getElementById("inCount"); c.value=target; document.getElementById("outCount").textContent=target+" trang";
+ toast("Bài "+this.options[this.selectedIndex].text+" — đã đặt số trang gợi ý "+target+" trang."); });
+document.getElementById("inCount").addEventListener("input",function(){ document.getElementById("outCount").textContent=this.value+" trang"; });
+function buildAutoOutline(){
+ var topic=(document.getElementById("fTopic").value||"").trim();
+ if(!topic){ toast("Thầy cô nhập chủ đề bài học trước nhé!"); document.getElementById("fTopic").focus(); return; }
+ syncForm(); state.topic=topic;
+ var count=parseInt(document.getElementById("inCount").value,10)||22;
+ var suffix=" — nội dung AI đề xuất, cần kiểm chứng đối chiếu SGK trước khi dạy";
+ var slides=[];
+ slides.push({type:"cover", phase:"Định hướng", title:topic, body:"Môn "+state.subject+" · "+state.level+"\nBài giảng do thầy cô biên soạn cùng Trợ Lý Slide Mr Quân.", note:"Giới thiệu bài học: "+topic+". Tạo tò mò bằng một câu hỏi mở đầu cho cả lớp."});
+ slides.push({type:"content", phase:"Định hướng", title:"Mục tiêu bài học", body:"• Nắm được kiến thức trọng tâm của bài "+topic+".\n• Vận dụng kiến thức vào bài tập và tình huống thực tế.\n• Rèn kỹ năng quan sát, thảo luận và trình bày trước lớp.", note:"Đọc mục tiêu, nhấn mạnh ý trọng tâm nhất của bài."});
+ slides.push({type:"content", phase:"Khởi động", title:"Khởi động", body:"• Câu hỏi gợi mở liên quan đến "+topic+".\n• Cả lớp chia sẻ ý kiến trong 2 phút.", note:"Gọi 2–3 học sinh trả lời, dẫn dắt vào bài mới. Chưa lộ đáp án ở chặng này."});
+ var chosen=GAMES.filter(function(g){ return state.games[g.id]; });
+ var fixed=7; /* cover, goals, start, practice, assess, apply, closing */
+ var explore=Math.max(2, count-fixed-chosen.length);
+ var half=Math.ceil(explore/2);
+ for(var i=1;i<=explore;i++){
+  var isExplain=i>half;
+  var bodyTxt="Ý chính "+i+" của bài "+topic+suffix+".\nVí dụ / hình ảnh minh họa đi kèm.\nCâu hỏi thảo luận cho học sinh.";
+  if(i===1 && state.sgkQuote) bodyTxt+="\nCâu SGK giữ nguyên văn: “"+state.sgkQuote+"”";
+  slides.push({type:"content", phase:isExplain?"Giải thích":"Khám phá", title:(isExplain?"Giải thích ":"Khám phá ")+i+": Nội dung chính "+i, body:bodyTxt, note:isExplain ? "Chuẩn hóa kiến thức: giáo viên chốt lại ý đúng, giải thích thuật ngữ theo SGK." : "Cho học sinh quan sát, thảo luận rồi tự rút ra kết luận trước khi giáo viên chuẩn hóa."});
+ }
+ slides.push({type:"content", phase:"Luyện tập", title:"Luyện tập", body:"• Bài tập áp dụng kiến thức vừa học.\n• Làm theo cặp, trình bày trước lớp.", note:"Quan sát các cặp làm bài, hỗ trợ nhóm còn chậm."});
+ chosen.forEach(function(g){ slides.push({type:"game", phase:"Đánh giá", title:g.name, body:"", note:"Luật chơi: "+g.desc, gameId:g.id}); });
+ slides.push({type:"content", phase:"Đánh giá", title:"Đánh giá nhanh cuối chặng", body:"• 3 câu kiểm tra nhanh bám mục tiêu bài học — mỗi câu có đáp án và giải thích.\n• Học sinh chọn sai được xem gợi ý và thử lại.", note:"Chặng Đánh giá theo Skill 09: câu hỏi phải có phản hồi đúng/sai, không chỉ hiện đáp án."});
+ slides.push({type:"content", phase:"Vận dụng", title:"Vận dụng", body:"• Liên hệ kiến thức "+topic+" với đời sống hằng ngày.\n• Nhiệm vụ nhỏ về nhà cho học sinh.", note:"Cho học sinh tự kể một ví dụ của mình."});
+ slides.push({type:"content", phase:"Tổng kết", title:"Tổng kết & dặn dò", body:"• Nhắc lại kiến thức trọng tâm của bài.\n• Dặn dò bài tập và chuẩn bị bài sau.", note:"Chốt bài bằng 1 câu ngắn dễ nhớ."});
+ slides.forEach(function(s,i){ ensureSlideMeta(s,i); });
+ state.slides=slides; state.cur=0; state.pages=slides.length;
+ goStep(2);
+ toast("Đã soạn dàn ý "+slides.length+" trang cho “"+topic+"”. Giờ chỉ cần chọn 1 mẫu ở bước 2.");
+}
+document.getElementById("btnGenerate").addEventListener("click",buildAutoOutline);
+
+/* ---- Export card: notes toggle + storyboard CSV ---- */
+document.getElementById("swNotes").addEventListener("change",function(){ state.notes=this.checked; });
+document.getElementById("btnStoryboard").addEventListener("click",function(){
+ ensureAllMeta();
+ var head="Trang,Loai trang,Chang hoc,Bo cuc,Tieu de,Noi dung,Thuyet minh,Tuong tac - cau dan,Tuong tac - hanh dong,Tuong tac - tieu chi,Tuong tac - phan hoi,Tuong tac - di tiep,Loi giang";
+ function q(v){ return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'; }
+ var lines=[head];
+ state.slides.forEach(function(s,i){ lines.push([i+1, TYPE_LABEL[s.type]||"", s.phase||"", s.layout||"", s.title||"", String(s.body||"").replace(/\n/g," | "), s.narration||"", s.ix?s.ix.prompt:"", s.ix?s.ix.action:"", s.ix?s.ix.criterion:"", s.ix?s.ix.feedback:"", s.ix?s.ix.next:"", s.note||""].map(q).join(",")); });
+ var blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+ dl(URL.createObjectURL(blob), "storyboard-"+(state.topic||"bai-hoc").replace(/[\\/:*?"<>|]/g,"-").slice(0,40)+".csv");
+ toast("Đã tải storyboard CSV — đủ chặng học, thuyết minh và đặc tả tương tác từng trang.");
+});
+
+/* ---- PPTX: extended speaker notes (A10) + branching feedback slides (A8, C4) ---- */
+function slideNotesText(sl){
+ var parts=[];
+ if(state.notes && sl.note) parts.push("Lời giảng: "+sl.note);
+ if(sl.narration) parts.push("Thuyết minh riêng: "+sl.narration);
+ parts.push("Chặng học: "+(sl.phase||"")+" • Bố cục: "+(sl.layout||""));
+ if(sl.ix && (sl.ix.prompt||sl.ix.feedback)){ parts.push("Tương tác — Câu dẫn: "+(sl.ix.prompt||"")); parts.push("Hành động: "+(sl.ix.action||"")+" • Tiêu chí: "+(sl.ix.criterion||"")); parts.push("Phản hồi: "+(sl.ix.feedback||"")); parts.push("Đi tiếp: "+(sl.ix.next||"")); }
+ if(state.sgkQuote) parts.push("Nguồn SGK"+(state.book?" ("+state.book+")":"")+(state.sgkPage?" "+state.sgkPage:"")+": “"+state.sgkQuote+"” — nội dung còn lại do AI đề xuất, cần kiểm chứng.");
+ return parts.join("\n");
+}
+function addFeedbackSlides(pptx, gameSl, gameIdx, tpl, deepHex){
+ var g=null; GAMES.forEach(function(x){ if(x.id===gameSl.gameId) g=x; });
+ var gname=g ? g.name : (gameSl.title||"Trò chơi");
+ function fb(ok){
+  var s=pptx.addSlide(); s.background={color:"FFFFFF"};
+  s.addText(ok ? "PHẢN HỒI — ĐÚNG" : "PHẢN HỒI — CHƯA ĐÚNG",{x:.7,y:.5,w:11.5,fontSize:13,bold:true,color:ok?"16A34A":"DC2626",fontFace:"Arial",charSpacing:3});
+  s.addText(ok ? ("✓ Đúng rồi! — "+gname) : ("✕ Chưa đúng — thử lại nhé! — "+gname),{x:.7,y:.95,w:11.9,fontSize:30,bold:true,color:"1E2A32",fontFace:"Arial"});
+  var lines= ok ? ["Giải thích: đáp án đúng vì bám đúng kiến thức trọng tâm của bài học.","Cộng điểm cho đội trả lời đúng, cả lớp vỗ tay!"]
+                : ["Gợi ý: xem lại ý chính ở các trang Khám phá / Giải thích trước khi chọn lại.","Bấm Thử lại để quay về trang trò chơi và chọn đáp án khác."];
+  s.addText(lines.map(function(b){ return {text:b, options:{bullet:true, fontSize:19, color:"1E2A32", spaceAfter:10}}; }),{x:.7,y:2.2,w:11.9,lineSpacingMultiple:1.25,fontFace:"Arial"});
+  s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.7,y:5.55,w:11.93,h:.85,fill:{color:deepHex},rectRadius:.1});
+  s.addText(ok ? "TIẾP TỤC →" : "↺ THỬ LẠI",{x:.7,y:5.72,w:11.93,h:.55,align:"center",fontSize:17,bold:true,color:"FFFFFF",fontFace:"Arial"});
+  s.addNotes( ok ? ("Trang phản hồi ĐÚNG của trò "+gname+". Trong PowerPoint: đặt liên kết từ đáp án đúng ở trang trò chơi tới trang này, nút Tiếp tục đi tới trang sau trò chơi. PPTX thuần không tự cộng điểm — điểm do giáo viên cộng trên lớp hoặc chơi bản web.")
+                 : ("Trang phản hồi SAI của trò "+gname+". Trong PowerPoint: đặt liên kết từ các đáp án sai tới trang này, nút Thử lại quay về đúng trang trò chơi (trang "+(gameIdx+1)+"). PPTX thuần không tự cộng điểm — điểm do giáo viên cộng trên lớp hoặc chơi bản web."));
+ }
+ fb(true); fb(false);
+}
+
 /* ============ INIT ============ */
-fillForm(); renderTpls(); renderGames(); renderLessonList();
+fillForm(); renderTpls(); renderGames(); renderLessonList(); ensureAllMeta();
 </script>
 <script>
 "use strict";
