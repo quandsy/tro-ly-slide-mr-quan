@@ -95,7 +95,7 @@ input:focus,select:focus,textarea:focus{outline:3px solid rgba(14,124,107,.3);bo
 .c-head{display:flex;align-items:flex-start;gap:10px}
 .c-title{color:var(--ink);font-size:clamp(20px,3.6vw,33px);margin:0;line-height:1.15;font-weight:900;flex:1}
 .c-part{flex:none;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,14px);border-radius:999px;padding:4px 12px;margin-top:4px}
-.c-prog{height:7px;border-radius:99px;background:var(--line);overflow:hidden;flex:none}
+.c-prog{height:9px;border-radius:99px;background:var(--line);overflow:hidden;flex:none;box-shadow:inset 0 1px 3px rgba(30,42,50,.18)}
 .c-prog i{display:block;height:100%;border-radius:99px}
 .c-rows{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
 .c-row{flex:1;display:flex;gap:12px;align-items:center;background:rgba(0,0,0,.035);border-radius:10px;padding:7px 12px 7px 8px;min-height:0}
@@ -230,6 +230,107 @@ footer.site b{color:var(--ink)}
 .gate-list li{display:flex;gap:9px;align-items:flex-start;padding:5px 0;font-size:14.5px}
 .g-ic{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff}
 .g-ic.ok{background:var(--green)} .g-ic.no{background:#DC2626}
+
+/* ===== 8 rotating content layouts (Skills 08/09/21) — monochrome only:
+   colours come inline from the chosen template (its own shades + white +
+   ink). This block only does structure, depth, type scale and spacing. */
+.slide-view.content .inner>*{position:relative;z-index:1}
+.slide-view.content .inner>.c-deco,.slide-view.content .inner>.lay-bignum{position:absolute;z-index:0}
+.lay-bignum{right:2.5%;bottom:9%;font-weight:900;font-size:clamp(70px,11vw,150px);line-height:1;pointer-events:none;letter-spacing:-.02em}
+.c-remember{box-shadow:0 8px 20px rgba(30,42,50,.22)}
+.c-part{box-shadow:0 4px 12px rgba(30,42,50,.25)}
+.lay-body{flex:1;display:flex;min-height:0}
+/* HERO */
+.hero-body{gap:3.5%;align-items:stretch}
+.hero-art{flex:none;width:38%;border-radius:14px;overflow:hidden;position:relative;border:3px solid;box-shadow:0 10px 24px rgba(30,42,50,.20)}
+.hero-art svg{width:100%;height:100%;display:block}
+.hero-cap{position:absolute;left:10px;bottom:10px;color:#fff;font-weight:800;font-size:clamp(11px,1.5vw,14px);border-radius:999px;padding:3px 12px}
+.hero-side{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0;justify-content:center}
+.hero-lead{margin:0;font-size:clamp(17px,2.6vw,26px);font-weight:800;line-height:1.35;color:var(--ink)}
+.hero-row{display:flex;gap:10px;align-items:center;background:rgba(0,0,0,.035);border-radius:10px;padding:6px 10px 6px 6px;box-shadow:0 3px 10px rgba(30,42,50,.08)}
+@media (prefers-color-scheme: dark){.hero-row{background:rgba(255,255,255,.07)}}
+.hero-row .c-thumb{width:52px;height:52px}
+.hero-row p{margin:0;font-size:clamp(13.5px,1.95vw,18px);font-weight:600;line-height:1.35}
+/* SPLIT */
+.split-body{gap:3.5%;align-items:stretch}
+.split-texts{flex:1.25;display:flex;flex-direction:column;gap:8px;justify-content:center;min-width:0}
+.split-tx{display:flex;gap:11px;align-items:flex-start}
+.num-badge{flex:none;width:30px;height:30px;border-radius:50%;color:#fff;font-weight:900;display:grid;place-items:center;font-size:15px;margin-top:2px;box-shadow:0 4px 10px rgba(30,42,50,.22)}
+.split-tx p{margin:0;font-size:clamp(14.5px,2.1vw,19.5px);font-weight:650;line-height:1.4}
+.split-arts{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
+.split-art{flex:1;border-radius:12px;overflow:hidden;position:relative;min-height:0;box-shadow:0 8px 18px rgba(30,42,50,.16)}
+.split-art svg{width:100%;height:100%;display:block;position:absolute;inset:0}
+.split-art span{position:absolute;top:6px;left:6px;width:22px;height:22px;border-radius:50%;background:rgba(30,42,50,.55);color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center}
+/* QUESTION */
+.lay-question .c-head{flex-direction:column;align-items:center;text-align:center;gap:6px}
+.lay-question .c-title{font-size:clamp(24px,4.3vw,40px)}
+.lay-question .c-part{margin-top:0}
+.question-body{flex-direction:column;gap:10px;align-items:center;justify-content:center}
+.q-badge{color:#fff;font-weight:900;font-size:clamp(13px,1.9vw,17px);border-radius:999px;padding:6px 18px;box-shadow:0 6px 16px rgba(30,42,50,.22)}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%}
+.q-chip{display:flex;gap:10px;align-items:center;border:2px solid;border-radius:12px;padding:7px 11px 7px 7px;box-shadow:0 5px 14px rgba(30,42,50,.10)}
+.q-chip .c-thumb{width:50px;height:50px}
+.q-chip p{margin:0;font-size:clamp(13.5px,1.95vw,18px);font-weight:650;line-height:1.35}
+/* SPOTLIGHT */
+.spot-body{gap:3.5%;align-items:stretch}
+.spot-term{flex:none;width:33%;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:clamp(26px,4.6vw,52px);line-height:1.12;border-radius:14px;padding:10px;word-break:break-word}
+.spot-cards{flex:1;display:flex;flex-direction:column;gap:8px;justify-content:center;min-width:0}
+.spot-card{display:flex;gap:11px;align-items:center;background:rgba(0,0,0,.035);border-radius:11px;padding:6px 12px 6px 6px;box-shadow:0 4px 12px rgba(30,42,50,.09)}
+@media (prefers-color-scheme: dark){.spot-card{background:rgba(255,255,255,.07)}}
+.spot-card .c-thumb{width:54px;height:54px}
+.spot-card p{margin:0;font-size:clamp(14px,2vw,19px);font-weight:650;line-height:1.38}
+/* STEPS */
+.steps-body{flex-direction:column;gap:8px;justify-content:center}
+.step-row{display:flex;gap:11px;align-items:center;background:rgba(0,0,0,.035);border-radius:11px;padding:6px 12px 6px 6px;box-shadow:0 5px 14px rgba(30,42,50,.10)}
+@media (prefers-color-scheme: dark){.step-row{background:rgba(255,255,255,.07)}}
+.step-num{flex:none;width:32px;height:32px;border-radius:50%;color:#fff;font-weight:900;display:grid;place-items:center;font-size:16px;box-shadow:0 4px 10px rgba(30,42,50,.22)}
+.step-row .c-thumb{width:52px;height:52px}
+.step-row p{margin:0;font-size:clamp(14px,2.05vw,19px);font-weight:650;line-height:1.38}
+/* GRID */
+.grid-body{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:stretch}
+.grid-body.n1{grid-template-columns:1fr}
+.g-card{border-radius:13px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 20px rgba(30,42,50,.14);border:2px solid}
+.g-art{height:44%;min-height:44px;overflow:hidden;flex:none}
+.g-art svg{width:100%;height:100%;display:block}
+.g-card p{margin:0;padding:8px 12px;font-size:clamp(13.5px,1.95vw,18px);font-weight:650;line-height:1.35;background:var(--surface)}
+/* QUOTE */
+.quote-body{flex-direction:column;gap:9px;justify-content:center}
+.quote-main{display:flex;gap:14px;align-items:center;border:2.5px solid;border-radius:14px;padding:12px 16px;box-shadow:0 10px 24px rgba(30,42,50,.14)}
+.quote-art{flex:none;width:92px;height:92px;border-radius:12px;overflow:hidden;box-shadow:0 6px 14px rgba(30,42,50,.18)}
+.quote-art svg{width:100%;height:100%;display:block}
+.quote-main p{margin:0;font-size:clamp(17px,2.7vw,27px);font-weight:800;line-height:1.35}
+.quote-mark{font-size:52px;font-weight:900;line-height:.6;flex:none;align-self:flex-start;margin-top:12px}
+.quote-row{display:flex;gap:10px;align-items:center;background:rgba(0,0,0,.035);border-radius:10px;padding:5px 11px 5px 5px}
+@media (prefers-color-scheme: dark){.quote-row{background:rgba(255,255,255,.07)}}
+.quote-row .c-thumb{width:44px;height:44px}
+.quote-row p{margin:0;font-size:clamp(13.5px,1.9vw,17.5px);font-weight:600;line-height:1.35}
+/* SUMMARY */
+.sum-body{gap:3%;align-items:center}
+.sum-col{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sum-chip{display:flex;gap:9px;align-items:center;border:2px solid;border-radius:999px;padding:5px 13px 5px 5px;box-shadow:0 5px 14px rgba(30,42,50,.10);background:var(--surface)}
+.sum-chip .c-thumb{width:42px;height:42px;border-radius:50%}
+.sum-chip p{margin:0;font-size:clamp(12.5px,1.8vw,16.5px);font-weight:650;line-height:1.3}
+.sum-center{flex:none;width:27%;aspect-ratio:1;max-width:230px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:clamp(15px,2.3vw,23px);line-height:1.25;padding:12px;box-shadow:0 12px 28px rgba(30,42,50,.25)}
+/* thumbnails: shrink every layout down */
+.thumb .lay-bignum{display:none}
+.thumb .hero-art,.thumb .split-art,.thumb .g-card,.thumb .quote-main,.thumb .sum-center{box-shadow:none}
+.thumb .hero-lead,.thumb .quote-main p{font-size:5.5px;line-height:1.25}
+.thumb .split-tx p,.thumb .spot-card p,.thumb .step-row p,.thumb .q-chip p,.thumb .g-card p,.thumb .quote-row p,.thumb .sum-chip p,.thumb .hero-row p{font-size:5px;line-height:1.2}
+.thumb .num-badge,.thumb .step-num{width:8px;height:8px;font-size:5px}
+.thumb .hero-row .c-thumb,.thumb .spot-card .c-thumb,.thumb .step-row .c-thumb,.thumb .q-chip .c-thumb{width:9px;height:9px;border-radius:2px}
+.thumb .quote-art{width:12px;height:12px;border-radius:2px}
+.thumb .quote-mark{font-size:10px;margin-top:2px}
+.thumb .sum-chip .c-thumb{width:8px;height:8px}
+.thumb .sum-center{font-size:5.5px;padding:2px}
+.thumb .spot-term{font-size:7px;padding:2px}
+.thumb .q-badge{font-size:5px;padding:1px 5px}
+.thumb .g-art{min-height:8px;height:8px}
+.thumb .hero-body,.thumb .split-body,.thumb .spot-body,.thumb .sum-body{gap:2px}
+@media (prefers-color-scheme: dark){.q-chip,.quote-main,.spot-term,.g-card,.sum-chip{background:rgba(255,255,255,.07)!important}.g-card p{background:transparent}}
+.thumb .split-texts,.thumb .split-arts,.thumb .hero-side,.thumb .spot-cards,.thumb .steps-body,.thumb .sum-col{gap:2px}
+.thumb .grid-body,.thumb .q-grid{gap:2px}
+.thumb .g-card p{padding:1px 2px}
+
 </style>
 </head>
 <body>
@@ -402,7 +503,7 @@ footer.site b{color:var(--ink)}
   <!-- STEP 2 -->
   <section id="view2" class="hidden">
     <h1>Bước 2 · Chọn mẫu trình bày</h1>
-    <p class="sub">Mỗi mẫu có một màu riêng và toàn bộ slide chỉ dùng đúng màu đó (cùng các sắc độ đậm/nhạt của nó và màu trắng). Trang bìa: chữ một bên, tranh lớn một bên. Trang nội dung: tiêu đề ở trên, mỗi ý chính là một hàng gồm một tranh nhỏ minh họa đúng ý đó ở bên trái và chữ ở bên phải, hộp “Điểm cần nhớ” ở cuối trang — trang nào cũng đầy đặn, dễ đọc từ máy chiếu.</p>
+    <p class="sub">Mỗi mẫu có một màu riêng và toàn bộ slide chỉ dùng đúng màu đó (cùng các sắc độ đậm/nhạt của nó và màu trắng). Trang bìa dùng bố cục HERO: chữ một bên, tranh lớn một bên. Các trang nội dung <b>luân phiên 8 bố cục</b> theo chặng học (câu hỏi trung tâm, chữ–tranh hai bên, khái niệm nổi bật, bậc thang, thẻ lưới, trích dẫn, tổng kết chòm sao…) — không trang nào giống hệt trang nào, mỗi ý chính vẫn có một tranh minh họa riêng liên quan đúng ý đó, hộp “Điểm cần nhớ” ở cuối trang. Thầy cô đổi được bố cục từng trang ở Bước 4.</p>
     <div class="chips" id="tplFilter" style="margin-bottom:14px"></div>
     <div class="tpl-grid" id="tplGrid"></div>
     <div class="card" style="margin-top:16px">
@@ -453,7 +554,7 @@ footer.site b{color:var(--ink)}
         </div>
         <div>
           <label class="fl" for="eLayout">Bố cục (Skill 21)</label>
-          <select id="eLayout"><option>Hero Cover</option><option>Question Stage</option><option>Concept Spotlight</option><option>Discovery Split</option><option>Flow / Sequence</option><option>Premium Infographic</option><option>Feedback / Reveal</option><option>Mission / STEM</option></select>
+          <select id="eLayout"><option value="hero">HERO — Tranh lớn mở trang</option><option value="split">SPLIT — Chữ một bên, tranh một bên</option><option value="question">QUESTION — Câu hỏi trung tâm</option><option value="spotlight">SPOTLIGHT — Khái niệm / con số nổi bật</option><option value="steps">STEPS — Bậc thang / dòng thời gian</option><option value="grid">GRID — Thẻ lưới nhiều ý</option><option value="quote">QUOTE — Trích dẫn chốt ý</option><option value="summary">SUMMARY — Tổng kết chòm sao</option></select>
         </div>
       </div>
       <label class="fl" for="eNarration">Kịch bản thuyết minh riêng — lời đọc thành tiếng, không lặp lại chữ trên slide, theo Skill 09</label>
@@ -761,7 +862,29 @@ var myLessons=[{name:"Hành trình hạt gạo (bài mẫu)", topic:SAMPLE.topic
 /* ============ SKILL 09/21 SLIDE META (phase / layout / narration / ix) ============
    Slide body stays a plain string (C6) — only these fields are added. */
 var PHASES=["Khởi động","Định hướng","Khám phá","Giải thích","Luyện tập","Vận dụng","Đánh giá","Tổng kết"];
-var LAYOUTS=["Hero Cover","Question Stage","Concept Spotlight","Discovery Split","Flow / Sequence","Premium Infographic","Feedback / Reveal","Mission / STEM"];
+var LAYOUTS=["hero","split","question","spotlight","steps","grid","quote","summary"];
+var LAYOUT_LABEL={hero:"HERO — Tranh lớn mở trang",split:"SPLIT — Chữ một bên, tranh một bên",question:"QUESTION — Câu hỏi trung tâm",spotlight:"SPOTLIGHT — Khái niệm / con số nổi bật",steps:"STEPS — Bậc thang / dòng thời gian",grid:"GRID — Thẻ lưới nhiều ý",quote:"QUOTE — Trích dẫn chốt ý",summary:"SUMMARY — Tổng kết chòm sao"};
+var OLD_LAYOUT_MAP={"Hero Cover":"hero","Question Stage":"question","Concept Spotlight":"spotlight","Discovery Split":"split","Flow / Sequence":"steps","Premium Infographic":"grid","Feedback / Reveal":"quote","Mission / STEM":"steps"};
+/* Auto-assignment by learning phase (Skill 09 cycle). First choice wins;
+   if it would repeat the previous content slide's layout, the second
+   choice (then the rotation) is used — two neighbouring content slides
+   never share a layout unless the teacher locked one by hand. */
+var PHASE_LAYOUT={"Khởi động":["question","hero"],"Định hướng":["hero","spotlight"],"Khám phá":["split","question"],"Giải thích":["spotlight","split"],"Luyện tập":["grid","steps"],"Vận dụng":["steps","grid"],"Đánh giá":["question","grid"],"Tổng kết":["summary","quote"]};
+var LAYOUT_ROTATION=["split","grid","steps","spotlight","question","quote","summary","hero"];
+function layoutLabel(code){ return LAYOUT_LABEL[code]||code; }
+function normLayout(v){ if(!v) return ""; if(LAYOUTS.indexOf(v)>=0) return v; if(OLD_LAYOUT_MAP[v]) return OLD_LAYOUT_MAP[v];
+ var low=String(v).toLowerCase(); for(var i=0;i<LAYOUTS.length;i++){ if(low.indexOf(LAYOUTS[i])>=0) return LAYOUTS[i]; } return ""; }
+function preferredLayout(phase,avoid){ var prefs=PHASE_LAYOUT[phase]||["split","grid"];
+ for(var i=0;i<prefs.length;i++){ if(prefs[i]!==avoid) return prefs[i]; }
+ for(var j=0;j<LAYOUT_ROTATION.length;j++){ if(LAYOUT_ROTATION[j]!==avoid) return LAYOUT_ROTATION[j]; } return "split"; }
+function assignLayouts(){ if(typeof state==="undefined" || !state.slides) return; var prev="";
+ state.slides.forEach(function(sl){ if(!sl) return;
+  if(sl.type==="cover"){ sl.layout="hero"; return; }
+  if(sl.type!=="content") return;
+  var cur=normLayout(sl.layout);
+  if(!cur) cur=preferredLayout(sl.phase,prev);
+  else if(cur===prev && !sl.layoutLocked) cur=preferredLayout(sl.phase,prev);
+  sl.layout=cur; prev=cur; }); }
 var TYPE_PHASE={cover:"Định hướng",content:"Khám phá",game:"Đánh giá"};
 var TYPE_LABEL={cover:"Trang bìa",content:"Nội dung",game:"Trò chơi"};
 function phaseFor(sl){
@@ -779,7 +902,8 @@ function phaseFor(sl){
 function ensureSlideMeta(s,i){
  if(!s) return s;
  if(!s.phase || PHASES.indexOf(s.phase)<0) s.phase=phaseFor(s);
- if(!s.layout || LAYOUTS.indexOf(s.layout)<0) s.layout= s.type==="cover" ? "Hero Cover" : LAYOUTS[(i||0)%LAYOUTS.length];
+ var nl=normLayout(s.layout); if(nl) s.layout=nl;
+ else s.layout= s.type==="cover" ? "hero" : (PHASE_LAYOUT[s.phase]||["split"])[0];
  if(s.narration==null) s.narration=s.note||"";
  if(!s.ix) s.ix={prompt:"",action:"",criterion:"",feedback:"",next:""};
  if(s.type==="game" && !s.ix.prompt){ var g=null; GAMES.forEach(function(x){ if(x.id===s.gameId) g=x; });
@@ -788,7 +912,7 @@ function ensureSlideMeta(s,i){
   s.ix={prompt:s.title, action:fb, criterion:"Đúng với kiến thức trọng tâm của bài", feedback:"Đúng: khen và giải thích ngắn. Sai: chỉ ra chỗ chưa đúng, gợi ý xem lại trang Giải thích.", next:"Đúng → trang tiếp theo • Sai → xem lại trang Khám phá / Giải thích rồi làm lại"}; }
  return s;
 }
-function ensureAllMeta(){ if(state.slides) state.slides.forEach(function(s,i){ ensureSlideMeta(s,i); }); }
+function ensureAllMeta(){ if(state.slides) state.slides.forEach(function(s,i){ ensureSlideMeta(s,i); }); assignLayouts(); }
 
 var tplFilter="Tất cả";
 
@@ -910,8 +1034,23 @@ function coreTitle(t){ return String(t==null?"":t).replace(/^Phần\s*\d+\s*[:�
 function normTxt(s){ return String(s==null?"":s).toLowerCase().replace(/\s+/g," ").trim().replace(/[\s.•·–—-]+$/,""); }
 function partLabel(sl, idx, total){
  var m=String(sl.title||"").match(/Phần\s*(\d+)/i);
- if(m){ var tot=0; return "Phần "+m[1]; }
- return "Nội dung";
+ if(m) return "Phần "+m[1];
+ return "Phần "+((idx||0)+1);
+}
+/* Remove a leftover outline number at the START of a bullet, but only when
+   it is clearly an index artefact: the rest of the sentence starts with a
+   phase/section word (Khám phá, Giải thích, …) or repeats the page title.
+   Real data is never touched: "3 quả táo" and "3 + 2 = 5" stay as they are. */
+var LEAD_PHASE_WORDS=["kham pha","giai thich","luyen tap","van dung","tong ket","khoi dong","dinh huong","danh gia"];
+function cleanLeadNumber(text,title){
+ var m=String(text).match(/^\s*(\d{1,2})\s*[.)\]:：\-–]?\s+(\S[\s\S]*)$/); if(!m) return text;
+ var rest=m[2].trim(); if(!rest) return text;
+ var rs=stripVN(rest);
+ for(var i=0;i<LEAD_PHASE_WORDS.length;i++){ if(rs===LEAD_PHASE_WORDS[i] || rs.indexOf(LEAD_PHASE_WORDS[i]+" ")===0) return rest; }
+ var rn=normTxt(rest), tn=normTxt(title), cn=normTxt(coreTitle(title||""));
+ if(rn && (rn===tn || rn===cn)) return rest;
+ if(cn && rn.indexOf(cn)===0) return rest;
+ return text;
 }
 function parseBullets(sl){
  var titleN=normTxt(sl.title), coreN=normTxt(coreTitle(sl.title));
@@ -930,9 +1069,10 @@ function parseBullets(sl){
  });
  var seen={}, res=[];
  out.forEach(function(b){
-  var n=normTxt(b);
+  var cb=cleanLeadNumber(b, sl.title);
+  var n=normTxt(cb);
   if(!n || n===titleN || n===coreN || seen[n]) return;
-  seen[n]=1; res.push(b);
+  seen[n]=1; res.push(cb);
  });
  return res.slice(0,4);
 }
@@ -946,25 +1086,85 @@ function rememberFor(sl, bullets){
  if(!/[.!?…]$/.test(txt)) txt+=".";
  return txt;
 }
+function spotlightTerm(sl, bullets){
+ var src=((bullets&&bullets[0])||"")+" "+(coreTitle(sl.title)||sl.title||"");
+ var m=src.match(/\d+(?:[.,]\d+)?\s?(?:%|kg|km|cm|mm|lít|lit|giờ|phút|giây|mét|m)\b/);
+ if(m) return m[0].trim();
+ var words=String(coreTitle(sl.title)||sl.title||"Ý chính").split(/\s+/).filter(Boolean);
+ return words.slice(0,3).join(" ")||"Ý chính";
+}
+function layoutBodyHTML(layout, sl, tpl, bullets){
+ var arts=bullets.map(function(b){ return topicArtSVG(pickTopicArt(b,tpl),tpl); });
+ var tint=mixHex(tpl.bg,"#FFFFFF",.88), tint2=mixHex(tpl.bg,"#FFFFFF",.68);
+ function thumb(i,cls){ return '<span class="c-thumb '+(cls||"")+'">'+arts[i]+'</span>'; }
+ if(layout==="hero"){
+  var side='<p class="hero-lead">'+esc(bullets[0])+'</p>';
+  for(var hi=1;hi<bullets.length;hi++) side+='<div class="hero-row">'+thumb(hi)+'<p>'+esc(bullets[hi])+'</p></div>';
+  return '<div class="lay-body hero-body"><div class="hero-art" style="background:'+tint+';border-color:'+tpl.bg+'">'+arts[0]+'<span class="hero-cap" style="background:'+tpl.deep+'">Ý chính 1 / '+bullets.length+'</span></div><div class="hero-side">'+side+'</div></div>';
+ }
+ if(layout==="split"){
+  var tx="", ar="";
+  bullets.forEach(function(b,i){ tx+='<div class="split-tx"><span class="num-badge" style="background:'+tpl.bg+'">'+(i+1)+'</span><p>'+esc(b)+'</p></div>'; });
+  arts.forEach(function(a,i){ ar+='<div class="split-art">'+a+'<span>'+(i+1)+'</span></div>'; });
+  return '<div class="lay-body split-body"><div class="split-texts">'+tx+'</div><div class="split-arts">'+ar+'</div></div>';
+ }
+ if(layout==="question"){
+  var chips="";
+  bullets.forEach(function(b,i){ chips+='<div class="q-chip" style="border-color:'+tpl.bg+';background:'+tint+'">'+thumb(i)+'<p>'+esc(b)+'</p></div>'; });
+  return '<div class="lay-body question-body"><div class="q-badge" style="background:'+tpl.deep+'">? &nbsp;Câu hỏi khám phá</div><div class="q-grid">'+chips+'</div></div>';
+ }
+ if(layout==="spotlight"){
+  var cards="";
+  bullets.forEach(function(b,i){ cards+='<div class="spot-card">'+thumb(i)+'<p>'+esc(b)+'</p></div>'; });
+  return '<div class="lay-body spot-body"><div class="spot-term" style="color:'+tpl.deep+';background:'+tint+';box-shadow:inset 0 0 0 3px '+tint2+'">'+esc(spotlightTerm(sl,bullets))+'</div><div class="spot-cards">'+cards+'</div></div>';
+ }
+ if(layout==="steps"){
+  var rows="";
+  bullets.forEach(function(b,i){ rows+='<div class="step-row" style="margin-left:'+(i*3.2)+'%"><span class="step-num" style="background:'+(i%2?tpl.deep:tpl.bg)+'">'+(i+1)+'</span>'+thumb(i)+'<p>'+esc(b)+'</p></div>'; });
+  return '<div class="lay-body steps-body">'+rows+'</div>';
+ }
+ if(layout==="grid"){
+  var cards2="";
+  bullets.forEach(function(b,i){ cards2+='<div class="g-card" style="border-color:'+tint2+'"><div class="g-art">'+arts[i]+'</div><p>'+esc(b)+'</p></div>'; });
+  return '<div class="lay-body grid-body n'+bullets.length+'">'+cards2+'</div>';
+ }
+ if(layout==="quote"){
+  var rest="";
+  for(var qi=1;qi<bullets.length;qi++) rest+='<div class="quote-row">'+thumb(qi)+'<p>'+esc(bullets[qi])+'</p></div>';
+  return '<div class="lay-body quote-body"><div class="quote-main" style="background:'+tint+';border-color:'+tpl.deep+'"><span class="quote-mark" style="color:'+tpl.deep+'">“</span><div class="quote-art">'+arts[0]+'</div><p>'+esc(bullets[0])+'</p></div>'+rest+'</div>';
+ }
+ if(layout==="summary"){
+  var half=Math.ceil(bullets.length/2), left="", right="";
+  bullets.forEach(function(b,i){ var chip='<div class="sum-chip" style="border-color:'+tint2+'">'+thumb(i)+'<p>'+esc(b)+'</p></div>'; if(i<half) left+=chip; else right+=chip; });
+  var center=String(coreTitle(sl.title)||sl.title||"Tổng kết").split(/\s+/).slice(0,3).join(" ");
+  return '<div class="lay-body sum-body"><div class="sum-col">'+left+'</div><div class="sum-center" style="background:'+tpl.deep+'"><span>'+esc(center)+'</span></div><div class="sum-col">'+right+'</div></div>';
+ }
+ /* fallback: classic rows */
+ var rows3=bullets.map(function(b,i){ return '<div class="c-row">'+thumb(i)+'<p>'+esc(b)+'</p></div>'; }).join("");
+ return '<div class="lay-body" style="flex-direction:column"><div class="c-rows">'+rows3+'</div></div>';
+}
 function slideHTML(sl, tpl, idx, total){
  if(sl.type==="cover") return '<div class="slide-view" style="background:'+tpl.bg+'"><div class="txt"><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body)+'</p></div><div class="art">'+artSVG(tpl.art,tpl.bg,tpl.deep)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
  if(sl.type==="game") return '<div class="slide-view" style="background:'+tpl.bg+'"><div class="txt"><h2>🎮 '+esc(sl.title)+'</h2><p>Đến giờ chơi rồi! Bấm nút Chơi ngay để bắt đầu.</p></div><div class="art">'+artSVG(tpl.art,tpl.bg,tpl.deep)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
  var bullets=parseBullets(sl);
+ var layout=normLayout(sl.layout)||"split";
  var pct=Math.max(4,Math.round((idx+1)/Math.max(1,total)*100));
  var hintStyle='border-color:'+tpl.bg+';background:'+mixHex(tpl.bg,"#FFFFFF",.88);
- var rows="";
+ var bodyHtml, hintHtml="";
  if(bullets.length){
-  rows=bullets.map(function(b){ return '<div class="c-row"><span class="c-thumb">'+topicArtSVG(pickTopicArt(b,tpl),tpl)+'</span><p>'+esc(b)+'</p></div>'; }).join("");
-  if(bullets.length<3) rows+='<div class="c-hint" style="'+hintStyle+'"><b>💡 Trang này còn ít ý</b><p>Thầy cô thêm '+(bullets.length===1?"2":"1")+'–2 ý chính nữa ở ô “Nội dung” bên dưới (mỗi dòng một ý), hoặc thêm một ví dụ / câu hỏi cho học sinh — trang sẽ đầy đặn và dễ dạy hơn.</p></div>';
+  bodyHtml=layoutBodyHTML(layout, sl, tpl, bullets);
+  if(bullets.length<3) hintHtml='<div class="c-hint" style="flex:none;'+hintStyle+'"><b>💡 Trang này còn ít ý</b><p>Thầy cô thêm '+(bullets.length===1?"2":"1")+'–2 ý chính nữa ở ô “Nội dung” bên dưới (mỗi dòng một ý), hoặc thêm một ví dụ / câu hỏi cho học sinh — trang sẽ đầy đặn và dễ dạy hơn.</p></div>';
  } else {
-  rows='<div class="c-hint" style="flex:1;display:flex;flex-direction:column;justify-content:center;'+hintStyle+'"><b>✏️ Phần này chưa có ý chính</b><p>Thầy cô bổ sung ở ô “Nội dung” bên dưới, mỗi dòng một ý — ví dụ:</p><p>• Ý chính thứ nhất của phần “'+esc(coreTitle(sl.title)||sl.title)+'”<br>• Một ví dụ hoặc hình ảnh minh họa<br>• Một câu hỏi để học sinh suy nghĩ</p><p style="margin-top:6px">Mỗi ý chính thầy cô thêm vào sẽ có ngay một tranh minh họa riêng liên quan đến đúng ý đó.</p></div>';
+  bodyHtml='<div class="c-hint" style="flex:1;display:flex;flex-direction:column;justify-content:center;'+hintStyle+'"><b>✏️ Phần này chưa có ý chính</b><p>Thầy cô bổ sung ở ô “Nội dung” bên dưới, mỗi dòng một ý — ví dụ:</p><p>• Ý chính thứ nhất của phần “'+esc(coreTitle(sl.title)||sl.title)+'”<br>• Một ví dụ hoặc hình ảnh minh họa<br>• Một câu hỏi để học sinh suy nghĩ</p><p style="margin-top:6px">Mỗi ý chính thầy cô thêm vào sẽ có ngay một tranh minh họa riêng liên quan đến đúng ý đó.</p></div>';
  }
- return '<div class="slide-view content" style="background:'+tpl.bg+'"><div class="inner">'
+ var bigNum=String(idx+1); if(bigNum.length<2) bigNum="0"+bigNum;
+ return '<div class="slide-view content lay-'+layout+'" style="background:'+tpl.bg+'"><div class="inner">'
   +'<span class="c-deco" style="width:74px;height:74px;right:-26px;top:-26px;background:'+tpl.bg+';opacity:.16"></span>'
   +'<span class="c-deco" style="width:34px;height:34px;right:34px;top:-14px;background:'+tpl.deep+';opacity:.14"></span>'
+  +'<span class="lay-bignum" style="color:'+mixHex(tpl.bg,"#FFFFFF",.8)+'">'+bigNum+'</span>'
   +'<div class="c-head"><h2 class="c-title">'+esc(sl.title)+'</h2><span class="c-part" style="background:'+tpl.deep+'">'+esc(partLabel(sl,idx,total))+' · Trang '+(idx+1)+'/'+total+'</span></div>'
   +'<div class="c-prog" style="background:'+mixHex(tpl.bg,"#FFFFFF",.8)+'"><i style="width:'+pct+'%;background:'+tpl.bg+'"></i></div>'
-  +'<div class="c-rows">'+rows+'</div>'
+  +bodyHtml+hintHtml
   +'<div class="c-remember" style="background:'+tpl.deep+'"><span class="star">⭐</span><p><b>Điểm cần nhớ:</b> '+esc(rememberFor(sl,bullets))+'</p></div>'
   +'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
 }
@@ -1054,7 +1254,7 @@ function renderStyleLock(){
  document.getElementById("lockPaletteTxt").textContent=cols.map(function(c){ return c[0]+" "+c[1]; }).join(" • ");
  document.getElementById("lockFont").textContent="Be Vietnam Pro";
  document.getElementById("lockMotif").textContent=tpl.name+" — "+tpl.desc;
- document.getElementById("lockLayouts").innerHTML=LAYOUTS.map(function(l,i){ return '<span>'+(i+1)+'. '+esc(l)+'</span>'; }).join("");
+ document.getElementById("lockLayouts").innerHTML=LAYOUTS.map(function(l,i){ return '<span>'+(i+1)+'. '+esc(layoutLabel(l))+'</span>'; }).join("");
 }
 document.getElementById("btnTo3").addEventListener("click",function(){ renderGames(); goStep(3); });
 
@@ -1101,7 +1301,7 @@ function renderStage(){ ensureAllMeta(); var tpl=tplById(state.tplId); var sl=st
  sl.title=document.getElementById("eTitle").value; sl.body=document.getElementById("eBody").value; sl.note=document.getElementById("eNote").value;
  var tpl=tplById(state.tplId); document.getElementById("stageMain").innerHTML=slideHTML(sl,tpl,state.cur,state.slides.length); renderQA(); }); });
 document.getElementById("ePhase").addEventListener("change",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.phase=this.value; renderStage(); });
-document.getElementById("eLayout").addEventListener("change",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.layout=this.value; renderQA(); });
+document.getElementById("eLayout").addEventListener("change",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.layout=this.value; sl.layoutLocked=true; renderStage(); });
 document.getElementById("eNarration").addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return; sl.narration=this.value; renderQA(); });
 [["eIxPrompt","prompt"],["eIxAction","action"],["eIxCriterion","criterion"],["eIxFeedback","feedback"],["eIxNext","next"]].forEach(function(pair){
  document.getElementById(pair[0]).addEventListener("input",function(){ var sl=state.slides[state.cur]; if(!sl) return; ensureSlideMeta(sl,state.cur); sl.ix[pair[1]]=this.value; renderQA(); }); });
@@ -1202,28 +1402,79 @@ document.getElementById("btnPptx").addEventListener("click",function(){
     else { s.addShape(pptx.shapes.RECTANGLE,{x:8,y:1.4,w:4.4,h:4.6,fill:{color:deepHex}}); s.addText("Mẫu: "+tpl.name,{x:8.3,y:3.4,w:3.8,h:.8,fontSize:20,bold:true,color:"FFFFFF",align:"center",fontFace:"Arial"}); } }
    else if(sl.type==="game"){ s.addText("🎮 "+sl.title,{x:.6,y:2.4,w:9,h:1.2,fontSize:36,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText("Trò chơi củng cố — chơi trực tiếp trong app Trợ Lý Slide Mr Quân.",{x:.6,y:3.8,w:9,h:1,fontSize:18,color:"FFFFFF",fontFace:"Arial"}); }
    else { var sIdx=state.slides.indexOf(sl); var sTotal=state.slides.length;
+    var INK="1E2A32";
+    var tintHex=mixHex(tpl.bg,"#FFFFFF",.88).replace("#",""), tint2Hex=mixHex(tpl.bg,"#FFFFFF",.68).replace("#","");
+    function rr(x,y,w,h,fill,r){ s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:x,y:y,w:w,h:h,fill:{color:fill},rectRadius:(r==null?.08:r)}); }
+    function tx(t,x,y,w,h,o){ var d={x:x,y:y,w:w,h:h,fontFace:"Arial",color:INK,valign:"middle"}; if(o) for(var k in o) d[k]=o[k]; s.addText(String(t),d); }
+    function pic(b,x,y,w,h){ var png=scenePng[pickTopicArt(b,tpl)]; if(png) s.addImage({data:png,x:x,y:y,w:w,h:h}); else rr(x,y,w,h,deepHex,.08); }
     s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.5,y:.5,w:12.33,h:6.5,fill:{color:"FFFFFF"},rectRadius:.15});
     s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:12.15,y:.18,w:.95,h:.95,fill:{color:deepHex,transparency:70},rectRadius:.45});
-    s.addText(sl.title,{x:.9,y:.68,w:9.2,h:.85,fontSize:29,bold:true,color:"1E2A32",fontFace:"Arial",valign:"middle"});
-    s.addText(partLabel(sl,sIdx,sTotal)+" · Trang "+(sIdx+1)+"/"+sTotal,{x:10.35,y:.78,w:2.1,h:.6,fontSize:12,bold:true,color:deepHex,fontFace:"Arial",align:"right"});
-    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.58,w:11.53,h:.09,fill:{color:trackHex}});
-    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.58,w:Math.max(.5,11.53*(sIdx+1)/Math.max(1,sTotal)),h:.09,fill:{color:bgHex}});
+    tx(String(sIdx+1).length<2?("0"+(sIdx+1)):(sIdx+1),10.1,5.0,2.5,1.3,{fontSize:66,bold:true,color:tint2Hex,align:"right"});
+    var lay=normLayout(sl.layout)||"split";
+    var qCenter=(lay==="question");
+    tx(sl.title,.9,.62,qCenter?11.53:9.2,.8,{fontSize:qCenter?31:28,bold:true,align:qCenter?"center":"left"});
+    tx(partLabel(sl,sIdx,sTotal)+" · Trang "+(sIdx+1)+"/"+sTotal,10.35,.74,2.1,.55,{fontSize:11.5,bold:true,color:deepHex,align:"right"});
+    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.5,w:11.53,h:.1,fill:{color:trackHex}});
+    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.5,w:Math.max(.5,11.53*(sIdx+1)/Math.max(1,sTotal)),h:.1,fill:{color:bgHex}});
     var bullets=parseBullets(sl);
-    if(bullets.length){
-     var rowH=Math.min(0.98,3.68/bullets.length);
-     bullets.forEach(function(b,i){
-      var y=1.92+i*rowH;
-      var png=scenePng[pickTopicArt(b,tpl)];
-      if(png){ s.addImage({data:png,x:.92,y:y+(rowH-.8)/2,w:.8,h:.8}); }
-      else { s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.92,y:y+(rowH-.8)/2,w:.8,h:.8,fill:{color:deepHex},rectRadius:.08}); }
-      s.addText(b,{x:1.92,y:y,w:10.5,h:rowH,fontSize:17.5,color:"1E2A32",fontFace:"Arial",valign:"middle"});
-     });
-     if(bullets.length<3) s.addText("Gợi ý: trang còn ít ý — thầy cô thêm 1–2 ý chính nữa cho phần này.",{x:.92,y:1.98+bullets.length*rowH,w:11.5,h:.6,fontSize:13,italic:true,color:deepHex,fontFace:"Arial"});
+    var BY=1.78, BH=3.5;
+    if(!bullets.length){
+     tx("Phần này chưa có ý chính.\n\nGợi ý hoàn thiện trang:\n• Thêm 2–3 ý chính của phần “"+coreTitle(sl.title)+"”\n• Thêm một ví dụ hoặc hình ảnh minh họa\n• Thêm một câu hỏi để học sinh suy nghĩ",.9,1.95,11.5,3.4,{fontSize:16,color:"5B6B74",valign:"top"});
+    } else if(lay==="hero"){
+     rr(.9,BY,4.3,BH,tintHex,.12); pic(bullets[0],1.05,BY+.15,4.0,BH-.3);
+     rr(1.15,BY+BH-.62,2.2,.42,deepHex,.2); tx("Ý chính 1 / "+bullets.length,1.15,BY+BH-.6,2.2,.4,{fontSize:11.5,bold:true,color:"FFFFFF",align:"center"});
+     tx(bullets[0],5.5,BY+.05,6.95,bullets.length>1?1.25:BH-.1,{fontSize:21,bold:true,valign:"top",lineSpacingMultiple:1.15});
+     if(bullets.length>1){ var rh=Math.min(1.02,(BH-1.35)/(bullets.length-1));
+      for(var hi=1;hi<bullets.length;hi++){ var hy=BY+1.35+(hi-1)*rh; pic(bullets[hi],5.5,hy+.06,.78,.78); tx(bullets[hi],6.45,hy,6.0,rh,{fontSize:16.5}); } }
+    } else if(lay==="split"){
+     var th=BH/bullets.length;
+     bullets.forEach(function(b,i){ var y=BY+i*th;
+      rr(.92,y+th/2-.27,.54,.54,i%2?deepHex:bgHex,.27); tx(i+1,.92,y+th/2-.25,.54,.5,{fontSize:15,bold:true,color:"FFFFFF",align:"center"});
+      tx(b,1.66,y,6.35,th,{fontSize:17});
+      pic(b,8.35,y+.07,4.05,Math.max(.5,th-.14)); });
+    } else if(lay==="question"){
+     tx("?",11.35,1.7,1.1,1.6,{fontSize:80,bold:true,color:tint2Hex,align:"center"});
+     rr(5.05,BY,2.25,.5,deepHex,.25); tx("?  Câu hỏi khám phá",5.05,BY+.02,2.25,.46,{fontSize:12.5,bold:true,color:"FFFFFF",align:"center"});
+     var cw=5.68, chh=(BH-.68)/Math.ceil(bullets.length/2);
+     bullets.forEach(function(b,i){ var cx=.9+(i%2)*(cw+.17), cy=BY+.68+Math.floor(i/2)*chh;
+      rr(cx,cy,cw,chh-.12,tintHex,.09); pic(b,cx+.12,cy+(chh-.92)/2,.8,.8); tx(b,cx+1.08,cy+.04,cw-1.2,chh-.2,{fontSize:15.5}); });
+    } else if(lay==="spotlight"){
+     rr(.9,BY,3.9,BH,tintHex,.12); tx(spotlightTerm(sl,bullets),1.1,BY+.2,3.5,BH-.4,{fontSize:34,bold:true,color:deepHex,align:"center",lineSpacingMultiple:1.1});
+     var sh=BH/bullets.length;
+     bullets.forEach(function(b,i){ var y=BY+i*sh; pic(b,5.1,y+(sh-.8)/2,.8,.8); tx(b,6.1,y,6.35,sh,{fontSize:16.5}); });
+    } else if(lay==="steps"){
+     var eh=BH/bullets.length;
+     bullets.forEach(function(b,i){ var x=.9+i*.55, y=BY+i*eh;
+      if(i<bullets.length-1) s.addShape(pptx.shapes.RECTANGLE,{x:x+.25,y:y+eh-.06,w:.07,h:.34,fill:{color:tint2Hex}});
+      rr(x,y+.06,.56,.56,i%2?deepHex:bgHex,.28); tx(i+1,x,y+.08,.56,.52,{fontSize:15,bold:true,color:"FFFFFF",align:"center"});
+      pic(b,x+.72,y+(eh-.78)/2,.78,.78); tx(b,x+1.66,y,12.43-(x+1.66),eh,{fontSize:16.5}); });
+    } else if(lay==="grid"){
+     var gw=5.68, gh=bullets.length<=2?BH:(BH-.14)/2;
+     bullets.forEach(function(b,i){ var cx=.9+(i%2)*(gw+.17), cy=BY+(bullets.length<=2?0:Math.floor(i/2)*(gh+.14));
+      rr(cx,cy,gw,gh,tintHex,.09); pic(b,cx+.14,cy+.14,gw-.28,Math.max(.5,gh*.44)); tx(b,cx+.16,cy+gh*.44+.2,gw-.32,gh*.56-.24,{fontSize:15.5,valign:"top",lineSpacingMultiple:1.12}); });
+    } else if(lay==="quote"){
+     rr(.9,BY,11.53,1.92,tintHex,.1);
+     tx("“",1.05,BY+.05,.6,.8,{fontSize:44,bold:true,color:deepHex});
+     pic(bullets[0],1.7,BY+.24,1.45,1.45);
+     tx(bullets[0],3.35,BY+.15,8.85,1.62,{fontSize:20,bold:true,lineSpacingMultiple:1.15});
+     if(bullets.length>1){ var qh=(BH-2.06)/(bullets.length-1);
+      for(var qi=1;qi<bullets.length;qi++){ var qy=BY+2.06+(qi-1)*qh; pic(bullets[qi],.95,qy+(qh-.72)/2,.72,.72); tx(bullets[qi],1.82,qy,10.6,qh,{fontSize:15.5}); } }
+    } else if(lay==="summary"){
+     var half=Math.ceil(bullets.length/2), lh=BH/Math.max(1,half);
+     bullets.forEach(function(b,i){ var leftSide=i<half, li=leftSide?i:i-half, y=BY+li*lh;
+      var cx=leftSide?.9:8.35;
+      rr(cx,y+.06,4.05,Math.max(.55,lh-.16),tintHex,.25); pic(b,cx+.1,y+(lh-.62)/2,.62,.62); tx(b,cx+.84,y+.06,3.1,Math.max(.55,lh-.16),{fontSize:13.5,lineSpacingMultiple:1.1}); });
+     rr(5.35,BY+.85,2.63,1.85,deepHex,.5);
+     tx(String(coreTitle(sl.title)||sl.title||"Tổng kết").split(/\s+/).slice(0,3).join(" "),5.5,BY+1.0,2.33,1.55,{fontSize:16.5,bold:true,color:"FFFFFF",align:"center",lineSpacingMultiple:1.15});
+    } else {
+     var fh=Math.min(.98,BH/bullets.length);
+     bullets.forEach(function(b,i){ var y=BY+i*fh; pic(b,.92,y+(fh-.8)/2,.8,.8); tx(b,1.92,y,10.5,fh,{fontSize:17}); });
     }
-    else { s.addText("Phần này chưa có ý chính.\n\nGợi ý hoàn thiện trang:\n• Thêm 2–3 ý chính của phần “"+coreTitle(sl.title)+"”\n• Thêm một ví dụ hoặc hình ảnh minh họa\n• Thêm một câu hỏi để học sinh suy nghĩ",{x:.9,y:1.95,w:11.5,h:3.4,fontSize:16,color:"5B6B74",fontFace:"Arial",valign:"top"}); }
-    s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.9,y:5.72,w:11.53,h:.82,fill:{color:deepHex},rectRadius:.08});
-    s.addText("★ Điểm cần nhớ: "+rememberFor(sl,bullets),{x:1.1,y:5.82,w:11.13,h:.62,fontSize:15.5,bold:true,color:"FFFFFF",fontFace:"Arial",valign:"middle"});
+    if(bullets.length && bullets.length<3) tx("Gợi ý: trang còn ít ý — thầy cô thêm 1–2 ý chính nữa cho phần này.",.92,5.38,11.5,.3,{fontSize:12,italic:true,color:deepHex});
+    rr(.9,5.72,11.53,.82,deepHex,.08);
+    tx("★ Điểm cần nhớ: "+rememberFor(sl,bullets),1.1,5.82,11.13,.62,{fontSize:15,bold:true,color:"FFFFFF"});
    }
+
    var nt0=slideNotesText(sl); if(nt0) s.addNotes(nt0);
    if(sl.type==="game") addFeedbackSlides(pptx, sl, slIdx, tpl, deepHex);
   });
@@ -1440,7 +1691,7 @@ document.getElementById("btnStoryboard").addEventListener("click",function(){
  var head="Trang,Loai trang,Chang hoc,Bo cuc,Tieu de,Noi dung,Thuyet minh,Tuong tac - cau dan,Tuong tac - hanh dong,Tuong tac - tieu chi,Tuong tac - phan hoi,Tuong tac - di tiep,Loi giang";
  function q(v){ return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'; }
  var lines=[head];
- state.slides.forEach(function(s,i){ lines.push([i+1, TYPE_LABEL[s.type]||"", s.phase||"", s.layout||"", s.title||"", String(s.body||"").replace(/\n/g," | "), s.narration||"", s.ix?s.ix.prompt:"", s.ix?s.ix.action:"", s.ix?s.ix.criterion:"", s.ix?s.ix.feedback:"", s.ix?s.ix.next:"", s.note||""].map(q).join(",")); });
+ state.slides.forEach(function(s,i){ lines.push([i+1, TYPE_LABEL[s.type]||"", s.phase||"", layoutLabel(s.layout||""), s.title||"", String(s.body||"").replace(/\n/g," | "), s.narration||"", s.ix?s.ix.prompt:"", s.ix?s.ix.action:"", s.ix?s.ix.criterion:"", s.ix?s.ix.feedback:"", s.ix?s.ix.next:"", s.note||""].map(q).join(",")); });
  var blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
  dl(URL.createObjectURL(blob), "storyboard-"+(state.topic||"bai-hoc").replace(/[\\/:*?"<>|]/g,"-").slice(0,40)+".csv");
  toast("Đã tải storyboard CSV — đủ chặng học, thuyết minh và đặc tả tương tác từng trang.");
@@ -1451,7 +1702,7 @@ function slideNotesText(sl){
  var parts=[];
  if(state.notes && sl.note) parts.push("Lời giảng: "+sl.note);
  if(sl.narration) parts.push("Thuyết minh riêng: "+sl.narration);
- parts.push("Chặng học: "+(sl.phase||"")+" • Bố cục: "+(sl.layout||""));
+ parts.push("Chặng học: "+(sl.phase||"")+" • Bố cục: "+layoutLabel(sl.layout||""));
  if(sl.ix && (sl.ix.prompt||sl.ix.feedback)){ parts.push("Tương tác — Câu dẫn: "+(sl.ix.prompt||"")); parts.push("Hành động: "+(sl.ix.action||"")+" • Tiêu chí: "+(sl.ix.criterion||"")); parts.push("Phản hồi: "+(sl.ix.feedback||"")); parts.push("Đi tiếp: "+(sl.ix.next||"")); }
  if(state.sgkQuote) parts.push("Nguồn SGK"+(state.book?" ("+state.book+")":"")+(state.sgkPage?" "+state.sgkPage:"")+": “"+state.sgkQuote+"” — nội dung còn lại do AI đề xuất, cần kiểm chứng.");
  return parts.join("\n");
