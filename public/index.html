@@ -418,7 +418,7 @@ footer.site b{color:var(--ink)}
 .zz-l{align-self:flex-start}.zz-r{align-self:flex-end;flex-direction:row-reverse}
 .zz-num{flex:none;width:86px;border-radius:12px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;box-shadow:0 6px 16px rgba(30,42,50,.18)}
 .zz-num b{font-size:clamp(21px,2.8vw,29px);font-weight:900;line-height:1}
-.zz-num small{font-size:clamp(11px,1.5vw,13.5px);font-weight:800}
+.zz-num small{font-size:14px;font-weight:800}
 .zz-bar{width:78%;height:6px;border-radius:99px;background:rgba(255,255,255,.35);overflow:hidden}
 .zz-bar i{display:block;height:100%;background:#fff;border-radius:99px}
 .zz-card{flex:1;display:flex;gap:11px;align-items:center;background:rgba(0,0,0,.035);border-radius:12px;padding:6px 13px 6px 7px;box-shadow:0 5px 14px rgba(30,42,50,.10)}
@@ -1397,7 +1397,7 @@ function parseBullets(sl){
   if(!n || n===titleN || n===coreN || seen[n]) return;
   seen[n]=1; res.push(cb);
  });
- return res.slice(0,4);
+ return res.slice(0,5);
 }
 function rememberFor(sl, bullets){
  var core=coreTitle(sl.title)||sl.title||"ý chính của trang này";
