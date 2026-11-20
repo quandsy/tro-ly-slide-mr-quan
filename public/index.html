@@ -1212,6 +1212,21 @@ function chipColors(tpl,base){
  for(var t=.08;t<1.001;t+=.08){ var c=mixHex(base,tpl.deep,Math.min(t,1)); if(contrastOf("#FFFFFF",c)>=4.5) return {bg:c,fg:"#FFFFFF"}; }
  return {bg:tpl.deep,fg:onColorFor(tpl.deep)};
 }
+/* SPINE card colours (TIMELINE-SPINE 01/02 numbers, web + PPTX): the numbers
+   sit on the spine card, whose background is TH.card — a wash that LIGHTENS
+   tpl.bg (web: white 10% over tpl.bg on dark templates; PPTX: card white at
+   88% transparency = 12% over tpl.bg; light templates: 52% toward white).
+   White on that wash falls below 4.5:1 on Xanh Ngọc / Hồng Phấn / Xanh Biển
+   Sâu, so resolve the card through the same chipColors logic on the
+   EFFECTIVE card colour: the number colour is picked by contrast against
+   the card it actually sits on, and when neither white nor ink reaches
+   4.5:1 the card is darkened toward tpl.deep until white passes. Only the
+   spine card background + number colour change — never size or place. */
+function spineCardColors(tpl,pptx){
+ var dark=onColorFor(tpl.bg)==="#FFFFFF";
+ var eff=dark?mixHex(tpl.bg,"#FFFFFF",pptx?.12:.10):mixHex(tpl.bg,"#FFFFFF",.52);
+ return chipColors(tpl,eff);
+}
 function hexDecor(color){ function hex(cx,cy,r){ var pts=[]; for(var k=0;k<6;k++){ var a=Math.PI/6+k*Math.PI/3; pts.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1)); } return '<polygon points="'+pts.join(" ")+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
  return '<svg class="hexdeco" viewBox="0 0 300 200" preserveAspectRatio="xMaxYMin meet" aria-hidden="true">'+hex(235,55,52)+hex(158,122,30)+hex(268,142,22)+'</svg>'; }
 var PHASE_DESC={"Khởi động":"Mở bài bằng một câu hỏi gợi mở — cả lớp cùng suy nghĩ và chia sẻ.","Định hướng":"Nêu mục tiêu và bức tranh toàn bài để học sinh biết mình sẽ học gì.","Khám phá":"Quan sát, tìm hiểu và tự rút ra kiến thức mới từ bài học.","Giải thích":"Chuẩn hóa kiến thức, chốt lại khái niệm trọng tâm của bài.","Luyện tập":"Làm bài tập và nhiệm vụ để nắm chắc kiến thức vừa học.","Vận dụng":"Đưa kiến thức vào tình huống đời sống hằng ngày.","Đánh giá":"Kiểm tra nhanh mức độ hiểu bài qua câu hỏi và trò chơi.","Tổng kết":"Chốt lại các ý trọng tâm và dặn dò trước khi kết thúc bài."};
@@ -1584,7 +1599,9 @@ function layoutBodyHTML(layout, sl, tpl, bullets){
  }
  if(layout==="arc"){
   var achips=""; bullets.slice(0,5).forEach(function(b,i){ achips+='<div class="fan-chip" style="border-color:'+tint2+'">'+thumb(i)+'<p>'+esc(shortTxt(b,52))+'</p></div>'; });
-  return '<div class="lay-body arc-body"><div class="arc-svg">'+fanSVG(bullets,tpl,"")+'<div class="arc-title" style="color:'+tpl.deep+'">'+esc(shortTxt(coreTitle(sl.title)||sl.title,34))+'</div></div><div class="fan-chips">'+achips+'</div></div>';
+  /* ARC title colour comes from onColorFor(tpl.bg) via TH.on — never tpl.deep:
+     deep on a dark template background is ~1:1 and the title vanished. */
+  return '<div class="lay-body arc-body"><div class="arc-svg">'+fanSVG(bullets,tpl,"")+'<div class="arc-title" style="color:'+TH.on+'">'+esc(shortTxt(coreTitle(sl.title)||sl.title,34))+'</div></div><div class="fan-chips">'+achips+'</div></div>';
  }
  if(layout==="zigzag"){
   var zr=""; bullets.forEach(function(b,i){ var pct4=bullets.length<=1?100:Math.round(i/(bullets.length-1)*100); var cc=chipColors(tpl,shadeSeq(tpl,i,bullets.length));
@@ -1592,7 +1609,8 @@ function layoutBodyHTML(layout, sl, tpl, bullets){
   return '<div class="lay-body zz-body">'+zr+'</div>';
  }
  if(layout==="spine"){
-  var sr=""; bullets.forEach(function(b,i){ var card='<div class="spine-card"><span class="sp-num" style="color:'+tpl.deep+'">'+("0"+(i+1)).slice(-2)+'</span><p>'+esc(b)+'</p></div>';
+  var spc=spineCardColors(tpl,false);
+  var sr=""; bullets.forEach(function(b,i){ var card='<div class="spine-card" style="background:'+spc.bg+'"><span class="sp-num" style="color:'+spc.fg+'">'+("0"+(i+1)).slice(-2)+'</span><p>'+esc(b)+'</p></div>';
    sr+='<div class="spine-row"><span class="sp-side sp-left">'+(i%2?"":card)+'</span><span class="spine-node" style="background:'+shadeSeq(tpl,i,bullets.length)+'">'+thumb(i)+'</span><span class="sp-side sp-right">'+(i%2?card:"")+'</span></div>'; });
   return '<div class="lay-body spine-body">'+sr+'</div>';
  }
@@ -2113,7 +2131,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
      if(fImg) s.addImage({data:fImg,x:lay==="wheel"?5.2:3.5,y:BY-.05,w:fw2,h:lay==="wheel"?2.9:2.5});
      var fwn=bullets.length?11.53/Math.min(6,bullets.length):0;
      bullets.slice(0,6).forEach(function(b,i){ tx(shortTxt(b,40),.9+i*fwn,BY+2.62,fwn-.15,1.0,{fontSize:14,align:"center",valign:"top",lineSpacingMultiple:1.12}); });
-     if(lay==="arc") tx(coreTitle(sl.title)||sl.title,4.4,BY+2.0,4.5,.6,{fontSize:18,bold:true,color:deepHex,align:"center"});
+     if(lay==="arc") tx(coreTitle(sl.title)||sl.title,4.4,BY+2.0,4.5,.6,{fontSize:18,bold:true,color:inkHex,align:"center"}); /* inkHex = onColorFor(tpl.bg): deepHex on dark tpl.bg was ~1:1 */
     } else if(lay==="zigzag"){
      var zh=BH/Math.max(1,bullets.length);
      bullets.forEach(function(b,i){ var y=BY+i*zh; var odd=i%2===1; var nx2=odd?11.03:.9; var cx3=odd?.9:2.4; var cw3=odd?9.95:10.03; var pct5=bullets.length<=1?100:Math.round(i/(bullets.length-1)*100);
@@ -2122,10 +2140,11 @@ document.getElementById("btnPptx").addEventListener("click",function(){
     } else if(lay==="spine"){
      s.addShape(pptx.shapes.LINE,{x:6.665,y:BY,w:0,h:BH,line:{color:tint2Hex,width:3}});
      var sh4=BH/Math.max(1,bullets.length);
+     var spcP=spineCardColors(tpl,true), spBgP=spcP.bg.replace("#",""), spFgP=spcP.fg.replace("#","");
      bullets.forEach(function(b,i){ var y=BY+i*sh4; var odd=i%2===1; var cardX=odd?7.35:.95;
       s.addShape(pptx.shapes.OVAL,{x:6.4,y:y+sh4/2-.27,w:.54,h:.54,fill:{color:odd?deepHex:midHex},line:{color:"FFFFFF",width:2}});
       var spng=bulletImg(sl,b)||scenePng[pickTopicArt(b,tpl)]; if(spng) s.addImage({data:spng,x:6.47,y:y+sh4/2-.2,w:.4,h:.4});
-      rr(cardX,y+.07,5.05,sh4-.16,tintHex,.09); tx(("0"+(i+1)).slice(-2),cardX+.14,y+.1,.75,sh4-.2,{fontSize:18,bold:true,color:inkHex}); tx(b,cardX+.85,y,4.05,sh4,{fontSize:15}); });
+      s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:cardX,y:y+.07,w:5.05,h:sh4-.16,fill:{color:spBgP},rectRadius:.09}); tx(("0"+(i+1)).slice(-2),cardX+.14,y+.1,.75,sh4-.2,{fontSize:18,bold:true,color:spFgP}); tx(b,cardX+.85,y,4.05,sh4,{fontSize:15}); });
     } else if(lay==="hub"){
      var hb=Math.ceil(bullets.length/2), hh2=BH/Math.max(1,hb);
      bullets.forEach(function(b,i){ var left=i<hb, li=left?i:i-hb, y=BY+li*hh2; var hx=left?.9:8.5;
