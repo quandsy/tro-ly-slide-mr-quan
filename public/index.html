@@ -72,6 +72,9 @@ input:focus,select:focus,textarea:focus{outline:3px solid rgba(14,124,107,.3);bo
 .tpl .meta{padding:10px 12px}
 .tpl .meta b{font-size:15px}
 .tpl .meta span{display:block;color:var(--muted);font-size:13px}
+.tpl .meta .tpl-cats{margin-top:5px;font-weight:800;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);opacity:.75}
+.tpl .meta .tpl-dots{display:flex;gap:5px;margin-top:7px}
+.tpl .meta .tpl-dots i{width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.16);display:block}
 .cover-mini{flex:1;display:flex;align-items:stretch;width:100%;aspect-ratio:16/10}
 .cover-mini .art{flex:1;min-height:100%}
 .cover-mini .art svg{width:100%;height:100%;display:block}
@@ -726,12 +729,12 @@ footer.site b{color:var(--ink)}
   <!-- STEP 2 -->
   <section id="view2" class="hidden">
     <h1>Bước 2 · Chọn mẫu trình bày</h1>
-    <p class="sub">Mỗi mẫu có một màu riêng và toàn bộ slide chỉ dùng đúng màu đó (cùng các sắc độ đậm/nhạt của nó và màu trắng). Trang bìa, trang ngắt chặng và trang cuối dùng <b>bản tối</b> (sắc đậm nhất của màu mẫu pha đen, chữ trắng); ngay sau bìa là <b>trang mục lục vòng tròn đánh số</b>. Các trang nội dung giữ bản sáng và <b>tự chọn bố cục theo nội dung</b>: có số liệu → thẻ KPI / cột ngang, có tỉ lệ → biểu đồ vòng, có mốc năm → trục thời gian, so sánh → bảng so sánh / vòng Venn, liệt kê → thanh viên nang có số lớn, quy trình → ziczac, thành phần → quạt bán nguyệt, phân loại → sơ đồ cây… — không trang nào giống hệt trang nào, mỗi ý chính vẫn có một tranh minh họa riêng liên quan đúng ý đó, hộp “Điểm cần nhớ” ở cuối trang. Thầy cô đổi được bố cục từng trang ở Bước 4.</p>
+    <p class="sub">Mỗi mẫu chuyên nghiệp có một bộ màu kỷ luật riêng — <b>màu nền, màu đậm và đúng một màu nhấn</b> (như vàng gold trên nền navy) — và toàn bộ slide chỉ dùng đúng bộ màu đó cùng màu trắng và chữ tối. Trang bìa, trang ngắt chặng và trang cuối dùng <b>bản tối</b> (màu đậm nhất của mẫu pha đen, chữ trắng, điểm nhấn giữ nguyên màu nhấn); ngay sau bìa là <b>trang mục lục vòng tròn đánh số</b>. Các trang nội dung giữ bản sáng và <b>tự chọn bố cục theo nội dung</b>: có số liệu → thẻ KPI / cột ngang, có tỉ lệ → biểu đồ vòng, có mốc năm → trục thời gian, so sánh → bảng so sánh / vòng Venn, liệt kê → thanh viên nang có số lớn, quy trình → ziczac, thành phần → quạt bán nguyệt, phân loại → sơ đồ cây… — không trang nào giống hệt trang nào, mỗi ý chính vẫn có một tranh minh họa riêng liên quan đúng ý đó, hộp “Điểm cần nhớ” ở cuối trang. Thầy cô đổi được bố cục từng trang ở Bước 4.</p>
     <div class="chips" id="tplFilter" style="margin-bottom:14px"></div>
     <div class="tpl-grid" id="tplGrid"></div>
     <div class="card" style="margin-top:16px">
       <h2>🔒 STYLE LOCK — khóa phong cách cả bộ <span style="font-size:12.5px;color:var(--muted);font-weight:600">(theo Skill 21)</span></h2>
-      <p class="sub">Chọn 1 mẫu là khóa cứng bảng màu, phông chữ, nhân vật và bộ bố cục cho toàn bài — không đổi lung tung từng trang. Đổi mẫu ở trên là STYLE LOCK tự cập nhật theo. Theo quy tắc đơn sắc của app: cả bộ chỉ dùng màu chính của mẫu, các sắc độ đậm/nhạt của chính màu đó, màu trắng và chữ tối.</p>
+      <p class="sub">Chọn 1 mẫu là khóa cứng bảng màu, phông chữ, nhân vật và bộ bố cục cho toàn bài — không đổi lung tung từng trang. Đổi mẫu ở trên là STYLE LOCK tự cập nhật theo. Theo quy tắc màu của app: cả bộ chỉ dùng màu nền, màu đậm và màu nhấn của mẫu đã chọn, các sắc độ đậm/nhạt của chính chúng, màu trắng và chữ tối.</p>
       <div class="lock-grid">
         <div class="lock-item"><b>Bảng màu khóa</b><div class="swatches" id="lockSwatches"></div><span id="lockPaletteTxt" class="hint"></span></div>
         <div class="lock-item"><b>Phông chữ khóa</b><span id="lockFont" style="font-size:14px;font-weight:700"></span><br /><span class="hint">Phông mặc định của app cho cả tiêu đề và nội dung — vùng an toàn ≥5% quanh mép trang.</span></div>
@@ -879,18 +882,18 @@ footer.site b{color:var(--ink)}
 /* ============ DATA ============ */
 var LEVELS=["Mầm non","Tiểu học","THCS","THPT","Đại học","Doanh nghiệp"];
 var TEMPLATES=[
- {id:"lua", name:"Đồng Lúa", cat:"Tiểu học", bg:"#F2A007", deep:"#B97A04", art:"rice", desc:"Cánh đồng lúa chín vàng, nông dân Việt gặt lúa"},
- {id:"bien", name:"Biển Xanh", cat:"Tiểu học", bg:"#1B7FB8", deep:"#0F5E8A", art:"sea", desc:"Thuyền buồm và sóng biển quê hương"},
- {id:"vutru", name:"Vũ Trụ", cat:"THCS", bg:"#2E4057", deep:"#1D2B3C", art:"space", desc:"Tên lửa, hành tinh và các vì sao"},
- {id:"rung", name:"Rừng Xanh", cat:"Mầm non", bg:"#3E9B4F", deep:"#2A7038", art:"forest", desc:"Rừng cây, chim muông và nắng sớm"},
- {id:"sach", name:"Trang Sách", cat:"Tiểu học", bg:"#D94F7A", deep:"#A83459", art:"book", desc:"Sách mở, bút chì và niềm vui đọc sách"},
- {id:"toan", name:"Số Học Vui", cat:"Tiểu học", bg:"#0E7C6B", deep:"#0A5F52", art:"math", desc:"Con số, hình khối rực rỡ cho giờ Toán"},
- {id:"que", name:"Quê Hương", cat:"THCS", bg:"#E4572E", deep:"#B03E1D", art:"village", desc:"Đình làng, cây đa và đường làng Việt Nam"},
- {id:"nhac", name:"Giai Điệu", cat:"Mầm non", bg:"#7A4FA3", deep:"#5B3880", art:"music", desc:"Nốt nhạc bay lên cho giờ Âm nhạc"},
- {id:"lop", name:"Lớp Học Vui", cat:"Mầm non", bg:"#E8890C", deep:"#B96A05", art:"class", desc:"Lớp học Việt Nam, cô giáo và học trò"},
- {id:"khoa", name:"Thí Nghiệm", cat:"THPT", bg:"#20736B", deep:"#15524C", art:"science", desc:"Ống nghiệm và khám phá khoa học"},
- {id:"su", name:"Dòng Sử Việt", cat:"THPT", bg:"#9C6642", deep:"#744A2E", art:"history", desc:"Trống đồng và di sản cha ông"},
- {id:"tin", name:"Công Nghệ", cat:"Đại học", bg:"#33658A", deep:"#244A66", art:"tech", desc:"Máy tính, mạch điện tử cho thời đại số"}
+ {id:"navyvang", name:"Navy Vàng", cat:"THCS", cats:["THCS","THPT","Đại học"], bg:"#0A1931", deep:"#060D1F", accent:"#D4AF37", art:"atom", desc:"Vật lý, khoa học: nền tối xanh navy, số vàng gold, hình nguyên tử"},
+ {id:"congnghe", name:"Công Nghệ Xanh", cat:"THCS", cats:["THCS","THPT","Đại học","Doanh nghiệp"], bg:"#05070D", deep:"#02040A", accent:"#2E9BFF", art:"techrings", desc:"Công nghệ, AI: nền đen, khung tròn xanh, họa tiết công nghệ"},
+ {id:"nauvang", name:"Nâu Vàng Cổ Điển", cat:"THPT", cats:["THPT","Đại học","Doanh nghiệp"], bg:"#F5EFE6", deep:"#5D4037", accent:"#B8860B", art:"columns", desc:"Luật, lịch sử, văn học: be-nâu sang trọng, cột La Mã, cân công lý"},
+ {id:"xanhla", name:"Xanh Lá Số Liệu", cat:"Đại học", cats:["Đại học","Doanh nghiệp"], bg:"#F7FAF5", deep:"#1B5E20", accent:"#43A047", art:"kpi", desc:"Kinh doanh, báo cáo: trắng + xanh lá, số lớn, thẻ KPI"},
+ {id:"chienluoc", name:"Xanh Dương Chiến Lược", cat:"THPT", cats:["THPT","Đại học","Doanh nghiệp"], bg:"#1565C0", deep:"#0D47A1", accent:"#64B5F6", art:"fanstrat", desc:"Chiến lược, kế hoạch: xanh dương, quạt nan, timeline"},
+ {id:"kinhlucgiac", name:"Kính Tối Lục Giác", cat:"THPT", cats:["THPT","Đại học","Doanh nghiệp"], bg:"#0A1B2E", deep:"#050D18", accent:"#22D3EE", art:"hexglass", desc:"Công nghệ tương lai: nền tối xanh navy, thẻ kính, lục giác"},
+ {id:"timsangtao", name:"Tím Sáng Tạo", cat:"Tiểu học", cats:["Tiểu học","THCS"], bg:"#6A1B9A", deep:"#4A148C", accent:"#CE93D8", art:"musicpro", desc:"Nghệ thuật, âm nhạc: tím đậm, điểm nhấn lavender"},
+ {id:"xanhngoc", name:"Xanh Ngọc Hiện Đại", cat:"Tiểu học", cats:["Tiểu học","THCS","THPT"], bg:"#0E7C6B", deep:"#062E28", accent:"#80CBC4", art:"leafwave", desc:"Mọi môn: xanh ngọc, sạch, hiện đại"},
+ {id:"camam", name:"Cam Ấm Áp", cat:"Mầm non", cats:["Mầm non","Tiểu học"], bg:"#F57C00", deep:"#E65100", accent:"#FFD54F", art:"sunblocks", desc:"Mầm non, tiểu học: cam ấm, thân thiện, rõ ràng"},
+ {id:"hongphan", name:"Hồng Phấn", cat:"Mầm non", cats:["Mầm non","Tiểu học"], bg:"#EC407A", deep:"#AD1457", accent:"#F8BBD0", art:"bookpro", desc:"Mầm non, tiểu học, ngữ văn: hồng phấn, sách mở"},
+ {id:"biensau", name:"Xanh Biển Sâu", cat:"Tiểu học", cats:["Tiểu học","THCS"], bg:"#0277BD", deep:"#01579B", accent:"#81D4FA", art:"sailpro", desc:"Địa lý, khoa học: xanh biển, thuyền buồm, sóng"},
+ {id:"vanglua", name:"Vàng Lúa Chín", cat:"Tiểu học", cats:["Tiểu học","THCS"], bg:"#F2A007", deep:"#8D5A00", accent:"#FFE082", art:"ricepro", desc:"Quê hương, lịch sử: vàng lúa, nâu đất, đình làng"}
 ];
 var GAMES=[
  {id:"nhanh", name:"Ai Nhanh Tay Hơn", icon:"⚡", color:"#E4572E", desc:"Trả lời nhanh trong 10 giây, càng nhanh điểm càng cao."},
@@ -1074,7 +1077,7 @@ function noQuestionsHTML(){
  return '<p style="font-size:17px;line-height:1.65">'+esc(msg)+'</p>';
 }
 
-var SAMPLE={topic:"Hành trình hạt gạo",level:"Tiểu học",subject:"Tự nhiên & Xã hội",pages:11,tpl:"lua",
+var SAMPLE={topic:"Hành trình hạt gạo",level:"Tiểu học",subject:"Tự nhiên & Xã hội",pages:11,tpl:"navyvang",
  outline:"Hạt gạo đến từ cây lúa\nGieo hạt và nảy mầm\nChăm sóc cây lúa\nLúa chín vàng trên cánh đồng\nBác nông dân gặt lúa\nPhơi thóc và xay thành gạo\nTừ hạt gạo đến bát cơm\nVì sao phải quý trọng hạt gạo",
  games:["leo","dungsai"]};
 
@@ -1097,9 +1100,9 @@ function sampleSlides(){
 
 /* ============ STATE ============ */
 var state={step:1, topic:"", level:SAMPLE.level, subject:SAMPLE.subject, pages:11,
- tplId:"lua", outline:"", games:{leo:true,dungsai:true}, slides:sampleSlides(), cur:0,
+ tplId:"navyvang", outline:"", games:{leo:true,dungsai:true}, slides:sampleSlides(), cur:0,
  book:"", sgkPage:"", sgkQuote:"", notes:true};
-var myLessons=[{name:"Hành trình hạt gạo (bài mẫu)", topic:SAMPLE.topic, level:SAMPLE.level, subject:SAMPLE.subject, pages:11, tplId:"lua", outline:SAMPLE.outline, games:{leo:true,dungsai:true}, slides:sampleSlides()}];
+var myLessons=[{name:"Hành trình hạt gạo (bài mẫu)", topic:SAMPLE.topic, level:SAMPLE.level, subject:SAMPLE.subject, pages:11, tplId:"navyvang", outline:SAMPLE.outline, games:{leo:true,dungsai:true}, slides:sampleSlides()}];
 /* ============ SKILL 09/21 SLIDE META (phase / layout / narration / ix) ============
    Slide body stays a plain string (C6) — only these fields are added. */
 var PHASES=["Khởi động","Định hướng","Khám phá","Giải thích","Luyện tập","Vận dụng","Đánh giá","Tổng kết"];
@@ -1173,7 +1176,7 @@ function mixHex(a,b,t){ var A=hexRGB(a),B=hexRGB(b); function c(i){ return Math.
 function monoPal(bg,deep){ return { m:bg, d:deep||mixHex(bg,"#000000",.35), d2:mixHex(deep||mixHex(bg,"#000000",.35),"#000000",.3), l1:mixHex(bg,"#FFFFFF",.38), l15:mixHex(bg,"#FFFFFF",.55), l2:mixHex(bg,"#FFFFFF",.68), w:"#FFFFFF" }; }
 /* ============ PRO DESIGN HELPERS (dark pages, data extraction, SVG charts) ============ */
 function darkOf(tpl){ return mixHex(tpl.deep||tpl.bg,"#000000",.55); }
-function shadeSeq(tpl,i,n){ var f=n<=1?1:i/(n-1); return mixHex(mixHex(tpl.bg,"#FFFFFF",.45),tpl.deep,f); }
+function shadeSeq(tpl,i,n){ var f=n<=1?1:i/(n-1); return mixHex(tpl.accent||mixHex(tpl.bg,"#FFFFFF",.45),tpl.deep,f); }
 function hexDecor(color){ function hex(cx,cy,r){ var pts=[]; for(var k=0;k<6;k++){ var a=Math.PI/6+k*Math.PI/3; pts.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1)); } return '<polygon points="'+pts.join(" ")+'" fill="none" stroke="'+color+'" stroke-width="2"/>'; }
  return '<svg class="hexdeco" viewBox="0 0 300 200" preserveAspectRatio="xMaxYMin meet" aria-hidden="true">'+hex(235,55,52)+hex(158,122,30)+hex(268,142,22)+'</svg>'; }
 var PHASE_DESC={"Khởi động":"Mở bài bằng một câu hỏi gợi mở — cả lớp cùng suy nghĩ và chia sẻ.","Định hướng":"Nêu mục tiêu và bức tranh toàn bài để học sinh biết mình sẽ học gì.","Khám phá":"Quan sát, tìm hiểu và tự rút ra kiến thức mới từ bài học.","Giải thích":"Chuẩn hóa kiến thức, chốt lại khái niệm trọng tâm của bài.","Luyện tập":"Làm bài tập và nhiệm vụ để nắm chắc kiến thức vừa học.","Vận dụng":"Đưa kiến thức vào tình huống đời sống hằng ngày.","Đánh giá":"Kiểm tra nhanh mức độ hiểu bài qua câu hỏi và trò chơi.","Tổng kết":"Chốt lại các ý trọng tâm và dặn dò trước khi kết thúc bài."};
@@ -1181,18 +1184,18 @@ function firstNumToken(b){ var m=String(b).match(/\d+(?:[.,]\d+)?\s?(?:%|kg|km|c
 function numVal(tok){ var m=String(tok).match(/\d+(?:[.,]\d+)?/); return m?parseFloat(m[0].replace(",",".")):0; }
 function kpiData(bullets){ var out=[]; bullets.forEach(function(b,bi){ var tok=firstNumToken(b); if(!tok) return; var lab=String(b).replace(tok,"").replace(/^[\s:—–-]+/,"").trim(); if(lab.length<3) lab=shortTxt(b,40); out.push({v:tok,val:numVal(tok),label:shortTxt(lab,44),bi:bi}); }); return out; }
 function pctData(bullets){ var out=[]; bullets.forEach(function(b,bi){ var m=String(b).match(/(\d+(?:[.,]\d+)?)\s?%/); if(!m) return; var lab=String(b).replace(m[0],"").replace(/^[\s:—–-]+/,"").trim(); out.push({pct:parseFloat(m[1].replace(",",".")),tok:m[0],label:shortTxt(lab||b,44),bi:bi}); }); return out; }
-function donutSVG(data,tpl){ var P=monoPal(tpl.bg,tpl.deep); var cols=[tpl.deep,tpl.bg,P.l1,P.d2,P.l15,P.d]; var tot=0; data.forEach(function(d){ tot+=d.pct; }); if(!tot) tot=1; var off=25;
+function donutSVG(data,tpl){ var P=monoPal(tpl.bg,tpl.deep); var cols=[tpl.deep,tpl.accent||tpl.bg,P.l1,P.d2,P.l15,P.d]; var tot=0; data.forEach(function(d){ tot+=d.pct; }); if(!tot) tot=1; var off=25;
  var out='<svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><circle cx="21" cy="21" r="15.9155" fill="none" stroke="'+mixHex(tpl.bg,"#FFFFFF",.85)+'" stroke-width="6"/>';
  data.forEach(function(d,i){ var frac=d.pct/tot*100; out+='<circle cx="21" cy="21" r="15.9155" fill="none" stroke="'+cols[i%cols.length]+'" stroke-width="6" stroke-dasharray="'+frac.toFixed(2)+' '+(100-frac).toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'"/>'; off-=frac; });
  out+='<text x="21" y="20.5" text-anchor="middle" font-family="Verdana" font-weight="bold" font-size="6.2" fill="'+tpl.deep+'">'+(data.length?esc(data[0].tok):"")+'</text><text x="21" y="26" text-anchor="middle" font-family="Verdana" font-size="3.3" fill="#5B6B74">tỉ lệ lớn nhất</text></svg>'; return out; }
-function fanSVG(bullets,tpl,center){ var P=monoPal(tpl.bg,tpl.deep); var cols=[P.l1,tpl.bg,P.l15,tpl.deep,P.l2,P.d2]; var n=Math.max(3,Math.min(6,bullets.length)); var cx=100,cy=106,R=98,r0=34;
+function fanSVG(bullets,tpl,center){ var P=monoPal(tpl.bg,tpl.deep); var cols=[tpl.accent||P.l1,mixHex(tpl.bg,tpl.deep,.3),tpl.deep,P.l1,P.d2,mixHex(tpl.bg,tpl.deep,.6)]; var n=Math.max(3,Math.min(6,bullets.length)); var cx=100,cy=106,R=98,r0=34;
  function pol(r,deg){ var a=deg*Math.PI/180; return [cx+r*Math.cos(a), cy-r*Math.sin(a)]; }
  var out='<svg viewBox="0 0 200 112" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">';
  for(var i=0;i<n;i++){ var a0=180-(180/n)*i, a1=180-(180/n)*(i+1); var p1=pol(R,a0),p2=pol(R,a1),p3=pol(r0,a1),p4=pol(r0,a0);
   out+='<path d="M'+p4[0].toFixed(1)+' '+p4[1].toFixed(1)+' L'+p1[0].toFixed(1)+' '+p1[1].toFixed(1)+' A'+R+' '+R+' 0 0 1 '+p2[0].toFixed(1)+' '+p2[1].toFixed(1)+' L'+p3[0].toFixed(1)+' '+p3[1].toFixed(1)+' A'+r0+' '+r0+' 0 0 0 '+p4[0].toFixed(1)+' '+p4[1].toFixed(1)+' Z" fill="'+cols[i%cols.length]+'" stroke="#FFFFFF" stroke-width="1.6"/>';
   var mid=(a0+a1)/2, tp=pol(68,mid); out+='<text x="'+tp[0].toFixed(1)+'" y="'+(tp[1]+4).toFixed(1)+'" text-anchor="middle" font-family="Verdana" font-weight="bold" font-size="12" fill="#FFFFFF">'+(i+1)+'</text>'; }
  out+='<path d="M '+(cx-r0-9)+' '+cy+' A '+(r0+9)+' '+(r0+9)+' 0 0 1 '+(cx+r0+9)+' '+cy+' Z" fill="#FFFFFF"/><text x="'+cx+'" y="'+(cy-7)+'" text-anchor="middle" font-family="Verdana" font-weight="bold" font-size="8.5" fill="'+tpl.deep+'">'+esc(shortTxt(center||"Ý chính",16))+'</text></svg>'; return out; }
-function wheelSVG(bullets,tpl,center){ var P=monoPal(tpl.bg,tpl.deep); var cols=[P.l1,tpl.bg,P.l15,tpl.deep,P.l2,P.d2]; var n=Math.max(4,Math.min(6,bullets.length)); var cx=100,cy=100,R=96,r0=40;
+function wheelSVG(bullets,tpl,center){ var P=monoPal(tpl.bg,tpl.deep); var cols=[tpl.accent||P.l1,mixHex(tpl.bg,tpl.deep,.3),tpl.deep,P.l1,P.d2,mixHex(tpl.bg,tpl.deep,.6)]; var n=Math.max(4,Math.min(6,bullets.length)); var cx=100,cy=100,R=96,r0=40;
  function pol(r,deg){ var a=deg*Math.PI/180; return [cx+r*Math.cos(a), cy-r*Math.sin(a)]; }
  var out='<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">';
  for(var i=0;i<n;i++){ var a0=90-(360/n)*i, a1=90-(360/n)*(i+1); var p1=pol(R,a0),p2=pol(R,a1),p3=pol(r0,a1),p4=pol(r0,a0);
@@ -1247,11 +1250,29 @@ function injectStructure(){
  state.slides=out;
  for(var j=out.length-1;j>=0;j--){ if(out[j].type==="content"){ out[j].closing=true; break; } }
 }
-function artSVG(kind, bg, deep){
- var P=monoPal(bg,deep), D=P.d, D2=P.d2, L1=P.l1, L15=P.l15, L2=P.l2, W=P.w;
+function artSVG(kind, bg, deep, accent){
+ var P=monoPal(bg,deep), D=P.d, D2=P.d2, L1=P.l1, L15=P.l15, L2=P.l2, W=P.w, ACC=accent||L2;
  var s="";
  var open='<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><rect width="400" height="250" fill="'+bg+'"/>';
- if(kind==="rice"){ s='<circle cx="330" cy="46" r="26" fill="'+W+'"/><path d="M0 170 Q100 140 200 165 T400 160 V250 H0 Z" fill="'+L1+'"/><path d="M0 200 Q120 178 240 198 T400 195 V250 H0 Z" fill="'+D+'"/>'
+ /* ===== PRO TEMPLATE ART (redrawn for the 12 professional templates) —
+    geometric, thin-line, editorial style; only bg / deep / accent / white. ===== */
+ if(kind==="atom"){ s='<g fill="none" stroke="'+ACC+'" stroke-width="3"><ellipse cx="200" cy="125" rx="150" ry="52"/><ellipse cx="200" cy="125" rx="150" ry="52" transform="rotate(60 200 125)"/><ellipse cx="200" cy="125" rx="150" ry="52" transform="rotate(120 200 125)"/></g><circle cx="200" cy="125" r="21" fill="'+ACC+'"/><circle cx="200" cy="125" r="9" fill="'+W+'"/><g fill="'+W+'"><circle cx="350" cy="125" r="7"/><circle cx="125" cy="65" r="7"/><circle cx="125" cy="185" r="7"/></g><g fill="'+ACC+'"><circle cx="52" cy="42" r="3"/><circle cx="356" cy="52" r="3"/><circle cx="330" cy="208" r="3"/><circle cx="60" cy="200" r="3"/></g><path d="M28 228 H150 M250 228 H372" stroke="'+ACC+'" stroke-width="2" opacity=".55"/>'; }
+ else if(kind==="techrings"){ s='<g fill="none" stroke="'+ACC+'"><circle cx="200" cy="125" r="96" stroke-width="2" opacity=".5"/><circle cx="200" cy="125" r="72" stroke-width="3"/><circle cx="200" cy="125" r="46" stroke-width="2" stroke-dasharray="10 8"/></g><path d="M200 29 a96 96 0 0 1 83 48" fill="none" stroke="'+W+'" stroke-width="5" stroke-linecap="round"/><circle cx="200" cy="125" r="24" fill="'+D2+'" stroke="'+ACC+'" stroke-width="3"/><circle cx="200" cy="125" r="8" fill="'+ACC+'"/><g fill="'+ACC+'"><circle cx="200" cy="53" r="6"/><circle cx="272" cy="125" r="6"/><circle cx="154" cy="197" r="6"/></g><g stroke="'+ACC+'" stroke-width="2.5" opacity=".8" fill="none"><path d="M28 60 h44 l14 14 M372 190 h-44 l-14 -14 M28 190 h34 M338 60 h34"/></g><g fill="'+W+'"><circle cx="28" cy="60" r="4"/><circle cx="372" cy="190" r="4"/></g>'; }
+ else if(kind==="columns"){ s='<path d="M60 62 L200 22 L340 62 Z" fill="'+D+'"/><rect x="52" y="62" width="296" height="10" fill="'+ACC+'"/>'
+  +[84,182,280].map(function(x){return '<rect x="'+x+'" y="82" width="38" height="10" fill="'+ACC+'"/><rect x="'+(x+3)+'" y="92" width="32" height="104" fill="'+W+'" stroke="'+D+'" stroke-width="2"/><path d="M'+(x+13)+' 96 v96 M'+(x+25)+' 96 v96" stroke="'+D+'" stroke-width="2" opacity=".4"/><rect x="'+x+'" y="196" width="38" height="10" fill="'+ACC+'"/>';}).join("")
+  +'<rect x="44" y="206" width="312" height="12" fill="'+D+'"/><path d="M200 84 v76" stroke="'+D+'" stroke-width="5"/><path d="M146 96 h108" stroke="'+D+'" stroke-width="5"/><circle cx="200" cy="84" r="7" fill="'+ACC+'"/><path d="M146 96 L130 122 M146 96 L162 122 M254 96 L238 122 M254 96 L270 122" stroke="'+D+'" stroke-width="2.5"/><path d="M124 122 a22 10 0 0 0 44 0 Z" fill="'+ACC+'"/><path d="M232 122 a22 10 0 0 0 44 0 Z" fill="'+ACC+'"/><path d="M182 168 h36 l6 12 h-48 Z" fill="'+D+'"/>'; }
+ else if(kind==="kpi"){ s='<g font-family="Verdana" font-weight="bold"><rect x="30" y="52" width="104" height="146" rx="10" fill="'+W+'" stroke="'+D+'" stroke-width="2.5"/><text x="82" y="118" text-anchor="middle" font-size="40" fill="'+ACC+'">01</text><rect x="48" y="136" width="68" height="9" rx="4.5" fill="'+D+'"/><rect x="48" y="154" width="48" height="9" rx="4.5" fill="'+ACC+'" opacity=".55"/><rect x="148" y="34" width="104" height="164" rx="10" fill="'+W+'" stroke="'+D+'" stroke-width="2.5"/><rect x="148" y="34" width="104" height="14" rx="7" fill="'+ACC+'"/><text x="200" y="118" text-anchor="middle" font-size="40" fill="'+D+'">02</text><path d="M166 168 v-22 M186 168 v-36 M206 168 v-16 M226 168 v-28" stroke="'+ACC+'" stroke-width="7"/><rect x="266" y="52" width="104" height="146" rx="10" fill="'+W+'" stroke="'+D+'" stroke-width="2.5"/><text x="318" y="118" text-anchor="middle" font-size="40" fill="'+ACC+'">03</text><circle cx="318" cy="158" r="17" fill="none" stroke="'+D+'" stroke-width="6"/><path d="M318 141 a17 17 0 0 1 15 9" stroke="'+ACC+'" stroke-width="6" fill="none"/></g>'; }
+ else if(kind==="fanstrat"){ s='<g stroke="'+W+'" stroke-width="2"><path d="M146 190 L50 190 A150 150 0 0 1 78.6 101.8 L156.3 158.2 A54 54 0 0 0 146 190 Z" fill="'+ACC+'"/><path d="M156.3 158.2 L78.6 101.8 A150 150 0 0 1 153.6 47.3 L183.3 138.6 A54 54 0 0 0 156.3 158.2 Z" fill="'+L1+'"/><path d="M183.3 138.6 L153.6 47.3 A150 150 0 0 1 246.4 47.3 L216.7 138.6 A54 54 0 0 0 183.3 138.6 Z" fill="'+D+'"/><path d="M216.7 138.6 L246.4 47.3 A150 150 0 0 1 321.4 101.8 L243.7 158.2 A54 54 0 0 0 216.7 138.6 Z" fill="'+L15+'"/><path d="M243.7 158.2 L321.4 101.8 A150 150 0 0 1 350 190 L254 190 A54 54 0 0 0 243.7 158.2 Z" fill="'+D2+'"/></g><g font-family="Verdana" font-weight="bold" font-size="15" fill="'+W+'" text-anchor="middle"><text x="103" y="163">1</text><text x="140" y="112">2</text><text x="200" y="93">3</text><text x="260" y="112">4</text><text x="297" y="163">5</text></g><path d="M146 190 A54 54 0 0 1 254 190 Z" fill="'+W+'"/><circle cx="200" cy="176" r="7" fill="'+ACC+'"/><rect x="40" y="200" width="320" height="5" rx="2.5" fill="'+ACC+'"/>'; }
+ else if(kind==="hexglass"){ s='<g fill="none" stroke="'+ACC+'" stroke-width="2.5"><polygon points="349.8,93 310,116 270.2,93 270.2,47 310,24 349.8,47"/><polygon points="115.4,195 86,212 56.6,195 56.6,161 86,144 115.4,161" opacity=".7"/><polygon points="372.8,208 352,220 331.2,208 331.2,184 352,172 372.8,184" opacity=".55"/></g><rect x="52" y="58" width="150" height="104" rx="12" fill="#FFFFFF" fill-opacity=".08" stroke="'+ACC+'" stroke-width="2"/><rect x="70" y="78" width="52" height="8" rx="4" fill="'+ACC+'"/><path d="M70 99 h114 M70 113 h92" stroke="#FFFFFF" stroke-opacity=".45" stroke-width="7" stroke-linecap="round"/><g fill="'+ACC+'"><rect x="70" y="130" width="16" height="18"/><rect x="94" y="122" width="16" height="26"/><rect x="118" y="136" width="16" height="12"/></g><rect x="216" y="96" width="132" height="92" rx="12" fill="#FFFFFF" fill-opacity=".06" stroke="'+ACC+'" stroke-width="1.6"/><circle cx="252" cy="128" r="10" fill="none" stroke="'+ACC+'" stroke-width="3"/><path d="M282 120 h44 M282 136 h44 M282 152 h30" stroke="#FFFFFF" stroke-opacity=".5" stroke-width="6" stroke-linecap="round"/>'; }
+ else if(kind==="musicpro"){ s='<g stroke="'+L2+'" stroke-width="2" opacity=".65"><path d="M36 84 H364 M36 100 H364 M36 116 H364 M36 132 H364 M36 148 H364"/></g><ellipse cx="118" cy="140" rx="12" ry="8.5" fill="'+W+'" transform="rotate(-18 118 140)"/><path d="M129 138 V72" stroke="'+W+'" stroke-width="4"/><path d="M129 72 q30 4 26 30 q-4 -18 -26 -20 Z" fill="'+ACC+'"/><ellipse cx="212" cy="118" rx="12" ry="8.5" fill="'+ACC+'" transform="rotate(-18 212 118)"/><path d="M223 116 V54" stroke="'+ACC+'" stroke-width="4"/><path d="M223 54 q30 4 26 30 q-4 -18 -26 -20 Z" fill="'+W+'"/><ellipse cx="292" cy="146" rx="11" ry="8" fill="'+W+'" transform="rotate(-18 292 146)"/><ellipse cx="336" cy="138" rx="11" ry="8" fill="'+W+'" transform="rotate(-18 336 138)"/><path d="M302 144 V86 M346 136 V78" stroke="'+W+'" stroke-width="4"/><path d="M302 86 L346 78 v12 L302 98 Z" fill="'+ACC+'"/><g fill="'+ACC+'"><circle cx="66" cy="196" r="4"/><circle cx="200" cy="206" r="4"/><circle cx="330" cy="196" r="4"/></g><path d="M52 206 H348" stroke="'+ACC+'" stroke-width="2" opacity=".5"/>'; }
+ else if(kind==="leafwave"){ s='<path d="M118 188 C72 128 84 58 156 28 C178 100 162 162 118 188 Z" fill="'+L1+'"/><path d="M118 188 C120 140 132 92 156 44" fill="none" stroke="'+W+'" stroke-width="3.5"/><path d="M238 168 C214 124 222 74 268 52 C282 104 270 148 238 168 Z" fill="'+ACC+'"/><path d="M238 168 C240 132 248 96 266 62" fill="none" stroke="'+D+'" stroke-width="3" opacity=".5"/><g fill="none" stroke-linecap="round"><path d="M24 208 q24 -14 48 0 t48 0 t48 0 t48 0 t48 0 t48 0 t48 0" stroke="'+ACC+'" stroke-width="5"/><path d="M24 228 q24 -14 48 0 t48 0 t48 0 t48 0 t48 0 t48 0 t48 0" stroke="'+W+'" stroke-width="4" opacity=".8"/></g><circle cx="322" cy="52" r="17" fill="none" stroke="'+ACC+'" stroke-width="3"/><circle cx="322" cy="52" r="6" fill="'+ACC+'"/>'; }
+ else if(kind==="sunblocks"){ s='<g stroke="'+ACC+'" stroke-width="6" stroke-linecap="round">'
+  +[0,45,90,135,180,225,270,315].map(function(a){return '<path d="M112 44 V26" transform="rotate('+a+' 112 88)"/>';}).join("")
+  +'</g><circle cx="112" cy="88" r="34" fill="'+ACC+'" stroke="'+W+'" stroke-width="4"/><circle cx="112" cy="88" r="20" fill="'+W+'" opacity=".35"/><rect x="46" y="156" width="58" height="58" rx="8" fill="'+W+'" stroke="'+D+'" stroke-width="3"/><path d="M150 214 L184 156 L218 214 Z" fill="'+D+'"/><circle cx="292" cy="185" r="29" fill="none" stroke="'+ACC+'" stroke-width="7"/><rect x="330" y="168" width="34" height="34" rx="6" fill="'+ACC+'"/><rect x="36" y="224" width="328" height="5" rx="2.5" fill="'+W+'" opacity=".7"/>'; }
+ else if(kind==="bookpro"){ s='<path d="M84 36 l3.5 8.5 8.5 3.5 -8.5 3.5 -3.5 8.5 -3.5 -8.5 -8.5 -3.5 8.5 -3.5 Z" fill="'+ACC+'"/><circle cx="330" cy="42" r="5" fill="'+W+'"/><path d="M200 78 q-58 -26 -118 -12 v118 q60 -14 118 12 Z" fill="'+W+'"/><path d="M200 78 q58 -26 118 -12 v118 q-60 -14 -118 12 Z" fill="'+L2+'"/><rect x="196" y="72" width="8" height="126" fill="'+D+'"/><g stroke="'+D+'" stroke-width="4.5" stroke-linecap="round" opacity=".7"><path d="M102 96 h76 M102 120 h76 M102 144 h56"/></g><g stroke="'+D+'" stroke-width="4.5" stroke-linecap="round" opacity=".45"><path d="M222 96 h76 M222 120 h76 M222 144 h56"/></g><path d="M262 58 v46 l-12 -9 -12 9 V60 Z" fill="'+ACC+'"/><rect x="82" y="216" width="236" height="5" rx="2.5" fill="'+ACC+'"/>'; }
+ else if(kind==="sailpro"){ s='<circle cx="66" cy="46" r="19" fill="'+ACC+'"/><path d="M196 158 L196 44 L282 158 Z" fill="'+W+'"/><path d="M188 158 L188 76 L128 158 Z" fill="'+L2+'"/><path d="M196 44 l30 8 -30 10 Z" fill="'+ACC+'"/><rect x="132" y="152" width="166" height="7" rx="3.5" fill="'+ACC+'"/><path d="M140 159 h150 l-18 29 h-114 Z" fill="'+D2+'"/><path d="M0 200 q25 -14 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V250 H0 Z" fill="'+D+'"/><path d="M0 224 q25 -13 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V250 H0 Z" fill="'+D2+'"/><path d="M0 200 q25 -14 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0" fill="none" stroke="'+ACC+'" stroke-width="3.5"/>'; }
+ else if(kind==="ricepro"){ s='<circle cx="326" cy="48" r="21" fill="'+ACC+'" stroke="'+W+'" stroke-width="3"/><path d="M70 60 q9 -8 18 0 M100 44 q9 -8 18 0" stroke="'+D2+'" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M0 150 Q200 108 400 146 V250 H0 Z" fill="'+L1+'"/><path d="M0 182 Q200 142 400 178 V250 H0 Z" fill="'+L15+'"/><path d="M0 214 Q200 180 400 210 V250 H0 Z" fill="'+D+'"/><path d="M128 138 L200 100 L272 138 L258 146 L200 116 L142 146 Z" fill="'+D2+'"/><rect x="158" y="146" width="84" height="34" fill="'+D2+'"/><rect x="192" y="156" width="16" height="24" fill="'+ACC+'"/><g stroke="'+ACC+'" stroke-width="3.5" fill="none" stroke-linecap="round"><path d="M52 238 v-22 M52 222 q-10 -10 -18 -10 M52 222 q10 -10 18 -10 M348 238 v-22 M348 222 q-10 -10 -18 -10 M348 222 q10 -10 18 -10"/></g>'; }
+ else if(kind==="rice"){ s='<circle cx="330" cy="46" r="26" fill="'+W+'"/><path d="M0 170 Q100 140 200 165 T400 160 V250 H0 Z" fill="'+L1+'"/><path d="M0 200 Q120 178 240 198 T400 195 V250 H0 Z" fill="'+D+'"/>'
   +[40,90,150,210,270,330].map(function(x){return '<g stroke="'+L2+'" stroke-width="4" fill="none"><path d="M'+x+' 250 V'+(185+ (x%3)*8)+'"/><path d="M'+x+' '+(190+(x%3)*8)+' q-14 -16 -22 -14 M'+x+' '+(190+(x%3)*8)+' q14 -16 22 -14"/></g><ellipse cx="'+x+'" cy="'+(178+(x%3)*8)+'" rx="6" ry="12" fill="'+W+'"/>';}).join("")
   +'<circle cx="120" cy="150" r="13" fill="'+D2+'"/><path d="M100 165 q20 -12 40 0 l6 34 h-52 Z" fill="'+D+'"/><path d="M96 148 l24 -14 24 14 -8 4 h-32 Z" fill="'+W+'"/>'; }
  else if(kind==="sea"){ s='<path d="M0 150 Q60 132 120 150 T240 150 T400 148 V250 H0 Z" fill="'+D+'"/><path d="M0 185 Q70 168 140 185 T280 185 T400 182 V250 H0 Z" fill="'+D2+'"/><circle cx="52" cy="42" r="20" fill="'+W+'"/><path d="M180 150 l14 -74 54 74 Z" fill="'+W+'"/><path d="M196 150 l4 -52 34 52 Z" fill="'+L2+'"/><path d="M150 150 h110 l-14 26 h-80 Z" fill="'+D2+'"/><path d="M60 90 q10 -8 20 0 M96 74 q10 -8 20 0" stroke="'+W+'" stroke-width="4" fill="none" stroke-linecap="round"/>'; }
@@ -1343,7 +1364,7 @@ var TOPIC_RULES=[
  ["question",["vi sao","tai sao","cau hoi","suy nghi"]],
  ["bulb",["y tuong","sang tao","ghi nho"]]
 ];
-var TOPIC_FALLBACK={rice:"rice",sea:"sea",forest:"tree",book:"book",music:"music",math:"math",village:"house",class:"school",science:"bulb",space:"star",history:"star",tech:"bulb"};
+var TOPIC_FALLBACK={atom:"bulb",techrings:"bulb",columns:"star",kpi:"math",fanstrat:"star",hexglass:"bulb",musicpro:"music",leafwave:"tree",sunblocks:"sun",bookpro:"book",sailpro:"sea",ricepro:"rice",rice:"rice",sea:"sea",forest:"tree",book:"book",music:"music",math:"math",village:"house",class:"school",science:"bulb",space:"star",history:"star",tech:"bulb"};
 function pickTopicArt(text, tpl){
  var t=" "+stripVN(text)+" ";
  for(var i=0;i<TOPIC_RULES.length;i++){
@@ -1485,7 +1506,7 @@ function layoutBodyHTML(layout, sl, tpl, bullets){
   return '<div class="lay-body pills-body">'+pr+'</div>';
  }
  if(layout==="donut"){
-  var dd=pctData(bullets); var dcols=[tpl.deep,tpl.bg,mixHex(tpl.bg,"#FFFFFF",.38),mixHex(tpl.deep,"#000000",.3),mixHex(tpl.bg,"#FFFFFF",.55),tpl.deep];
+  var dd=pctData(bullets); var dcols=[tpl.deep,tpl.accent||tpl.bg,mixHex(tpl.bg,"#FFFFFF",.38),mixHex(tpl.deep,"#000000",.3),mixHex(tpl.bg,"#FFFFFF",.55),tpl.deep];
   var leg=""; dd.forEach(function(d,i){ leg+='<div class="donut-leg"><span class="donut-dot" style="background:'+dcols[i%dcols.length]+'"></span><p>'+esc(d.label)+'</p><b style="color:'+tpl.deep+'">'+esc(d.tok)+'</b></div>'; });
   return '<div class="lay-body donut-body"><div class="donut-chart">'+donutSVG(dd,tpl)+'</div><div class="donut-legs">'+leg+'</div></div>';
  }
@@ -1582,18 +1603,18 @@ function layoutBodyHTML(layout, sl, tpl, bullets){
  return '<div class="lay-body" style="flex-direction:column"><div class="c-rows">'+rows3+'</div></div>';
 }
 function slideHTML(sl, tpl, idx, total){
- if(sl.type==="cover"){ var dk=darkOf(tpl); var P0=monoPal(tpl.bg,tpl.deep);
-  return '<div class="slide-view darkslide" style="background:'+dk+'">'+hexDecor(P0.l2)+'<div class="txt"><span class="eyebrow" style="color:'+P0.l2+'">'+esc((typeof state!=="undefined"&&state.subject)||"Bài giảng")+' · '+esc((typeof state!=="undefined"&&state.level)||"")+'</span><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body)+'</p><span class="dark-foot" style="color:'+P0.l2+'">Mr Quân - Đồng hành cùng giáo viên · Liên hệ: 0982.521.721</span></div><div class="art">'+mainArtHTML(sl,tpl,artSVG(tpl.art,tpl.bg,tpl.deep))+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
- if(sl.type==="game") return '<div class="slide-view" style="background:'+tpl.bg+'"><div class="txt"><h2>🎮 '+esc(sl.title)+'</h2><p>Đến giờ chơi rồi! Bấm nút Chơi ngay để bắt đầu.</p></div><div class="art">'+artSVG(tpl.art,tpl.bg,tpl.deep)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
+ if(sl.type==="cover"){ var dk=darkOf(tpl); var P0=monoPal(tpl.bg,tpl.deep); var ACC0=tpl.accent||P0.l2;
+  return '<div class="slide-view darkslide" style="background:'+dk+'">'+hexDecor(ACC0)+'<div class="txt"><span class="eyebrow" style="color:'+ACC0+'">'+esc((typeof state!=="undefined"&&state.subject)||"Bài giảng")+' · '+esc((typeof state!=="undefined"&&state.level)||"")+'</span><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body)+'</p><span class="dark-foot" style="color:'+ACC0+'">Mr Quân - Đồng hành cùng giáo viên · Liên hệ: 0982.521.721</span></div><div class="art">'+mainArtHTML(sl,tpl,artSVG(tpl.art,tpl.bg,tpl.deep,tpl.accent))+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
+ if(sl.type==="game") return '<div class="slide-view" style="background:'+darkOf(tpl)+'"><div class="txt"><h2>🎮 '+esc(sl.title)+'</h2><p>Đến giờ chơi rồi! Bấm nút Chơi ngay để bắt đầu.</p></div><div class="art">'+artSVG(tpl.art,tpl.bg,tpl.deep,tpl.accent)+'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
  if(sl.type==="contents"){ var parts=sl.parts||[]; var P1=monoPal(tpl.bg,tpl.deep); var circ="";
-  parts.forEach(function(pn,i){ circ+='<div class="cc-item">'+(i?'<span class="cc-line" style="background:'+P1.l1+'"></span>':"")+'<span class="cc-circ" style="border-color:'+tpl.bg+';color:'+tpl.deep+'">'+("0"+(i+1)).slice(-2)+'</span><span class="cc-ic">'+topicArtSVG(pickTopicArt(pn,tpl),tpl)+'</span><p>'+esc(pn)+'</p></div>'; });
+  parts.forEach(function(pn,i){ circ+='<div class="cc-item">'+(i?'<span class="cc-line" style="background:'+(tpl.accent||P1.l1)+'"></span>':"")+'<span class="cc-circ" style="border-color:'+(tpl.accent||tpl.bg)+';color:'+tpl.deep+'">'+("0"+(i+1)).slice(-2)+'</span><span class="cc-ic">'+topicArtSVG(pickTopicArt(pn,tpl),tpl)+'</span><p>'+esc(pn)+'</p></div>'; });
   return '<div class="slide-view content lay-contents" style="background:'+tpl.bg+'"><div class="inner cc-inner"><h2 class="cc-title" style="color:'+tpl.deep+'">Nội dung bài học</h2><p class="cc-sub">Bài “'+esc(lessonTitle())+'” gồm '+parts.length+' phần chính:</p><div class="cc-row">'+circ+'</div></div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
- if(sl.type==="divider"){ var dk2=darkOf(tpl); var P2=monoPal(tpl.bg,tpl.deep);
-  return '<div class="slide-view darkslide" style="background:'+dk2+'">'+hexDecor(P2.l2)+'<div class="dv-wrap"><span class="dv-circ" style="border-color:'+P2.l2+'">'+("0"+(sl.phaseIndex||2)).slice(-2)+'</span><div><span class="eyebrow" style="color:'+P2.l2+'">Chặng học</span><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body||"")+'</p></div></div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
+ if(sl.type==="divider"){ var dk2=darkOf(tpl); var P2=monoPal(tpl.bg,tpl.deep); var ACC2=tpl.accent||P2.l2;
+  return '<div class="slide-view darkslide" style="background:'+dk2+'">'+hexDecor(ACC2)+'<div class="dv-wrap"><span class="dv-circ" style="border-color:'+ACC2+'">'+("0"+(sl.phaseIndex||2)).slice(-2)+'</span><div><span class="eyebrow" style="color:'+ACC2+'">Chặng học</span><h2>'+esc(sl.title)+'</h2><p>'+esc(sl.body||"")+'</p></div></div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
  var bullets=parseBullets(sl);
  if(sl.closing){ var dk3=darkOf(tpl); var P3=monoPal(tpl.bg,tpl.deep); var cbc="";
   bullets.forEach(function(b,i){ cbc+='<div class="cl-card"><span class="c-thumb">'+bulletArtHTML(sl,b,topicArtSVG(pickTopicArt(b,tpl),tpl))+'</span><p>'+esc(b)+'</p></div>'; });
-  return '<div class="slide-view darkslide" style="background:'+dk3+'">'+hexDecor(P3.l2)+'<div class="cl-wrap"><span class="eyebrow" style="color:'+P3.l2+'">Trang cuối · Tổng kết</span><h2>'+esc(sl.title)+'</h2><div class="cl-cards">'+cbc+'</div><p class="cl-rem">⭐ Điểm cần nhớ: '+esc(rememberFor(sl,bullets))+'</p></div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
+  return '<div class="slide-view darkslide" style="background:'+dk3+'">'+hexDecor(tpl.accent||P3.l2)+'<div class="cl-wrap"><span class="eyebrow" style="color:'+(tpl.accent||P3.l2)+'">Trang cuối · Tổng kết</span><h2>'+esc(sl.title)+'</h2><div class="cl-cards">'+cbc+'</div><p class="cl-rem">⭐ Điểm cần nhớ: '+esc(rememberFor(sl,bullets))+'</p></div><span class="badge">'+(idx+1)+' / '+total+'</span></div>'; }
  var layout=normLayout(sl.layout)||"split";
  var cornerHtml=(sl.img && imgModeOf(sl,layout,bullets)==="corner")?'<span class="img-corner" style="border-color:'+tpl.bg+'"><img src="'+sl.img+'" alt="Ảnh minh họa nhỏ của trang"></span>':"";
  var pct=Math.max(4,Math.round((idx+1)/Math.max(1,total)*100));
@@ -1611,7 +1632,7 @@ function slideHTML(sl, tpl, idx, total){
   +'<span class="c-deco" style="width:34px;height:34px;right:34px;top:-14px;background:'+tpl.deep+';opacity:.14"></span>'
   +'<span class="lay-bignum" style="color:'+mixHex(tpl.bg,"#FFFFFF",.8)+'">'+bigNum+'</span>'
   +'<div class="c-head"><h2 class="c-title">'+esc(sl.title)+'</h2>'+cornerHtml+'<span class="c-part" style="background:'+tpl.deep+'">'+esc(partLabel(sl,idx,total))+' · Trang '+(idx+1)+'/'+total+'</span></div>'
-  +'<div class="c-prog" style="background:'+mixHex(tpl.bg,"#FFFFFF",.8)+'"><i style="width:'+pct+'%;background:'+tpl.bg+'"></i></div>'
+  +'<div class="c-prog" style="background:'+mixHex(tpl.bg,"#FFFFFF",.8)+'"><i style="width:'+pct+'%;background:'+(tpl.accent||tpl.bg)+'"></i></div>'
   +bodyHtml+hintHtml
   +'<div class="c-remember" style="background:'+tpl.deep+'"><span class="star">⭐</span><p><b>Điểm cần nhớ:</b> '+esc(rememberFor(sl,bullets))+'</p></div>'
   +'</div><span class="badge">'+(idx+1)+' / '+total+'</span></div>';
@@ -1683,21 +1704,23 @@ var filters=["Tất cả","Mầm non","Tiểu học","THCS","THPT","Đại học
 var fwrap=document.getElementById("tplFilter");
 filters.forEach(function(f){ var b=document.createElement("button"); b.type="button"; b.className="chip"+(f==="Tất cả"?" on":""); b.textContent=f;
  b.addEventListener("click",function(){ tplFilter=f; fwrap.querySelectorAll(".chip").forEach(function(c){c.classList.remove("on")}); b.classList.add("on"); renderTpls(); }); fwrap.appendChild(b); });
+function tplCats(t){ return t.cats&&t.cats.length?t.cats:[t.cat]; }
 function renderTpls(){ var grid=document.getElementById("tplGrid"); grid.innerHTML="";
- TEMPLATES.filter(function(t){ return tplFilter==="Tất cả"||t.cat===tplFilter||t.cat===state.level; }).forEach(function(t){
+ TEMPLATES.filter(function(t){ return tplFilter==="Tất cả"||tplCats(t).indexOf(tplFilter)>=0; }).forEach(function(t){
   var b=document.createElement("button"); b.type="button"; b.className="tpl"+(t.id===state.tplId?" on":"");
-  b.innerHTML='<span class="cover-mini"><span class="art">'+artSVG(t.art,t.bg,t.deep)+'</span></span><span class="meta"><b>'+esc(t.name)+(t.id===state.tplId?" · ✓ Đang chọn":"")+'</b><span>'+esc(t.desc)+'</span></span>';
+  b.innerHTML='<span class="cover-mini"><span class="art">'+artSVG(t.art,t.bg,t.deep,t.accent)+'</span></span><span class="meta"><b>'+esc(t.name)+(t.id===state.tplId?" · ✓ Đang chọn":"")+'</b><span>'+esc(t.desc)+'</span><span class="tpl-cats">'+esc(tplCats(t).join(" · "))+'</span><span class="tpl-dots"><i style="background:'+t.bg+'" title="Màu nền '+t.bg+'"></i><i style="background:'+t.deep+'" title="Màu đậm '+t.deep+'"></i><i style="background:'+(t.accent||t.bg)+'" title="Màu nhấn '+(t.accent||"")+'"></i></span></span>';
   b.addEventListener("click",function(){ state.tplId=t.id; renderTpls(); });
   grid.appendChild(b); });
  if(!grid.children.length) grid.innerHTML='<p class="sub">Chưa có mẫu cho nhóm này — chọn “Tất cả” để xem mọi mẫu.</p>';
  renderStyleLock();
 }
-/* STYLE LOCK (Skill 21) — monochrome version (C3): the template's own colour,
-   its monoPal shades, white and the dark ink. No foreign colour ever appears. */
+/* STYLE LOCK (Skill 21): the template's disciplined palette — its own
+   background, deep shade and ONE accent colour, plus white and dark ink.
+   No foreign colour ever appears. */
 function renderStyleLock(){
  var sw=document.getElementById("lockSwatches"); if(!sw) return;
  var tpl=tplById(state.tplId); var P=monoPal(tpl.bg,tpl.deep);
- var cols=[["Màu chính",tpl.bg],["Sắc độ đậm",P.d],["Sắc độ đậm hơn",P.d2],["Sắc độ nhạt 1",P.l1],["Sắc độ nhạt 2",P.l15],["Sắc độ nhạt nhất",P.l2],["Trắng","#FFFFFF"],["Chữ","#1E2A32"]];
+ var cols=[["Màu nền",tpl.bg],["Màu đậm",tpl.deep],["Màu nhấn",tpl.accent||tpl.bg],["Sắc độ đậm hơn",P.d2],["Sắc độ nhạt 1",P.l1],["Sắc độ nhạt 2",P.l15],["Sắc độ nhạt nhất",P.l2],["Trắng","#FFFFFF"],["Chữ","#1E2A32"]];
  sw.innerHTML=cols.map(function(c){ return '<span class="swatch" title="'+c[0]+' '+c[1]+'" style="background:'+c[1]+'"></span>'; }).join("");
  document.getElementById("lockPaletteTxt").textContent=cols.map(function(c){ return c[0]+" "+c[1]; }).join(" • ");
  document.getElementById("lockFont").textContent="Be Vietnam Pro";
@@ -1762,9 +1785,9 @@ function bulletImg(sl,b){ if(!sl || !sl.bimgs) return ""; return sl.bimgs[normTx
 function mainArtHTML(sl,tpl,fallbackSVG){ if(sl && sl.img) return '<img src="'+sl.img+'" alt="Ảnh minh họa thầy cô tải lên cho trang này">'; return fallbackSVG; }
 function bulletArtHTML(sl,b,fallbackSVG){ var im=bulletImg(sl,b); if(im) return '<img src="'+im+'" alt="Ảnh minh họa thầy cô tải lên cho ý này">'; return fallbackSVG; }
 function imgPromptMain(sl){ var tpl=tplById(state.tplId); var bullets=parseBullets(sl); var ctx=bullets.length?bullets.join(" "):String(sl.body||"").replace(/\n/g," ");
- return "Tạo một tranh minh họa phẳng (flat illustration), khổ ngang 16:9, làm ẢNH CHÍNH cho một slide bài giảng môn "+(state.subject||"")+", "+(state.level||"")+". Chủ đề của slide: “"+(coreTitle(sl.title)||sl.title)+"”. Nội dung ảnh phải thể hiện đúng: "+shortTxt(ctx,220)+". Bối cảnh Việt Nam gần gũi; nếu có người thì là nhân vật VẼ minh họa người Việt Nam, không phải ảnh người thật. Phong cách tranh phẳng tối giản, chỉ dùng một màu chủ đạo "+tpl.bg+" (mẫu “"+tpl.name+"”) cùng các sắc độ đậm/nhạt của chính màu đó và màu trắng — không dùng bất kỳ màu nào khác. Chỉ một chủ thể rõ ràng ở giữa ảnh, nền đơn giản, sáng sủa, phù hợp học sinh "+(state.level||"")+". TUYỆT ĐỐI không vẽ chữ, chữ số, ký hiệu, bảng hiệu hay logo trong ảnh. Chỉ vẽ đúng những gì có trong nội dung bài, không tự thêm vật thể không liên quan."; }
+ return "Tạo một tranh minh họa phẳng (flat illustration), khổ ngang 16:9, làm ẢNH CHÍNH cho một slide bài giảng môn "+(state.subject||"")+", "+(state.level||"")+". Chủ đề của slide: “"+(coreTitle(sl.title)||sl.title)+"”. Nội dung ảnh phải thể hiện đúng: "+shortTxt(ctx,220)+". Bối cảnh Việt Nam gần gũi; nếu có người thì là nhân vật VẼ minh họa người Việt Nam, không phải ảnh người thật. Phong cách tranh phẳng tối giản, chỉ dùng đúng bộ màu của mẫu “"+tpl.name+"”: màu nền "+tpl.bg+", màu đậm "+tpl.deep+", màu nhấn "+(tpl.accent||tpl.bg)+" cùng các sắc độ đậm/nhạt của chúng và màu trắng — không dùng bất kỳ màu nào khác. Chỉ một chủ thể rõ ràng ở giữa ảnh, nền đơn giản, sáng sủa, phù hợp học sinh "+(state.level||"")+". TUYỆT ĐỐI không vẽ chữ, chữ số, ký hiệu, bảng hiệu hay logo trong ảnh. Chỉ vẽ đúng những gì có trong nội dung bài, không tự thêm vật thể không liên quan."; }
 function imgPromptBullet(sl,b){ var tpl=tplById(state.tplId);
- return "Tạo một tranh minh họa phẳng (flat illustration), khổ ngang 16:9, minh họa cho MỘT ý trong slide “"+(coreTitle(sl.title)||sl.title)+"” của bài giảng môn "+(state.subject||"")+", "+(state.level||"")+". Ý cần minh họa: “"+b+"”. Bối cảnh Việt Nam gần gũi; nếu có người thì là nhân vật VẼ minh họa người Việt Nam, không phải ảnh người thật. Phong cách tranh phẳng tối giản, chỉ dùng một màu chủ đạo "+tpl.bg+" (mẫu “"+tpl.name+"”) cùng các sắc độ đậm/nhạt của chính màu đó và màu trắng — không dùng bất kỳ màu nào khác. Chỉ một chủ thể rõ ràng, nền đơn giản, sáng sủa. TUYỆT ĐỐI không vẽ chữ, chữ số, ký hiệu, bảng hiệu hay logo trong ảnh. Chỉ vẽ đúng ý trên, không tự thêm vật thể không có trong bài."; }
+ return "Tạo một tranh minh họa phẳng (flat illustration), khổ ngang 16:9, minh họa cho MỘT ý trong slide “"+(coreTitle(sl.title)||sl.title)+"” của bài giảng môn "+(state.subject||"")+", "+(state.level||"")+". Ý cần minh họa: “"+b+"”. Bối cảnh Việt Nam gần gũi; nếu có người thì là nhân vật VẼ minh họa người Việt Nam, không phải ảnh người thật. Phong cách tranh phẳng tối giản, chỉ dùng đúng bộ màu của mẫu “"+tpl.name+"”: màu nền "+tpl.bg+", màu đậm "+tpl.deep+", màu nhấn "+(tpl.accent||tpl.bg)+" cùng các sắc độ đậm/nhạt của chúng và màu trắng — không dùng bất kỳ màu nào khác. Chỉ một chủ thể rõ ràng, nền đơn giản, sáng sủa. TUYỆT ĐỐI không vẽ chữ, chữ số, ký hiệu, bảng hiệu hay logo trong ảnh. Chỉ vẽ đúng ý trên, không tự thêm vật thể không có trong bài."; }
 function allPromptsText(){ var lines=["CÂU LỆNH TẠO ẢNH CHO BÀI “"+lessonTitle()+"” — dán từng câu lệnh vào ChatGPT, tải ảnh về rồi bấm Tải ảnh lên ở đúng trang/gạch trong app.",""];
  state.slides.forEach(function(sl,i){ if(sl.type==="game") return;
   lines.push("=== TRANG "+(i+1)+": "+(sl.title||"")+" — ẢNH CHÍNH ==="); lines.push(imgPromptMain(sl)); lines.push("");
@@ -1824,7 +1847,7 @@ document.addEventListener("keydown",function(e){ if(!document.getElementById("pr
 
 /* ---- Save / My lessons ---- */
 function snapshot(){ return {name:state.topic, topic:state.topic, level:state.level, subject:state.subject, pages:state.pages, tplId:state.tplId, outline:state.outline, games:Object.assign({},state.games), slides:JSON.parse(JSON.stringify(state.slides)), book:state.book, sgkPage:state.sgkPage, sgkQuote:state.sgkQuote, notes:state.notes}; }
-function loadLesson(L){ state.topic=L.topic; state.level=L.level; state.subject=L.subject; state.pages=L.pages||L.slides.length; state.tplId=L.tplId; state.outline=L.outline||""; state.games=Object.assign({},L.games); state.slides=JSON.parse(JSON.stringify(L.slides)); state.cur=0;
+function loadLesson(L){ state.topic=L.topic; state.level=L.level; state.subject=L.subject; state.pages=L.pages||L.slides.length; state.tplId=L.tplId; var tplKnown=false; for(var ti=0;ti<TEMPLATES.length;ti++) if(TEMPLATES[ti].id===state.tplId) tplKnown=true; if(!tplKnown) state.tplId=TEMPLATES[0].id; state.outline=L.outline||""; state.games=Object.assign({},L.games); state.slides=JSON.parse(JSON.stringify(L.slides)); state.cur=0;
  state.book=L.book||""; state.sgkPage=L.sgkPage||""; state.sgkQuote=L.sgkQuote||""; state.notes=L.notes!==false;
  document.getElementById("inBook").value=state.book; document.getElementById("inSgkPage").value=state.sgkPage; document.getElementById("inSgkQuote").value=state.sgkQuote; document.getElementById("swNotes").checked=state.notes;
  fillForm(); renderTpls(); renderGames(); }
@@ -1879,7 +1902,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
  var needScenes={};
  state.slides.forEach(function(sl){ if(sl.type==="content") parseBullets(sl).forEach(function(b){ needScenes[pickTopicArt(b,tpl)]=1; }); });
  var sceneList=Object.keys(needScenes);
- var jobs=[svgToPngData(artSVG(tpl.art,tpl.bg,tpl.deep),4.9,3.06,tpl.bg)];
+ var jobs=[svgToPngData(artSVG(tpl.art,tpl.bg,tpl.deep,tpl.accent),4.9,3.06,tpl.bg)];
  sceneList.forEach(function(sc){ jobs.push(svgToPngData(topicArtSVG(sc,tpl),0.8,0.8,null)); });
  var dfKeys=[], dfJobs=[];
  state.slides.forEach(function(sl,i){ if(sl.type==="content"){ var lay0=normLayout(sl.layout); if(lay0==="donut"||lay0==="fan"||lay0==="wheel"||lay0==="arc"){ dfKeys.push(i); var bl0=parseBullets(sl); dfJobs.push(svgToPngData(lay0==="donut"?donutSVG(pctData(bl0),tpl):lay0==="wheel"?wheelSVG(bl0,tpl,coreTitle(sl.title)||sl.title):fanSVG(bl0,tpl,coreTitle(sl.title)||sl.title),3.6,2.7,null)); } } });
@@ -1892,30 +1915,30 @@ document.getElementById("btnPptx").addEventListener("click",function(){
   var pptx=new PptxGenJS(); pptx.defineLayout({name:"W",width:13.33,height:7.5}); pptx.layout="W";
   var bgHex=tpl.bg.replace("#",""), deepHex=tpl.deep.replace("#","");
   var trackHex=mixHex(tpl.bg,"#FFFFFF",.8).replace("#","");
-  var darkHex=darkOf(tpl).replace("#",""), lt2Hex=mixHex(tpl.bg,"#FFFFFF",.68).replace("#","");
+  var darkHex=darkOf(tpl).replace("#",""), lt2Hex=mixHex(tpl.bg,"#FFFFFF",.68).replace("#",""), accHex=(tpl.accent||tpl.bg).replace("#","");
   state.slides.forEach(function(sl, slIdx){
    var s=pptx.addSlide(); s.background={color:bgHex};
    if(sl.type==="cover"){ s.background={color:darkHex};
-    s.addText(((state.subject||"Bài giảng")+" · "+(state.level||"")).toUpperCase(),{x:.6,y:.8,w:7.2,h:.5,fontSize:14,bold:true,color:lt2Hex,fontFace:"Arial",charSpacing:4});
+    s.addText(((state.subject||"Bài giảng")+" · "+(state.level||"")).toUpperCase(),{x:.6,y:.8,w:7.2,h:.5,fontSize:14,bold:true,color:accHex,fontFace:"Arial",charSpacing:4});
     s.addText(sl.title,{x:.6,y:1.45,w:6.6,h:2.2,fontSize:48,bold:true,color:"FFFFFF",fontFace:"Arial"});
     s.addText(sl.body,{x:.6,y:3.85,w:6.4,h:1.4,fontSize:18,color:"FFFFFF",fontFace:"Arial"});
-    s.addText("Mr Quân - Đồng hành cùng giáo viên · Liên hệ: 0982.521.721",{x:.6,y:6.65,w:9,h:.4,fontSize:14,color:lt2Hex,fontFace:"Arial"});
+    s.addText("Mr Quân - Đồng hành cùng giáo viên · Liên hệ: 0982.521.721",{x:.6,y:6.65,w:9,h:.4,fontSize:14,color:accHex,fontFace:"Arial"});
     if(sl.img){ s.addImage({data:sl.img,x:7.55,y:2.05,w:4.9,h:3.06}); }
     else if(coverPng){ s.addImage({data:coverPng,x:7.55,y:2.05,w:4.9,h:3.06}); }
     else { s.addShape(pptx.shapes.RECTANGLE,{x:8,y:1.4,w:4.4,h:4.6,fill:{color:deepHex}}); s.addText("Mẫu: "+tpl.name,{x:8.3,y:3.4,w:3.8,h:.8,fontSize:20,bold:true,color:"FFFFFF",align:"center",fontFace:"Arial"}); } }
    else if(sl.type==="contents"){ s.background={color:"FFFFFF"};
     s.addText("Nội dung bài học",{x:.9,y:.7,w:11.53,h:.9,fontSize:32,bold:true,color:deepHex,align:"center",fontFace:"Arial"});
     var cps=sl.parts||[]; var cw2=cps.length?11.53/cps.length:0;
-    if(cps.length>1) s.addShape(pptx.shapes.LINE,{x:1.7,y:2.62,w:9.93,h:0,line:{color:lt2Hex,width:1.5}});
+    if(cps.length>1) s.addShape(pptx.shapes.LINE,{x:1.7,y:2.62,w:9.93,h:0,line:{color:accHex,width:1.5}});
     cps.forEach(function(pn,i){ var cx=.9+cw2*i+cw2/2;
      s.addShape(pptx.shapes.OVAL,{x:cx-.62,y:2.0,w:1.24,h:1.24,fill:{color:"FFFFFF"},line:{color:bgHex,width:2.5}});
      s.addText(("0"+(i+1)).slice(-2),{x:cx-.62,y:2.3,w:1.24,h:.6,fontSize:22,bold:true,color:deepHex,align:"center",fontFace:"Arial"});
      s.addText(pn,{x:cx-cw2/2+.15,y:3.55,w:cw2-.3,h:.9,fontSize:16,bold:true,color:"1E2A32",align:"center",fontFace:"Arial"}); });
    }
    else if(sl.type==="divider"){ s.background={color:darkHex};
-    s.addShape(pptx.shapes.OVAL,{x:.9,y:2.2,w:2.5,h:2.5,fill:{color:darkHex},line:{color:lt2Hex,width:3}});
+    s.addShape(pptx.shapes.OVAL,{x:.9,y:2.2,w:2.5,h:2.5,fill:{color:darkHex},line:{color:accHex,width:3}});
     s.addText(("0"+(sl.phaseIndex||2)).slice(-2),{x:.9,y:2.95,w:2.5,h:1,fontSize:44,bold:true,color:"FFFFFF",align:"center",fontFace:"Arial"});
-    s.addText("CHẶNG HỌC",{x:3.9,y:2.45,w:8,h:.5,fontSize:14,bold:true,color:lt2Hex,fontFace:"Arial",charSpacing:4});
+    s.addText("CHẶNG HỌC",{x:3.9,y:2.45,w:8,h:.5,fontSize:14,bold:true,color:accHex,fontFace:"Arial",charSpacing:4});
     s.addText(sl.title,{x:3.9,y:3.0,w:8.5,h:1.2,fontSize:40,bold:true,color:"FFFFFF",fontFace:"Arial"});
     s.addText(sl.body||"",{x:3.9,y:4.35,w:8.5,h:.8,fontSize:18,color:"FFFFFF",fontFace:"Arial"});
    }
@@ -1926,9 +1949,9 @@ document.getElementById("btnPptx").addEventListener("click",function(){
      s.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:.9,y:yy,w:11.53,h:chh2-.14,fill:{color:deepHex},rectRadius:.08});
      if(png2) s.addImage({data:png2,x:1.05,y:yy+.08,w:.72,h:.72});
      s.addText(b,{x:1.95,y:yy+.04,w:10.2,h:chh2-.18,fontSize:16,color:"FFFFFF",fontFace:"Arial",valign:"middle"}); });
-    s.addText("★ Điểm cần nhớ: "+rememberFor(sl,cbl),{x:.9,y:6.35,w:11.53,h:.6,fontSize:15,bold:true,color:lt2Hex,fontFace:"Arial"});
+    s.addText("★ Điểm cần nhớ: "+rememberFor(sl,cbl),{x:.9,y:6.35,w:11.53,h:.6,fontSize:15,bold:true,color:accHex,fontFace:"Arial"});
    }
-   else if(sl.type==="game"){ s.addText("🎮 "+sl.title,{x:.6,y:2.4,w:9,h:1.2,fontSize:36,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText("Trò chơi củng cố — chơi trực tiếp trong app Trợ Lý Slide Mr Quân.",{x:.6,y:3.8,w:9,h:1,fontSize:18,color:"FFFFFF",fontFace:"Arial"}); }
+   else if(sl.type==="game"){ s.background={color:darkHex}; s.addText("🎮 "+sl.title,{x:.6,y:2.4,w:9,h:1.2,fontSize:36,bold:true,color:"FFFFFF",fontFace:"Arial"}); s.addText("Trò chơi củng cố — chơi trực tiếp trong app Trợ Lý Slide Mr Quân.",{x:.6,y:3.8,w:9,h:1,fontSize:18,color:"FFFFFF",fontFace:"Arial"}); }
    else { var sIdx=state.slides.indexOf(sl); var sTotal=state.slides.length;
     var INK="1E2A32";
     var tintHex=mixHex(tpl.bg,"#FFFFFF",.88).replace("#",""), tint2Hex=mixHex(tpl.bg,"#FFFFFF",.68).replace("#","");
@@ -1945,7 +1968,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
     tx(partLabel(sl,sIdx,sTotal)+" · Trang "+(sIdx+1)+"/"+sTotal,10.35,.74,2.1,.55,{fontSize:14,bold:true,color:deepHex,align:"right"});
     if(sl.img && iMode==="corner") s.addImage({data:sl.img,x:9.42,y:.64,w:.85,h:.58});
     s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.5,w:11.53,h:.1,fill:{color:trackHex}});
-    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.5,w:Math.max(.5,11.53*(sIdx+1)/Math.max(1,sTotal)),h:.1,fill:{color:bgHex}});
+    s.addShape(pptx.shapes.RECTANGLE,{x:.9,y:1.5,w:Math.max(.5,11.53*(sIdx+1)/Math.max(1,sTotal)),h:.1,fill:{color:accHex}});
     var bullets=parseBullets(sl);
     var BY=1.78, BH=3.5;
     var iMode=imgModeOf(sl,lay,bullets);
@@ -2023,7 +2046,7 @@ document.getElementById("btnPptx").addEventListener("click",function(){
     } else if(lay==="donut"){
      var dd2=pctData(bullets); var dImg=dfPng[sIdx];
      if(dImg) s.addImage({data:dImg,x:1.0,y:BY+.05,w:3.4,h:3.4}); else tx("Biểu đồ tỉ lệ",1.0,BY+.4,3.4,1,{fontSize:18,bold:true,color:deepHex});
-     var cols3=[deepHex,bgHex,mixHex(tpl.bg,"#FFFFFF",.38).replace("#",""),mixHex(tpl.deep,"#000000",.3).replace("#","")];
+     var cols3=[deepHex,accHex,mixHex(tpl.bg,"#FFFFFF",.38).replace("#",""),mixHex(tpl.deep,"#000000",.3).replace("#","")];
      dd2.forEach(function(d,i){ var y=BY+.25+i*.78; s.addShape(pptx.shapes.OVAL,{x:5.0,y:y+.08,w:.3,h:.3,fill:{color:cols3[i%cols3.length]}}); tx(d.label,5.5,y,5.2,.6,{fontSize:16}); tx(d.tok,10.8,y,1.6,.6,{fontSize:18,bold:true,color:deepHex,align:"right"}); });
     } else if(lay==="barchart"){
      var bd3=kpiData(bullets); var mx3=1; bd3.forEach(function(d){ if(d.val>mx3) mx3=d.val; }); var bh3=BH/Math.max(1,bd3.length);
